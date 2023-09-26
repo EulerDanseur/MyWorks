@@ -1,8 +1,9 @@
 #include<iostream>
 using namespace std;
+
 int main()
 {
-    int amount, numinput, x, y, min, max;
+    int amount, numinput, x, y, mini, maxi;
 
     cin >> amount;
     cin >> x;
@@ -14,28 +15,43 @@ int main()
         return 0;
     }   
     
-    if(x < y)
-        {
-            min=x;
-            max=y;
-        }
-    else
-        {
-            min=y;
-            max=x;
-        }
-
+    maxi=max(x,y);
+    mini=min(x,y);
 
     for(int i=1; i <= amount - 2; i++)
     {
         cin >> numinput;
-        if(numinput > max )
-            max = numinput;
-        else if(numinput < min)
-            min = numinput;
+        maxi=max(numinput,maxi);
+        mini=min(numinput,mini);
     }
     
-    cout << max - min;
+    //comparing
+    /*
+    if(x < y)
+        {
+            mini=x;
+            maxi=y;
+        }
+    else
+        {
+            mini=y;
+            maxi=x;
+        }
+    
+    
+    for(int i=1; i <= amount - 2; i++)
+    {
+        cin >> numinput;
+        if(numinput > maxi )
+            maxi = numinput;
+        else if(numinput < mini)
+            mini = numinput;
+    }
+    */
+
+
+
+    cout << maxi - mini;
     
     
     return 0;
