@@ -3,7 +3,8 @@ using namespace std;
 int main()
 {
     
-    int k, b, i, j, m;
+    int k, b, i, j;
+    char m;
     while(m != 'e')
     {
         cin >> k >> b;
