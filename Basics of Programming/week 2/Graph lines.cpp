@@ -16,6 +16,7 @@ int main()
             }
             cout << "*" << endl;
         }
+        getchar();
         scanf("%c", &m);
     }
     return 0;
