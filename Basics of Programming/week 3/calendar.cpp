@@ -26,25 +26,11 @@ int Days(int month, int year)
     return day;    
 }
 
-int IWeek(int c, int y, int iMonth, int iDay)
+int IWeek(int iYear, int iMonth, int iDay)
 {
-    int iWeek;
-    iWeek = ((c / 4)-2*c + y + ( y / 4)+(26 * ( iMonth + 1) /10)+ iDay - 1) % 7;
-    while(iWeek <= 0)
-     iWeek += 7;
-    return iWeek;
-}
-
-int main()
-{
-    int iWeek, iMonth, iYear, c, y;
-    cin >> iYear >> iMonth;
-    cout << iYear << "年" << iMonth <<"月"<<endl;
+    int iWeek, c, y;
     
-    //Days
-    int days = Days(iMonth, iYear);
-    
-    //Special months
+    //special months
     switch(iMonth)
     case 1: case 2:
         {
@@ -53,15 +39,48 @@ int main()
             break;
         }
     
-
-    //calculate parameters
-    c = iYear / 100;
-    y = iYear % 100;
+    //calculate parameter
+        c = iYear / 100;
+        y = iYear % 100;
     
-    //nested and nested...omg, these sh*t needs to be optimised..... 
+    iWeek = ((c / 4)-2*c + y + ( y / 4)+(26 * ( iMonth + 1) /10)+ iDay - 1) % 7;
+    while(iWeek <= 0)
+     iWeek += 7;
+    return iWeek;
+}
+
+int main()
+{
+    int iWeek, iMonth, iYear;
+    cin >> iYear >> iMonth;
+    cout << iYear << "年" << iMonth <<"月"<<endl;
+    
+    //printing
+        //pre-printing spaces
+    int days = Days(iMonth, iYear);
+    iWeek = IWeek(iYear, iMonth, 1);
+    for(int space = 2; space <= iWeek; space++)
+    {
+        cout << "    ";
+    }
+
+        //print dates
     for(int date = 1; date <= days; date++)
+    {
+        iWeek=IWeek(iYear, iMonth, date);
+        cout << date <<"    ";
+        
+        if (iWeek == 7)
+            cout << endl;
+    }
+    cout << endl;
+    //舒服多了~
+
+
+    //nested and nested...omg, these sh*t needs to be optimised..... 
+   /* for(int date = 1; date <= days; date++)
     {   
-        iWeek=IWeek(c, y, iMonth, date);
+        iWeek=IWeek(iYear, iMonth, date);
         
         if(date == 1)
         {
@@ -83,6 +102,7 @@ int main()
                 }
         }
     }
+    */
     
     return 0;
 }
