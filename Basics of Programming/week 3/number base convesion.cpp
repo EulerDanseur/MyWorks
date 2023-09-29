@@ -12,7 +12,6 @@ int main()
     { 
         if(num == '1')
             num10 += pow(2, i);
-        
         i--;
     }
     cout << num10;
