@@ -63,7 +63,7 @@ int main()
     iWeek = IWeek(iYear, iMonth, 1);
     for(int space = 2; space <= iWeek; space++)
     {
-        //cout << setw(5) <<" ";
+        //cout <<" " <<setw(5);
         printf("\t");
     }
 
@@ -71,8 +71,8 @@ int main()
     for(int date = 1; date <= days; date++)
     {
         iWeek=IWeek(iYear, iMonth, date);
-        printf("%d\t", date) ;
-        
+        printf("%d\t", date);
+        //cout << setw(5) <<date;
         if (iWeek == 7)
             cout << endl;
     }
