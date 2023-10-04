@@ -96,5 +96,6 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "iomanip": "cpp"
-  }
+  },
+  "C_Cpp_Runner.msvcSecureNoWarnings": false
 }

@@ -1,0 +1,16 @@
+#include<iostream>
+#include<ncurses.h>
+//#include<conio.h>
+using namespace std;
+int main()
+{
+    initscr();
+    keypad(stdscr,1);
+    while(true)
+    {
+        int c = getch();
+            cout << c;
+
+    }
+    return 0;
+}
