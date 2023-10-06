@@ -1,0 +1,16 @@
+# 1.Motion
+h -> left;
+j -> down;
+k -> up;
+l -> right;
+
+w -> move to the start of the next word;
+b -> back to the start of the previous word;
+
+W,B means to conduct WORD-ly
+
+e -> jump to the end of a word;
+ge -> jump to the end of a previous word
+
+-Use `f{character}` (find) to move to the next occurrence of a character in a line.
+- Use `F{character}` to find the previous occurrence of a character
