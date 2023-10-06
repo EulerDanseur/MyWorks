@@ -1,14 +1,19 @@
 #include<iostream>
-#include<ncurses.h>
-//#include<conio.h>
+//#include<ncurses.h>
+#include<conio.h>
+
+
 using namespace std;
 int main()
 {
-    initscr();
-    keypad(stdscr,1);
-    while(true)
+    //initscr();
+    //keypad(stdscr,1);
+    int c;
+    
+    while(1)
     {
-        int c = getch();
+         c = getch();
+            
             cout << c;
 
     }
