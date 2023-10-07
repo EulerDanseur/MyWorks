@@ -14,24 +14,26 @@ int main()
     
     cout << "Enter year and month (e.g.: 2023 9): ";
     cin >> iYear >> iMonth;
+    printCalendar(iYear, iMonth); // Print the calendar
+    getchar();
     
     initscr(); // Initialize ncurses
-    //raw(); // Set character input to raw mode
+    raw(); // Set character input to raw mode
     keypad(stdscr, 1); // Enable special keys
-    //noecho(); // Turn off character echoing
+    noecho(); // Turn off character echoing
     //curs_set(0); // Hide cursor
     int ch;
 
-   
-
+    printCalendar(iYear, iMonth); // Print the calendar
+    getchar();
     while (true)
     {
-        //clear(); // Clear the screen
-        printCalendar(iYear, iMonth); // Print the calendar
         //refresh(); // Refresh the screen
+        //clear(); // Clear the screen
 
         ch = getch(); // Read user input
-
+        //refresh(); // Refresh the sc
+        //clear(); // Clear the screen
         if (ch == KEY_DOWN)
         {
             // Down arrow key, decrease the month
@@ -66,6 +68,7 @@ int main()
         }
         else if (ch == 'q' || ch == 'e')
             break; // If the user enters 'q' or 'e', exit the program
+    printCalendar(iYear, iMonth); // Print the calendar
     }
 
     endwin(); // Clean up ncurses
