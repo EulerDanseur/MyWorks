@@ -1,8 +1,8 @@
 #include <stdio.h> 
 #include "cards.h" 
   
- int main(void) {
-
+ int main(void) 
+ {
     int a;
 
     scanf("%d", &a); 
