@@ -1,6 +1,6 @@
 #include<stdio.h>
 #include<assert.h>
-#include<stdlib.h>
+//#include<stdlib.h>
 #include"cards.h"
 
 void assert_card_valid(card_t c)
