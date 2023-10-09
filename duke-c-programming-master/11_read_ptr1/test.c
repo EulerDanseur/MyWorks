@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void g(int x, int * y) {
+void g(int x, int * y) 
+{
   printf("In g, x = %d, *y = %d\n", x, *y);
   x++;
   *y = *y - x;
   y = &x;
 }
 
-void f(int * a, int b) {
+void f(int * a, int b) 
+{
   printf("In f, *a = %d, b = %d\n", *a, b);
   *a += b;
   b *= 2;
@@ -16,8 +18,8 @@ void f(int * a, int b) {
   printf("Back in f, *a = %d, b = %d\n", *a, b);
 }
 
-
-int main(void) {
+int main(void)
+{
   int x = 3;
   int y = 4;
   f(&x, y);
