@@ -1,7 +1,11 @@
 #include <stdio.h> 
 #include "cards.h" 
   
- int main(void) { 
+ int main(void) {
+
+    int a;
+
+    scanf("%d", &a); 
   
      const char* cnm = ranking_to_string(THREE_OF_A_KIND); 
      printf("%s\n", cnm); // "THREE OF A KIND" 

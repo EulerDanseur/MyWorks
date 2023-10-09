@@ -83,10 +83,10 @@ card_t card_from_letters(char value_let, char suit_let)
     //suit_let match
     switch(suit_let)
     {
-        case's': c.suit = SPADES ;break;
-        case'h': c.suit = HEARTS ;break;
-        case'd': c.suit = DIAMONDS ;break;
-        case'c': c.suit = CLUBS ;break;
+        case 's': c.suit = SPADES ;break;
+        case 'h': c.suit = HEARTS ;break;
+        case 'd': c.suit = DIAMONDS ;break;
+        case 'c': c.suit = CLUBS ;break;
         default : assert(0);
     }
 
