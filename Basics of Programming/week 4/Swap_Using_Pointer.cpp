@@ -13,6 +13,6 @@ int main()
     int a, b;
     cin >> a >> b;
     Swap(&a, &b);
-    cout << a << b;
+    cout << a << " " << b << endl;
     return 0;
 }
