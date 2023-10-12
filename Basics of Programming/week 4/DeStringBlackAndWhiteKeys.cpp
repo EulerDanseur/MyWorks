@@ -3,30 +3,25 @@ using namespace std;
 
 int main()
 {
-	int length, flag, count = 1;
+	int length, flag, count = 0;
 	cin >> length;
 	if (length == 0)
 	{
 		cout << 0;
 		return 0;
 	}
-	char key ;
+	string key;
 	
 	cin >> key;
-	if (key == 'B')
-		flag = 1;
-	else
-		flag = 0;
 
-	for (int i = 2; i <= length; i++)
+	for (char k : key)
 	{
-		cin >> key;
-		if (flag == 1 && key == 'W')
+		if (flag == 1 && k == 'W')
 		{
 				count++;
 				flag = 0;
 		}
-		else if(flag == 0 && key == 'B')
+		else if(flag == 0 && k == 'B')
 		{
 		
 				count++;
