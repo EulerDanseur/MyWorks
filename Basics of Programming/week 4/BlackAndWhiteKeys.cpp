@@ -10,8 +10,8 @@ int main()
 		cout << 0;
 		return 0;
 	}
-	char key ;
 	
+	char key;
 	cin >> key;
 	if (key == 'B')
 		flag = 1;
