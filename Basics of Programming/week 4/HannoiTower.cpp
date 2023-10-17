@@ -1,25 +1,25 @@
 #include<iostream>
 using namespace std;
 
-int CountStep(int n);
+int MinStep(int n);
 void PrintStep(char x, char y, char z, int start, int end);
 
 int main()
 {
     int towerNum;
     cin >> towerNum;
-    int step = CountStep(towerNum);
+    int step = MinStep(towerNum);
     cout << step << " steps" << endl;
     PrintStep('A', 'B', 'C', 1, step);
     return 0;
 }
 
-int CountStep(int n)
+int MinStep(int n)
 {
     if(n == 1)
         return 1;
     else
-        return 1 + 2 * CountStep(n - 1);
+        return 1 + 2 * MinStep(n - 1);
 }
 
 void PrintStep(char init, char trans, char goal, int start, int end)
