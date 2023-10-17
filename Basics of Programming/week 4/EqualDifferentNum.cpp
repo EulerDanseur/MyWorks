@@ -24,7 +24,7 @@ int IsEqualDifferentNum(int num)
         return -1;
     else if(num > 10 && num < 100) 
     {   
-        if(num % 10 == 0 || num%10 - num / 10 == 0)
+        if(num % 10 == 0 || num % 10 - num / 10 == 0)
             return -1;
         else
             return TypeOfNum(num);
