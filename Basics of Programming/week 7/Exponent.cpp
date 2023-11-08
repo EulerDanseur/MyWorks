@@ -18,14 +18,18 @@ int main()
 long double ExpSeries(int x, int precision)
 {
     long double result = 1, check = 1;
-    long double term = 1, k = x;
-    //long long a = 1, b = 1;
+    long double term = 1, k = x, b = 1;
+    long long a = 1;
     if(x == 0) return result;
     long double deviation = pow(0.1, precision);
     for(int i = 1;;i++)
     {
         //series
-        term *= (k / i);
+        //term *= (k / i);
+        
+        a *= k;
+        b *= i;
+        term = a / b;
         result += term;
         
         //check the precision
