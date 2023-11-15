@@ -3,7 +3,7 @@ int RandomNum();
 //randomly set the place
 int RandomPlace();
 //generate the number in the place
-void GenerateNum();
+void DoGenerateNum();
 //map the coordinate to num
 inline int PlaceToOrder(int row, int col);
 //map the num to row

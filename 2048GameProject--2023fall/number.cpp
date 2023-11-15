@@ -40,13 +40,36 @@ int RandomNum()
 
 }
 
-int RandomPlace()
+int RandomOrder(int vacantOrder[16], int range)
 {
-
+    int idx = range * rand() / RAND_MAX;
+    return vacantOrder[idx];    
 }
 
-void GenerateNum()
+bool DoGenerateNum(int board[][4])
 {
+    int vacantOrder[16] = {0};
+    int indexVacant = 0;
+    board[OrderToRow(indexVacant)][OrderToCol(indexVacant)] = RandomNum();
+}
+
+bool CheckIfVacant(int board[][4], int vacantOrder[16], int *indexVacant)
+{
+
+    *indexVacant = 0;
+
+    for(int i = 0; i < 4; i++)
+    for(int j = 0; j < 4; j++)
+        if(board[i][j] == 0)
+        {    
+            vacantOrder[*indexVacant] = PlaceToOrder(i, j);
+            *indexVacant++;
+        }
+    
+    if(*indexVacant == 1)    return false;
+        //gameover
+    else    return true;
+    
 
 }
 
