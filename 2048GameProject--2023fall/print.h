@@ -1,5 +1,5 @@
 using namespace std;
 
-void PrintBoard(int board[][4]);
+void PrintBoard();
 
-void PrintScore(int score);
+void PrintScore();

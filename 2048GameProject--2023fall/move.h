@@ -1,6 +1,1 @@
-#include <iostream>
-#include "move.h"
-#include <cstdlib>
-using namespace std;
-
-
+void Move(char direction);

@@ -2,8 +2,10 @@
 #include <cstdlib>
 #include <conio.h>
 #include "print.h"
+extern int board[4][4];
+extern int score;
 
-void PrintBoard(int board[][4])
+void PrintBoard()
 {   
     //clear the screen
     system("cls");
@@ -14,9 +16,7 @@ void PrintBoard(int board[][4])
     printf("%d\t%d\t%d\t%d\t\n", board[2][0], board[2][1],board[2][2], board[2][3]);
     printf("%d\t%d\t%d\t%d\t\n", board[3][0], board[3][1],board[3][2], board[3][3]);
     printf("\n");   
-}
-
-void PrintScore(int score)
-{
     printf("Score: %d\n", score);
+    printf("You can use these skills:\n");
+    printf("1.let a number double or be half (score -10)\n");
 }

@@ -7,9 +7,9 @@
       "request": "launch",
       "args": [],
       "stopAtEntry": false,
-      "externalConsole": false,
-      "cwd": "/home/EulerDanseur/桌面/MyWorks/2048GameProject--2023fall",
-      "program": "/home/EulerDanseur/桌面/MyWorks/2048GameProject--2023fall/build/Debug/outDebug",
+      "externalConsole": true,
+      "cwd": "d:/MyWorks/2048GameProject--2023fall",
+      "program": "d:/MyWorks/2048GameProject--2023fall/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [
