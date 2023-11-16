@@ -8,7 +8,7 @@
 using namespace std;
 extern int board[4][4];
 
-int Gameloop()
+void Gameloop()
 {
     char direction;
     int vacantRange = 14;
@@ -36,8 +36,6 @@ int Gameloop()
 
                 //print the result
                 PrintBoard();
-
-                if(If2048()) return 1;
                 
                 break;
             }
@@ -46,5 +44,5 @@ int Gameloop()
 
     }
     
-    return 0;
+    return;
 }

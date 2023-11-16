@@ -20,3 +20,10 @@ void PrintBoard()
     printf("You can use these skills:\n");
     printf("1.let a number double or be half (score -10)\n");
 }
+
+void PrintRule()
+{
+    cout <<
+    "Game Rule:  ";
+    
+}

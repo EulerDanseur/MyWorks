@@ -1,0 +1,2 @@
+void GameStart();
+void GameEnd();
