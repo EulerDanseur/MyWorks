@@ -31,7 +31,7 @@ void Move(char direction)
                 //check the cimbination
                 for(int i = 0; i < 4; i++)
                 {
-                    while(temp[i]==temp[i+1])
+                    if(temp[i]==temp[i+1])
                     {
                         score += temp[i];
                         temp[i] *= 2;
@@ -39,7 +39,7 @@ void Move(char direction)
                         {
                             temp[j] = temp[j+1];
                         }
-                        temp[3] == 0;
+                        temp[3] = 0;
                     }
                 }
 
@@ -53,40 +53,40 @@ void Move(char direction)
 
         case 'd':
         {
-            for(int row = 0; row < 4; row++)
+            for (int row = 0; row < 4; row++)
             {
                 //restore value
-                int temp[4] = {0};
-                int index = 0;
+                int temp[4] = { 0 };
+                int index = 3;
 
-                for(int col = 3; col > -1; col--)
+                for (int col = 3; col > -1; col--)
                 {
-                    if(board[row][col] != 0)
+                    if (board[row][col] != 0)
                     {
-                        temp[index]=board[row][col];
-                        index++;   
-                    }                
+                        temp[index] = board[row][col];
+                        index--;
+                    }
                 }
-            
+
                 //check the cimbination
-                for(int i = 0; i < 4; i++)
+                for (int i = 3; i >= 0; i--)
                 {
-                    while(temp[i]==temp[i+1])
+                    if (temp[i] == temp[i - 1])
                     {
                         score += temp[i];
                         temp[i] *= 2;
-                        for(int j = i+1; j < 3; j++)
+                        for (int j = i - 1; j > 0; j--)
                         {
-                            temp[j] = temp[j+1];
+                            temp[j] = temp[j - 1];
                         }
-                        temp[0] == 0;
+                        temp[0] = 0;
                     }
                 }
 
                 //return to the Board
-                for(int col = 3; col > -1; col--)
-                    board[row][col] = temp[col]; 
-                
+                for (int col = 3; col > -1; col--)
+                    board[row][col] = temp[col];
+
             }
             break;
         }
@@ -111,7 +111,7 @@ void Move(char direction)
                 //check the cimbination
                 for(int i = 0; i < 4; i++)
                 {
-                    while(temp[i]==temp[i+1])
+                    if(temp[i]==temp[i+1])
                     {
                         score += temp[i];
                         temp[i] *= 2;
@@ -119,7 +119,7 @@ void Move(char direction)
                         {
                             temp[j] = temp[j+1];
                         }
-                        temp[3] == 0;
+                        temp[3] = 0;
                     }
                 }
 
@@ -137,29 +137,29 @@ void Move(char direction)
             {
                 //restore value
                 int temp[4] = {0};
-                int index = 0;
+                int index = 3;
 
                 for(int col = 3; col > -1; col--)
                 {
                     if(board[col][row] != 0)
                     {
                         temp[index]=board[col][row];
-                        index++;   
+                        index--;   
                     }                
                 }
             
                 //check the cimbination
-                for(int i = 0; i < 4; i++)
+                for (int i = 3; i >= 0; i--)
                 {
-                    while(temp[i]==temp[i+1])
-                    {
+                     if (temp[i] == temp[i - 1])
+                     {
                         score += temp[i];
                         temp[i] *= 2;
-                        for(int j = i+1; j < 3; j++)
+                        for (int j = i - 1; j > 0; j--)
                         {
-                            temp[j] = temp[j+1];
+                            temp[j] = temp[j - 1];
                         }
-                        temp[0] == 0;
+                        temp[0] = 0;
                     }
                 }
 

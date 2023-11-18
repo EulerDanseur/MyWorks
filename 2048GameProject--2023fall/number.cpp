@@ -5,29 +5,13 @@ using namespace std;
 extern int board[4][4];
 //#define test 1;
 
-#ifdef test;
-int main()
-{   
-    srand(time(0));
 
-    int count2 = 0, count4 = 0;
-
-    for(int i = 0; i < 1000; i++)
-    {
-        int num = GenerateNum();
-        cout << num ;
-        if(num == 2) count2++;
-        else    count4++;
-    }
-    cout  << endl << count2 << endl << count4;
-}
-#endif
 
 int RandomNum()
 {
     rand();
 
-    int flag = (int)(10.0 * rand() / RAND_MAX);
+    int flag = (int)(100.0 * rand() / RAND_MAX);
 
     if(flag < 4)
         return 4;
@@ -74,7 +58,7 @@ bool IfCombinable()
             board[0][i]==board[0][i-1]
         ||  board[0][i]==board[0][i+1]
         ||  board[3][i]==board[3][i+1]
-        ||  board[3][i]==board[3][i+1]
+        ||  board[3][i]==board[3][i-1]
         )
         return true;
     }

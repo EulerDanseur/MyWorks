@@ -3,6 +3,7 @@
 #include "number.h"
 #include "print.h"
 #include "move.h"
+#include <conio.h>
 #include "bonus.h"
 #include <cstdlib>
 using namespace std;
@@ -16,7 +17,7 @@ void Gameloop()
 
     while(vacantRange > 0 || IfCombinable())
     {
-        cin >> direction;
+        direction = _getche();
         
         switch(direction)
         {

@@ -1,5 +1,6 @@
 #include<iostream>
 #include<cstdlib>
+#include <ctime>
 #include "bonus.h"
 #include "gameloop.h"
 #include "move.h"

@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include "print.h"
 #include "number.h"
+#include <conio.h>
 extern int board[4][4];
 extern int score;
 using namespace std;
@@ -20,6 +21,7 @@ void GameStart()
     do
     {
         second = 15 * rand() / RAND_MAX;
+
     } while (second == corner[first]);
     board[OrderToRow(second)][OrderToCol(second)] = 2;
     
@@ -42,7 +44,7 @@ void GameEnd()
 
     do
     {
-        cin >> flag;
+        flag = _getche();
 
     } while (flag != 'e');
     
