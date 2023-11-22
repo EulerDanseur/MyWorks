@@ -1,3 +1,3 @@
 void Bonus(char select);
 
-//void DoubleOrHalf();
+void DoubleOrHalf();
