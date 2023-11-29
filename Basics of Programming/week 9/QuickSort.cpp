@@ -24,7 +24,7 @@ int main()
 
 void QuickSort(int arr[], int start, int end)
 {
-    if(end - start <= 1)
+    if(end - start < 1)
         return;
     int splitPoint = SplitPoint1(arr, start, end);
 
