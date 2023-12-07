@@ -4,6 +4,7 @@
 #include "print.h"
 extern int board[4][4];
 extern int score;
+extern int dof;
 
 void PrintBoard()
 {   
@@ -34,7 +35,7 @@ void PrintBoard()
     printf("\n");   
     printf("Score: %d\n", score);
     printf("You can use these skills:\n");
-    printf("1.let a number double or be half (score -10)\n");
+    printf("1.let a number double or be half (score -100), you can do it %d more times\n", dof);
 }
 
 void PrintRule()

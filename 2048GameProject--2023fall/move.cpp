@@ -68,7 +68,7 @@ void Move(char direction)
                     }
                 }
 
-                //check the cimbination
+                //check the combination
                 for (int i = 3; i >= 0; i--)
                 {
                     if (temp[i] == temp[i - 1])
@@ -148,7 +148,7 @@ void Move(char direction)
                     }                
                 }
             
-                //check the cimbination
+                //check the combination
                 for (int i = 3; i >= 0; i--)
                 {
                      if (temp[i] == temp[i - 1])

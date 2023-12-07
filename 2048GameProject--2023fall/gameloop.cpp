@@ -15,10 +15,11 @@ void Gameloop()
     int vacantRange = 14;
     int vacantOrder[16] = {0};
 
-    while(vacantRange > 0 || IfCombinable())
+    while( vacantRange > 0 || IfCombinable() || !If2048() )
     {
         direction = _getche();
-        
+        system("cls");
+        PrintBoard();
         switch(direction)
         {
             case '1': case '2': case '3': 

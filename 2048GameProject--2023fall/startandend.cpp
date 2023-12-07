@@ -23,6 +23,7 @@ void GameStart()
         second = 15 * rand() / RAND_MAX;
 
     } while (second == corner[first]);
+
     board[OrderToRow(second)][OrderToCol(second)] = 2;
     
     PrintBoard(); 

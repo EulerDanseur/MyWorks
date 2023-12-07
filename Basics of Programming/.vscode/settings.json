@@ -95,7 +95,10 @@
     "stdexcept": "cpp",
     "streambuf": "cpp",
     "typeinfo": "cpp",
-    "iomanip": "cpp"
+    "iomanip": "cpp",
+    "Menu.C": "cpp",
+    "main.C": "cpp",
+    "ReadData.C": "cpp"
   },
   "C_Cpp_Runner.msvcSecureNoWarnings": false
 }

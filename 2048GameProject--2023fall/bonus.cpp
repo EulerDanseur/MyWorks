@@ -4,6 +4,8 @@
 #include "bonus.h"
 using namespace std;
 extern int board[4][4];
+extern int score;
+int dof = 2;
 
 void Bonus(char selection)
 {
@@ -17,25 +19,45 @@ void Bonus(char selection)
 
 void DoubleOrHalf()
 {
-    printf("\nPrint the row:\n");
-    char row = _getche() - '0';
-    printf("\nPrint the column\n");
-    char col = _getche() - '0';
-    printf("\nPrint the operation, \'/\' means half, \'*\' means double.");
-    char operation = _getche();
-    switch (operation)
+    if (dof > 0)
     {
-    case '/':
+        printf("\nPrint the row:\n");
+        char row = _getche() - '0';
+        printf("\nPrint the column\n");
+        char col = _getche() - '0';
+        if (board[row - 1][col - 1] == 0)
+        {
+            cout << "\nNull!!!\n";
+            return;
+        }
+        printf("\nPrint the operation, \'/\' means half, \'*\' means double.");
+        char operation = _getche();
+        switch (operation)
+        {
+        case '/':
+        {
+            if (board[row - 1][col - 1] == 2)
+            {
+                cout << "\n2 is the minimum!!\n";
+                return;
+            }
+            board[row - 1][col - 1] /= 2;
+            break;
+        }
+        case '*':
+        {
+            board[row - 1][col - 1] *= 2;
+            break;
+        }
+        }
+        dof--;
+        score -= 100;
+        PrintBoard();
+    }
+    else
     {
-        board[row-1][col-1] /= 2;
-        break;
+        cout << "\nno more skill one!!!!\n";
+
     }
-    case '*':
-    {
-        board[row-1][col-1] *= 2;
-        break;
-    }
-    }
-    
-    PrintBoard();
 }
+
