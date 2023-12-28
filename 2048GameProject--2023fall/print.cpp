@@ -34,8 +34,8 @@ void PrintBoard()
     }
     printf("\n");   
     printf("Score: %d\n", score);
-    printf("You can use these skills:\n");
-    printf("1.let a number double or be half (score -100), you can do it %d more times\n", dof);
+    //printf("You can use these skills:\n");
+    //printf("1.let a number double or be half (score -100), you can do it %d more times\n", dof);
 }
 
 void PrintRule()

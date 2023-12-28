@@ -46,6 +46,8 @@ int main()
             deno /= i; numi /= i;
         }
     }
+    
+    if(numi == 0) deno = 1;
 
     cout << numi << ' ' << deno;
 
