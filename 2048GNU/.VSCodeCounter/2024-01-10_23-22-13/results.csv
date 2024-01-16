@@ -1,0 +1,10 @@
+"filename", "language", "C++", "CMake", "comment", "blank", "total"
+"d:\MyWorks\2048GNU\CMakelists.txt", "CMake", 0, 11, 0, 4, 15
+"d:\MyWorks\2048GNU\gameboard.cpp", "C++", 271, 0, 11, 56, 338
+"d:\MyWorks\2048GNU\gameboard.h", "C++", 41, 0, 5, 26, 72
+"d:\MyWorks\2048GNU\main.cpp", "C++", 16, 0, 1, 8, 25
+"d:\MyWorks\2048GNU\move.cpp", "C++", 140, 0, 13, 24, 177
+"d:\MyWorks\2048GNU\move.h", "C++", 1, 0, 0, 0, 1
+"d:\MyWorks\2048GNU\number.cpp", "C++", 69, 0, 0, 18, 87
+"d:\MyWorks\2048GNU\number.h", "C++", 18, 0, 7, 4, 29
+"Total", "-", 556, 11, 37, 140, 744
