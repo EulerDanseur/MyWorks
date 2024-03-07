@@ -116,7 +116,7 @@ void Create()
     {
         printf("SYNTAX ERROR\n");
         while(getchar() != ';');
-        return;       
+     -   return;       
     }
 
     gets(tabl);
@@ -373,12 +373,16 @@ void Insert()
         }
         keyptr = keyptr->nextKey;
 
-
         if(flag == 1)
             scanf("%s", word);
     }    
     printf("1 RECORDS INSERTED\n");
+
 }
+
+
+
+
 
 
 

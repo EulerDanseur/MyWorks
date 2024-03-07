@@ -20,8 +20,8 @@ int main()
     {
         for(int j = 0; j < size; j++)
         {
-            if(star[i][j]) cout << "*";
-            else cout << " ";
+            if(star[i][j]) cout << "* ";
+            else cout << "  ";
         }
         cout << endl;
     }
