@@ -116,12 +116,12 @@ void SwitchButton::mousePressEvent(QMouseEvent* ev)
 {
     Q_UNUSED(ev)
 
-        m_checked = !m_checked;
+    m_checked = !m_checked;
     emit statusChanged(m_checked);
 
     //计算步长
-    //m_step = width() / 5;
-    m_step = 25;
+    m_step = width() / 20;
+    //m_step = 25;
     //计算滑块X轴终点坐标
     if (m_checked) {
         m_endX = width() - height();
