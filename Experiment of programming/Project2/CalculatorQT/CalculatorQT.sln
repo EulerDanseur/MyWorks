@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34322.80
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CalculatorQT", "CalculatorQT.vcxproj", "{70B0FC99-8ED1-42F2-9531-6DAA5C20C998}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{70B0FC99-8ED1-42F2-9531-6DAA5C20C998}.Debug|x64.ActiveCfg = Debug|x64
+		{70B0FC99-8ED1-42F2-9531-6DAA5C20C998}.Debug|x64.Build.0 = Debug|x64
+		{70B0FC99-8ED1-42F2-9531-6DAA5C20C998}.Release|x64.ActiveCfg = Release|x64
+		{70B0FC99-8ED1-42F2-9531-6DAA5C20C998}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D73122BA-06FF-4A6B-8752-0DA4408AC180}
+	EndGlobalSection
+EndGlobal

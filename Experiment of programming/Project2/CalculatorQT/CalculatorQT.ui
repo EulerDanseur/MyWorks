@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Window</class>
+ <widget class="QWidget" name="Window">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>745</width>
+    <height>900</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Preferred" vsizetype="Ignored">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="windowTitle">
+   <string>CalculatorQT</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">
+	background-color: rgb(85, 90, 96);
+</string>
+  </property>
+  <widget class="QWidget" name="verticalLayoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>751</width>
+     <height>901</height>
+    </rect>
+   </property>
+   <layout class="QVBoxLayout" name="mainLayout">
+    <item>
+     <widget class="QCheckBox" name="checkBox_2">
+      <property name="styleSheet">
+       <string notr="true">QCheckBox{
+min-width: 20px;
+max-width: 20px;
+max-height: 40px;
+min-height: 40px;
+border-radius: 10px;
+background: rgb(243, 170, 76);
+}
+QCheckBox:unchecked{
+min-width: 20px;
+max-width: 20px;
+max-height: 40px;
+min-height: 40px;
+border-radius: 10px;
+background: rgb(243, 170, 76);
+}
+QCheckBox:checked{
+min-width: 20px;
+max-width: 20px;
+max-height: 40px;
+min-height: 40px;
+border-radius: 10px;
+background: rgb(85, 90, 96);
+}
+
+QCheckBox::indicator {
+	subcontrol-position:center center;
+max-width: 0px;
+max-height: 0px;
+}
+QCheckBox::indicator:unchecked {
+	subcontrol-position:center center;
+max-width: 0px;
+max-height: 0px;
+background: rgb(243, 170, 76);
+}
+QCheckBox::indicator:checked {
+	subcontrol-position:center center;
+max-width: 0px;
+max-height: 0px;
+background: rgb(85, 90, 96);
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="tristate">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="CalculatorQT.qrc"/>
+ </resources>
+ <connections/>
+</ui>

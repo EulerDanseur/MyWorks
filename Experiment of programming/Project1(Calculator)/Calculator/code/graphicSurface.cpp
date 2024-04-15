@@ -163,30 +163,7 @@ void showMousebuttons()
     inputChanged = false;
 
     // 光标移动
-    switch (buttonCursor(0, 750 - 5 * 100, 100, 100, TEXT("<-")))
-    {
-    case 1:
-        if (cursorPosition > 0)
-            cursorPosition--;
-        showinput();
-        break;
-    case 2:
-        cursorPosition = 0;
-        showinput();
-        break;
-    }
-    switch (buttonCursor(100, 750 - 5 * 100, 100, 100, TEXT("->")))
-    {
-    case 1:
-        if (cursorPosition < input.length())
-            cursorPosition++;
-        showinput();
-        break;
-    case 2:
-        cursorPosition = input.length();
-        showinput();
-        break;
-    }
+
 
     // 按钮们~
     for (int i = 0; i < 4; i++)
