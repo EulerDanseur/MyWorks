@@ -36,68 +36,7 @@
      <height>901</height>
     </rect>
    </property>
-   <layout class="QVBoxLayout" name="mainLayout">
-    <item>
-     <widget class="QCheckBox" name="checkBox_2">
-      <property name="styleSheet">
-       <string notr="true">QCheckBox{
-min-width: 20px;
-max-width: 20px;
-max-height: 40px;
-min-height: 40px;
-border-radius: 10px;
-background: rgb(243, 170, 76);
-}
-QCheckBox:unchecked{
-min-width: 20px;
-max-width: 20px;
-max-height: 40px;
-min-height: 40px;
-border-radius: 10px;
-background: rgb(243, 170, 76);
-}
-QCheckBox:checked{
-min-width: 20px;
-max-width: 20px;
-max-height: 40px;
-min-height: 40px;
-border-radius: 10px;
-background: rgb(85, 90, 96);
-}
-
-QCheckBox::indicator {
-	subcontrol-position:center center;
-max-width: 0px;
-max-height: 0px;
-}
-QCheckBox::indicator:unchecked {
-	subcontrol-position:center center;
-max-width: 0px;
-max-height: 0px;
-background: rgb(243, 170, 76);
-}
-QCheckBox::indicator:checked {
-	subcontrol-position:center center;
-max-width: 0px;
-max-height: 0px;
-background: rgb(85, 90, 96);
-}</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>0</width>
-        <height>0</height>
-       </size>
-      </property>
-      <property name="tristate">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QVBoxLayout" name="mainLayout"/>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>

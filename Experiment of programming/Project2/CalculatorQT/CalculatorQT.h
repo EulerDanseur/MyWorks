@@ -55,13 +55,13 @@ public:
     void createNumButtons(TCHAR num, int x, int y);
 
     // 显示输入
-    void showinput();
+    void showinput(TCHAR key = 0);
 
     // 显示结果
-    void showresult();
+    void showresult(TCHAR key = 0);
 
     // 显示警告，或结果
-    void showwarningbar(QString warn);
+    void showwarningbar(QString warn, TCHAR key = 0);
 
     // 按键响应
     bool buttonsPressed(TCHAR key);
@@ -79,7 +79,7 @@ public:
     void Clear();
 
 private:
-    Ui::Window ui;
+    //Ui::Window ui;
 
     // 主要界面布局
     QVBoxLayout *mainLayout;

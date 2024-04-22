@@ -60,7 +60,7 @@ BOOL InitWindowsClass(HINSTANCE hInstance) //定义窗口类
 {
 	WNDCLASS WndClass;
 	TCHAR lpszClassName[] = TEXT("WinFill");//窗口类名
-	TCHAR lpszTitle[] = TEXT("填充示例程序");//窗口标题名
+	TCHAR lpszTitle[] = "Demonstration"; //TEXT("填充示例程序");//窗口标题名
 	WndClass.cbClsExtra = 0;
 	WndClass.cbWndExtra = 0;
 	WndClass.hbrBackground = (HBRUSH)(GetStockObject(WHITE_BRUSH));
@@ -77,7 +77,7 @@ BOOL InitWindows(HINSTANCE hInstance, int nCmdShow)//初始化窗口
 {
 	HWND hWnd;
 	TCHAR lpszClassName[] = TEXT("WinFill");//窗口类名
-	TCHAR lpszTitle[] = TEXT("填充示例程序");//窗口标题名
+	TCHAR lpszTitle[] ="Demonstration"; //TEXT("填充示例程序");//窗口标题名
 	hWnd = CreateWindow(
 		lpszClassName, //生成窗口
 		lpszTitle,
