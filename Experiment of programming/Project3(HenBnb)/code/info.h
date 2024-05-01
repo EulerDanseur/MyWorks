@@ -99,66 +99,10 @@ public:
     void show();
     void AddMoneyInfo();
     void ChangeMoneyInfo();
+    void DeleteMoneyInfo();
 };
-bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b)
-{
-    return a.date < b.date;
-}
+bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b);
 
-void Moneyinfo::AddMoneyInfo()
-{
-    string date, money, source;
-    pos(30, 22);
-    cout << "日期:";
-    pos(36, 22);
-    cin >> date;
-    pos(30, 24);
-    cout << "金额:";
-    pos(36, 24);
-    cin >> money;
-    pos(30, 26);
-    cout << "来源:";
-    pos(36, 26);
-    cin >> source;
-    vec.push_back(moneyInfoSt{date, money, source});
-    sort(vec.begin(), vec.end(), cmpMoneyInfo);
-    update();
-    show();
-    pos(30, 28);
-    cout << "添加成功" << endl;
-    pos(30, 30);
-    system("pause");
-}
-
-void Moneyinfo::ChangeMoneyInfo()
-{
-    string date, money, source;
-    int i = 0;
-    pos(30, 21);
-    cout << "请选择要修改的项:";
-    pos(36, 21);
-    cin >> i;
-    pos(30, 22);
-    cout << "日期:";
-    pos(36, 22);
-    cin >> date;
-    pos(30, 24);
-    cout << "金额:";
-    pos(36, 24);
-    cin >> money;
-    pos(30, 26);
-    cout << "来源:";
-    pos(36, 26);
-    cin >> source;
-    vec[i] = moneyInfoSt{date, money, source};
-    sort(vec.begin(), vec.end(), cmpMoneyInfo);
-    update();
-    show();
-    pos(30, 28);
-    cout << "修改成功" << endl;
-    pos(30, 30);
-    system("pause");
-}
 
 extern Reserveinfo reserveInfo;
 extern Repairinfo repairInfo;

@@ -135,25 +135,13 @@ void Housing::DoMoneyInfo()
     bool flag = 1;
     while (flag)
     {
-        system("cls");
-        pos(30, 10);
-        cout << "**********资金流水**********" << endl;
-        pos(30, 11);
-        cout << "* 1.查看资金流水" << endl;
-        pos(30, 13);
-        cout << "* 2.修改资金流水" << endl;
-        pos(30, 15);
-        cout << "* 3.增加资金流水" << endl;
-        pos(30, 17);
-        cout << "* 按q返回房主界面 按r返回上一级" << endl;
-        pos(30, 19);
-        cout << "********************************************" << endl;
+        moneyInfo.show();
         key = _getch();
 
         switch (key)
         {
         case '1':
-            moneyInfo.show();
+            moneyInfo.DeleteMoneyInfo();
             break;
         case '2':
             moneyInfo.ChangeMoneyInfo();
