@@ -5,7 +5,9 @@ using namespace std;
 
 extern HANDLE hOut;
 
-extern char key;
+extern char keyc;
+extern string keys;
+extern int keynum;
 
 void pos(int x,int y);
 

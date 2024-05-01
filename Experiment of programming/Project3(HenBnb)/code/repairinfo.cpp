@@ -44,9 +44,9 @@ void Repairinfo::show(string status)
     pos(30, 6);
     cout << "* 按0查看全部 按1查看已处理 按2查看未处理           " << endl;
     pos(30, 8);
-    cout << "* 按q返回房主菜单                          " << endl;
+    cout << "* 按q返回房主菜单                " << endl;
     pos(30, 10);
-    cout << "* 按r修改维修状态                   " << endl;
+    cout << "* 按r修改维修状态  按d删除维修状态 " << endl;
     pos(30, 12);
     cout << "********************************************" << endl;
     pos(10, 14);
@@ -79,7 +79,7 @@ void Repairinfo::show(string status)
             else if (i.status == status)
             {
                 pos(10, 15 + order);
-                cout.setf(ios::left);  // 设置对齐方式为left
+                cout.setf(ios::left);                                                                                                                                            // 设置对齐方式为left
                 cout << setw(10) << order << setw(10) << i.date << setw(10) << i.reporter << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
 
                 order++;
@@ -107,155 +107,60 @@ void Repairinfo::update()
 }
 
 
-void Housing::DoRepairInfo()
-{
-    repairInfo.show("全部");
-    key = 0;
-    bool flag = 1;
-    while (flag)
-    {
-        key = _getch();
-        switch (key)
-        {
-        case '0':
-            if (repairInfo.vec.size() == 1)
-            {
-                pos(30, 2);
-                cout << "修理列表为空" << endl;
-            }
-            repairInfo.show("全部");
-            break;
-        case '1':
-            if (repairInfo.vec.size() == 1)
-            {
-                pos(30, 2);
-                cout << "修理列表为空" << endl;
-            }
-            repairInfo.show("已处理");
-            break;
-        case '2':
-            if (repairInfo.vec.size() == 1)
-            {
-                pos(30, 2);
-                cout << "修理列表为空" << endl;
-            }
-            repairInfo.show("未处理");
-            break;
-        case 'd':
-            if (repairInfo.vec.size() == 1)
-            {
-                pos(30, 2);
-                cout << "修理列表为空" << endl;
-            }
-            else
-                DeleteRepairInfo();
-            break;
-        case 'r':
-            if (repairInfo.vec.size() == 1)
-            {
-                pos(30, 2);
-                cout << "修理列表为空" << endl;
-            }
-            else
-                ReviseRepairInfo();
-            break;
-        case 'q':
-            Menu();
-            flag = 0;
-            break;
-        case 'e':
-            showMainMenu();
-            flag = 0;
-            break;
-        default:
-            pos(30, 2);
-            cout << "输入有误,请重新输入" << endl;
-            break;
-        }
-    }
-}
 
-
-
-void Housing::ShowDeleteRepairInfo()
+void Repairinfo::showDeleteSurface()
 {
     system("cls");
-    pos(30, 2);
-    cout << "请输入您要删除的信息序号" << endl;
     pos(30, 4);
     cout << "**********维修信息查看*******************" << endl;
     pos(30, 6);
     cout << "* 按a全删 按y删除已处理 " << endl;
     pos(30, 8);
-    cout << "* 按q返回房主菜单  按e返回主界面" << endl;
+    cout << "* 按r返回上一级" << endl;
     pos(30, 10);
-    cout << "* 按0退出删除操作                    " << endl;
+    cout << "* 请输入您要删除的信息序号        " << endl;
     pos(30, 12);
     cout << "********************************************" << endl;
     int order = 0;
-    for (auto i : repairInfo.vec)
-    {
-
-        pos(10, 14 + order);
-        cout.setf(ios::left); // 设置对齐方式为left
-        if (order == 0)
-            cout << setw(10) << "序号" << setw(10) << i.date << setw(10) << i.reporter << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
-        else
-            cout << setw(10) << order << setw(10) << i.date << setw(10) << i.reporter << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
-
-        order++;
-    }
+    show();
+    pos(30, 11);
+    cin >> keys;
 }
 
-void Housing::DeleteRepairInfo()
+void Repairinfo::DeleteRepairInfo()
 {
-    ShowDeleteRepairInfo();
-    key = 0;
+    keys = "";
     bool flag = 1;
     while (flag)
     {
-        key = _getch();
-        if (key == '0')
+        showDeleteSurface();
+        if (isnumber(keys) && stoi(keys) <= vec.size())
         {
-            repairInfo.show("全部");
-            DoRepairInfo();
-            break;
-        }
-        if (key != '0' && isdigit(key) && key - '0' <= repairInfo.vec.size())
-        {
-            int position = key - '0';
-            // auto ite = repairInfo.vec.begin() + position;
-            repairInfo.vec.erase(repairInfo.vec.begin() + position);
-            repairInfo.update();
-            ShowDeleteRepairInfo();
+            int position = stoi(keys);
+            vec.erase(vec.begin() + position);
+            update();
         }
         else
-            switch (key)
+            switch (keys[0])
             {
-            case 'q':
-                Menu();
-                flag = 0;
-                break;
-            case 'e':
-                showMainMenu();
+            case 'r':
                 flag = 0;
                 break;
             case 'a':
-                repairInfo.vec.clear();
-                repairInfo.vec.push_back(repairInfo.rpTitle);
-                repairInfo.update();
+                vec.clear();
+                vec.push_back(rpTitle);
+                update();
                 break;
             case 'y':
-                for (auto i = repairInfo.vec.begin(); i != repairInfo.vec.end(); i++)
+                for (auto i = vec.begin(); i != vec.end(); i++)
                 {
                     if (i->status == "已处理")
                     {
                         i--;
-                        repairInfo.vec.erase(i + 1);
+                        vec.erase(i + 1);
                     }
                 }
-                repairInfo.update();
-                ShowDeleteRepairInfo();
+                update();
                 break;
 
             default:
@@ -265,126 +170,112 @@ void Housing::DeleteRepairInfo()
             }
     }
 
-    key = 0;
+    keyc = 0;
 }
 
-void Housing::ReviseRepairInfo()
+void Repairinfo::showReviseSurface()
 {
+    system("cls");
+    pos(30, 4);
+    cout << "**********维修信息查看*******************" << endl;
+    pos(30, 6);
+    cout << "* 按r返回上一级" << endl;
+    pos(30, 8);
+    cout << "* 请输入您要修改的信息序号" << endl;
+    pos(30, 10);
+    cout << "********************************************" << endl;
+    int order = 0;
+    show();
+    pos(30, 9);
+    cin >> keys;
+}
 
-
-    key = 0;
-    while (key != 'q' && key != 'e')
+void Repairinfo::ReviseRepairChoose()
+{
+    keys = "";
+    bool flag = 1;
+    while (flag)
     {
-        system("cls");
-        pos(30, 2);
-        cout << "请输入您要修改的信息序号" << endl;
-        pos(30, 4);
-        cout << "*****************维修信息查看*******************" << endl;
-        pos(30, 6);
-        cout << "*  " << endl;
-        pos(30, 8);
-        cout << "* 按q返回房主菜单  按e返回主界面  按0退出修改操作" << endl;
-        pos(30, 10);
-        cout << "*               " << endl;
-        pos(30, 12);
-        cout << "********************************************" << endl;
-        int order = 0;
-        for (auto i : repairInfo.vec)
+        showReviseSurface();
+
+        if (isnumber(keys) && stoi(keys) <= vec.size())
         {
-
-            pos(10, 14 + order);
-            cout.setf(ios::left); // 设置对齐方式为left
-            if (order == 0)
-                cout << setw(10) << "序号" << setw(10) << i.date << setw(10) << i.reporter << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
-            else
-                cout << setw(10) << order << setw(10) << i.date << setw(10) << i.reporter << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
-
-            order++;
-        }
-
-        key = _getch();
-
-
-        if (key == '0')
-        {
-            repairInfo.show("全部");
-            DoRepairInfo();
-            break;
-        }
-        if (key != '0' && isdigit(key) && key - '0' <= repairInfo.vec.size())
-        {
-            system("cls");
-            pos(30, 2);
-            cout << "按s修改状态 按c修改备注 按b返回" << endl;
-            pos(30, 4);
-            cout << "*****************维修信息查看*******************" << endl;
-            pos(30, 6);
-            cout << "*  " << endl;
-            pos(30, 10);
-            cout << "*               " << endl;
-            pos(30, 12);
-            cout << "********************************************" << endl;
-            pos(10, 14);
-            cout << setw(10) << "序号" << setw(10) << repairInfo.rpTitle.date << setw(10) << repairInfo.rpTitle.reporter << setw(30) << repairInfo.rpTitle.description << setw(10) << repairInfo.rpTitle.status << setw(30) << repairInfo.rpTitle.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
-            pos(10, 15);
-            cout << setw(10) << key - '0' << setw(10) << repairInfo.vec[key - '0'].date << setw(10) << repairInfo.vec[key - '0'].reporter << setw(30) << repairInfo.vec[key - '0'].description << setw(10) << repairInfo.vec[key - '0'].status << setw(30) << repairInfo.vec[key - '0'].comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
-            char revisekey = 0;
-
-            while (revisekey != 's' && revisekey != 'c' && revisekey != 'b')
-            {
-                revisekey = _getch();
-
-                if (revisekey == 's')
-                {
-                    if (repairInfo.vec[key - '0'].status == "已处理")
-                        repairInfo.vec[key - '0'].status = "未处理";
-                    else
-                        repairInfo.vec[key - '0'].status = "已处理";
-                    repairInfo.update();
-                    break;
-                }
-                if (revisekey == 'c')
-                {
-                    pos(30, 18);
-                    cout << "请输入备注(请勿输入空格或直接回车):" << endl;
-                    pos(30, 19);
-                    string comment = "";
-                    cin >> comment;
-                    cin.clear();
-                    if (comment == "")
-                        comment = "无";
-                    repairInfo.vec[key - '0'].comment = comment;
-                    repairInfo.update();
-                    break;
-                }
-                if (revisekey == 'b')
-                {
-                    break;
-                }
-            }
-            repairInfo.update();
-        }
-        else if (key == 'q')
-        {
-            Menu();
-            break;
-        }
-        else if (key == 'e')
-        {
-            showMainMenu();
-            break;
+            ReviseRepairInfo();
         }
         else
         {
             pos(30, 2);
-            cout << "输入有误,请重新输入             " << endl;
+            cout << "输入有误,请重新输入" << endl;
             pos(30, 3);
             system("pause");
         }
     }
 
-
-    key = 0;
+    keyc = 0;
 }
 
+void Repairinfo::showReviseInfo()
+{
+    system("cls");
+    pos(30, 4);
+    cout << "*****************维修信息查看*******************" << endl;
+    pos(30, 6);
+    cout << "* 按s修改状态 按c修改备注  " << endl;
+    pos(30, 10);
+    cout << "* 按b返回              " << endl;
+    pos(30, 12);
+    cout << "********************************************" << endl;
+    pos(10, 14);
+    cout << setw(10) << "序号" << setw(10) << rpTitle.date << setw(10) << rpTitle.reporter << setw(30) << rpTitle.description << setw(10) << rpTitle.status << setw(30) << rpTitle.comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
+    pos(10, 15);
+    keynum = stoi(keys);
+    cout << setw(10) << keys << setw(10) << vec[keynum].date << setw(10) << vec[keynum].reporter << setw(30) << vec[keynum].description << setw(10) << vec[keynum].status << setw(30) << vec[keynum].comment << endl; // printf("%d\t\t%s\t\t%s\t\t%s\t\t%s\t\t%s\n", order, i.date.c_str(), i.reporter.c_str(), i.description.c_str(), i.status.c_str(),i.comment.c_str());
+}
+
+void Repairinfo::ReviseRepairInfo()
+{
+    char revisekey = 0;
+    bool flag = 1;
+    while (flag)
+    {
+        showReviseInfo();
+        revisekey = _getch();
+
+        if (revisekey == 's')
+        {
+            if (vec[keynum].status == "已处理")
+                vec[keynum].status = "未处理";
+            else
+                vec[keynum].status = "已处理";
+            update();
+            break;
+        }
+        if (revisekey == 'c')
+        {
+            pos(30, 18);
+            cout << "请输入备注(请勿输入空格或直接回车):" << endl;
+            pos(30, 19);
+            string comment = "";
+            cin >> comment;
+            cin.clear();
+            if (comment == "")
+                comment = "无";
+            vec[keynum].comment = comment;
+            update();
+            break;
+        }
+        if (revisekey == 'b')
+        {
+            break;
+        }
+        else
+        {
+            pos(30, 2);
+            cout << "输入有误,请重新输入          " << endl;
+            pos(30, 3);
+            system("pause");
+        }
+    }
+    update();
+}
 

@@ -18,7 +18,7 @@ typedef struct ReserveinfoSt
 {
     DateYMD checkin;
     DateYMD checkout;
-    string guest;
+    string client;
 
 } ReserveinfoSt;
 
@@ -67,7 +67,13 @@ public:
     Repairinfo();
     ~Repairinfo();
     void update();
-    void show(string status);
+    void show(string status = "È«²¿");
+    void showDeleteSurface();
+    void DeleteRepairInfo();
+    void showReviseSurface();
+    void ReviseRepairChoose();
+    void showReviseInfo();
+    void ReviseRepairInfo();
 };
 
 bool cmpRepair(RepairinfoSt a, RepairinfoSt b);
@@ -83,7 +89,12 @@ public:
     ~Dateinfo();
 
     void show();
+    void showHousing();
+    void showChangePrice();
+    void showChangeSpare();
     void update();
+    void ChangeDatePrice();
+    void ChangeDateSpare();
 };
 
 class Moneyinfo
@@ -127,7 +138,7 @@ inline void ReserveinfoToDateinfo()
             daytemp = toString(checkInDay);
             monthtemp = toString(checkInMonth);
             datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-            dateInfo.map[datetemp].status = i.guest;
+            dateInfo.map[datetemp].status = i.client;
             if (dateInfo.map[datetemp].price == "")
                 dateInfo.map[datetemp].price = "-1";
 
@@ -146,8 +157,21 @@ inline void ReserveinfoToDateinfo()
         daytemp = toString(checkInDay);
         monthtemp = toString(checkInMonth);
         datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-        dateInfo.map[datetemp].status = i.guest;
+        dateInfo.map[datetemp].status = i.client;
         if (dateInfo.map[datetemp].price == "")
             dateInfo.map[datetemp].price = "-1";
     }
 }
+
+inline bool isnumber(string a)
+{
+    for(auto i : a)
+    {
+        if(!isdigit(i))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+

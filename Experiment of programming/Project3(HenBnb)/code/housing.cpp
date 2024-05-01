@@ -7,6 +7,11 @@ Housing::Housing()
     file.close();
 }
 
+Housing::~Housing()
+{
+    update();
+}
+
 void Housing::Login()
 {
 
@@ -62,11 +67,12 @@ void Housing::Menu()
     pos(30, 23);
     cout << "********************************************" << endl;
 
-    key = 0;
-    while (key != '1' && key != '2' && key != '3' && key != '4' && key != '5' && key != '6')
+    keyc = 0;
+    bool flag = 1;
+    while (flag)
     {
-        key = _getch();
-        switch (key)
+        keyc = _getch();
+        switch (keyc)
         {
         case '1':
             Reservedinfo();
@@ -81,11 +87,191 @@ void Housing::Menu()
             HousingInfo();
             break;
         case '6':
-            showMainMenu();
+            flag = 0;
             break;
         default:
             pos(30, 25);
             cout << "输入有误,请重新输入" << endl;
+        }
+    }
+}
+
+void Housing::Reservedinfo()
+{
+    reserveInfo.show();
+    keyc = _getch();
+    while (keyc)
+    {
+        if (keyc == 'q')
+        {
+            Menu();
+            break;
+        }
+        else if (keyc == 'e')
+        {
+            showMainMenu();
+            break;
+        }
+        else
+        {
+            pos(30, 8);
+            cout << "输入错误,请重新输入" << endl;
+        }
+        keyc = _getch();
+    }
+}
+
+void Housing::DoDateInfo()
+{
+    system("cls");
+    pos(30, 2);
+    cout << "请输入想查看的年月份:" << endl;
+    pos(30, 3);
+    cin >> dateInfo.year >> dateInfo.month;
+    while (dateInfo.year < 1000 || dateInfo.month > 12 || dateInfo.year > 2050 || dateInfo.month < 1)
+    {
+        pos(30, 3);
+        cout << "输入有误,请重新输入" << endl;
+        pos(30, 4);
+        system("pause");
+        pos(30, 3);
+        cout << "                           " << endl;
+        pos(30, 4);
+        cout << "                           " << endl;
+        pos(30, 3);
+        cin >> dateInfo.year >> dateInfo.month;
+    }
+
+    bool flag = 1;
+    while (flag)
+    {
+        dateInfo.showHousing();
+        if (keyc == -32)
+        {
+            keyc = _getch();
+            switch (keyc)
+            {
+            case UPKEY:
+                dateInfo.month--;
+                if (dateInfo.month == 0)
+                {
+                    dateInfo.month = 12;
+                    dateInfo.year--;
+                }
+                dateInfo.showHousing();
+                break;
+            case DOWNKEY:
+                dateInfo.month++;
+                if (dateInfo.month == 13)
+                {
+                    dateInfo.month = 1;
+                    dateInfo.year++;
+                }
+                dateInfo.showHousing();
+                break;
+            case LEFTKEY:
+                dateInfo.year--;
+                dateInfo.showHousing();
+                break;
+            case RIGHTKEY:
+                dateInfo.year++;
+                dateInfo.showHousing();
+                break;
+            default:
+                pos(30, 22);
+                cout << "输入有误,请重新输入" << endl;
+                break;
+            }
+        }
+        else
+            switch (keyc)
+            {
+            case '1':
+                dateInfo.ChangeDatePrice();
+                break;
+            case '2':
+                dateInfo.ChangeDateSpare();
+                break;
+            case 'q':
+                Menu();
+                flag = 0;
+                break;
+            case 'e':
+                showMainMenu();
+                flag = 0;
+                break;
+            default:
+                pos(30, 22);
+                cout << "输入有误,请重新输入" << endl;
+                break;
+            }
+    }
+}
+
+void Housing::DoRepairInfo()
+{
+    repairInfo.show("全部");
+    keyc = 0;
+    bool flag = 1;
+    while (flag)
+    {
+        keyc = _getch();
+        switch (keyc)
+        {
+        case '0':
+            if (repairInfo.vec.size() == 1)
+            {
+                pos(30, 2);
+                cout << "修理列表为空" << endl;
+            }
+            repairInfo.show("全部");
+            break;
+        case '1':
+            if (repairInfo.vec.size() == 1)
+            {
+                pos(30, 2);
+                cout << "修理列表为空" << endl;
+            }
+            repairInfo.show("已处理");
+            break;
+        case '2':
+            if (repairInfo.vec.size() == 1)
+            {
+                pos(30, 2);
+                cout << "修理列表为空" << endl;
+            }
+            repairInfo.show("未处理");
+            break;
+        case 'd':
+            if (repairInfo.vec.size() == 1)
+            {
+                pos(30, 2);
+                cout << "修理列表为空" << endl;
+            }
+            else
+                repairInfo.DeleteRepairInfo();
+            break;
+        case 'r':
+            if (repairInfo.vec.size() == 1)
+            {
+                pos(30, 2);
+                cout << "修理列表为空" << endl;
+            }
+            else
+                repairInfo.ReviseRepairInfo();
+            break;
+        case 'q':
+            Menu();
+            flag = 0;
+            break;
+        case 'e':
+            showMainMenu();
+            flag = 0;
+            break;
+        default:
+            pos(30, 2);
+            cout << "输入有误,请重新输入" << endl;
+            break;
         }
     }
 }
@@ -106,11 +292,11 @@ void Housing::HousingInfo()
     pos(30, 19);
     cout << "********************************************" << endl;
 
-    key = 0;
-    while (key != '1' && key != '2' && key != '3' && key != '4')
+    keyc = 0;
+    while (keyc != '1' && keyc != '2' && keyc != '3' && keyc != '4')
     {
-        key = _getch();
-        switch (key)
+        keyc = _getch();
+        switch (keyc)
         {
         case '1':
             ChangePassword();
@@ -130,15 +316,16 @@ void Housing::HousingInfo()
         }
     }
 }
+
 void Housing::DoMoneyInfo()
 {
     bool flag = 1;
     while (flag)
     {
         moneyInfo.show();
-        key = _getch();
+        keyc = _getch();
 
-        switch (key)
+        switch (keyc)
         {
         case '1':
             moneyInfo.DeleteMoneyInfo();
@@ -195,4 +382,12 @@ void Housing::ChangePassword()
         system("pause");
         ChangePassword();
     }
+
+}
+
+void Housing::update()
+{
+    ofstream fout;
+    fout.open("housing.txt");
+    fout << password << endl;
 }

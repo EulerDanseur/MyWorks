@@ -110,110 +110,8 @@ void Dateinfo::update()
     }
     file.close();
 }
-void Housing::DoDateInfo()
-{
-    system("cls");
-    pos(30, 2);
-    cout << "请输入想查看的年月份:" << endl;
-    pos(30, 10);
-    cout << "**********房间信息修改*******************" << endl;
-    pos(30, 12);
-    cout << "* 按q返回房主界面                            " << endl;
-    pos(30, 14);
-    cout << "* 1.修改房价                               " << endl;
-    pos(30, 16);
-    cout << "* 2.增删空闲时间                           " << endl;
-    pos(30, 18);
-    cout << "*                         " << endl;
-    pos(30, 20);
-    cout << "********************************************" << endl;
 
-    pos(30, 3);
-    cin >> dateInfo.year >> dateInfo.month;
-    while (dateInfo.year < 1000 || dateInfo.month > 12 || dateInfo.year > 2050 || dateInfo.month < 1)
-    {
-        pos(30, 3);
-        cout << "输入有误,请重新输入" << endl;
-        pos(30, 4);
-        system("pause");
-        pos(30, 3);
-        cout << "                           " << endl;
-        pos(30, 4);
-        cout << "                           " << endl;
-        pos(30, 3);
-        cin >> dateInfo.year >> dateInfo.month;
-    }
-
-    ShowDateInfo();
-
-    key = _getch();
-    bool flag = 1;
-    while (flag)
-    {
-        if (key == -32)
-        {
-            key = _getch();
-            switch (key)
-            {
-            case UPKEY:
-                dateInfo.month--;
-                if (dateInfo.month == 0)
-                {
-                    dateInfo.month = 12;
-                    dateInfo.year--;
-                }
-                ShowDateInfo();
-                break;
-            case DOWNKEY:
-                dateInfo.month++;
-                if (dateInfo.month == 13)
-                {
-                    dateInfo.month = 1;
-                    dateInfo.year++;
-                }
-                ShowDateInfo();
-                break;
-            case LEFTKEY:
-                dateInfo.year--;
-                ShowDateInfo();
-                break;
-            case RIGHTKEY:
-                dateInfo.year++;
-                ShowDateInfo();
-                break;
-            default:
-                pos(30, 22);
-                cout << "输入有误,请重新输入" << endl;
-                break;
-            }
-        }
-        else
-            switch (key)
-            {
-            case '1':
-                DatePrice();
-                break;
-            case '2':
-                DateSpare();
-                break;
-            case 'q':
-                Menu();
-                flag = 0;
-                break;
-            case 'e':
-                showMainMenu();
-                flag = 0;
-                break;
-            default:
-                pos(30, 22);
-                cout << "输入有误,请重新输入" << endl;
-                break;
-            }
-        key = _getch();
-    }
-}
-
-void Housing::ShowDateInfo()
+void Dateinfo::showHousing()
 {
     system("cls");
     pos(30, 10);
@@ -229,10 +127,33 @@ void Housing::ShowDateInfo()
     pos(30, 20);
     cout << "********************************************" << endl;
 
-    dateInfo.show();
+    show();
+
+    keyc = _getch();
 }
 
-void Housing::DatePrice()
+void Dateinfo::showChangePrice()
+{
+    system("cls");
+    pos(30, 10);
+    cout << "**********修改房价*************************" << endl;
+    pos(30, 12);
+    cout << "* 按r返回上一级           " << endl;
+    pos(30, 14);
+    cout << "* 1.基本价格                               " << endl;
+    pos(30, 16);
+    cout << "* 2.特定日期的价格                         " << endl;
+    pos(30, 18);
+    cout << "*                                       " << endl;
+    pos(30, 20);
+    cout << "********************************************" << endl;
+
+    show();
+
+    keyc = _getch();
+}
+
+void Dateinfo::ChangeDatePrice()
 {
 
     int price;
@@ -242,54 +163,37 @@ void Housing::DatePrice()
 
     while (flag)
     {
-        system("cls");
-        pos(30, 10);
-        cout << "**********修改房价*************************" << endl;
-        pos(30, 12);
-        cout << "* 按q返回房主界面 按r返回上一级           " << endl;
-        pos(30, 14);
-        cout << "* 1.基本价格                               " << endl;
-        pos(30, 16);
-        cout << "* 2.特定日期的价格                         " << endl;
-        pos(30, 18);
-        cout << "*                                       " << endl;
-        pos(30, 20);
-        cout << "********************************************" << endl;
-
-        dateInfo.show();
-
-        key = _getch();
-
-        if (key == -32)
+        showChangePrice();
+        if (keyc == -32)
         {
-            key = _getch();
-            switch (key)
+            keyc = _getch();
+            switch (keyc)
             {
             case UPKEY:
-                dateInfo.month--;
-                if (dateInfo.month == 0)
+                month--;
+                if (month == 0)
                 {
-                    dateInfo.month = 12;
-                    dateInfo.year--;
+                    month = 12;
+                    year--;
                 }
-                ShowDateInfo();
+                showChangePrice();
                 break;
             case DOWNKEY:
-                dateInfo.month++;
-                if (dateInfo.month == 13)
+                month++;
+                if (month == 13)
                 {
-                    dateInfo.month = 1;
-                    dateInfo.year++;
+                    month = 1;
+                    year++;
                 }
-                ShowDateInfo();
+                showChangePrice();
                 break;
             case LEFTKEY:
-                dateInfo.year--;
-                ShowDateInfo();
+                year--;
+                showChangePrice();
                 break;
             case RIGHTKEY:
-                dateInfo.year++;
-                ShowDateInfo();
+                year++;
+                showChangePrice();
                 break;
             default:
                 pos(30, 22);
@@ -298,45 +202,36 @@ void Housing::DatePrice()
             }
         }
         else
-            switch (key)
+            switch (keyc)
             {
             case '1':
                 pos(30, 22);
                 cout << "基本价格:" << endl;
                 pos(30, 23);
                 cin >> price;
-                dateInfo.basicPrice = '$' + to_string(price);
-                dateInfo.update();
-                dateInfo.show();
+                basicPrice = '$' + to_string(price);
+                update();
+                show();
                 break;
             case '2':
                 pos(30, 22);
-                cout << "日期(如：21):" << endl;
+                cout << "日期(如:21):" << endl;
                 pos(30, 23);
                 cin >> date;
-                datestr = toString(dateInfo.year) + '.' + toString(dateInfo.month) + '.' + toString(date);
+                datestr = toString(year) + '.' + toString(month) + '.' + toString(date);
                 pos(30, 24);
                 cout << "价格:" << endl;
                 pos(30, 25);
                 cin >> price;
-                if (dateInfo.map.find(datestr) == dateInfo.map.end())
+                if (map.find(datestr) == map.end())
                 {
-                    dateInfo.map[datestr].status = "空闲";
+                    map[datestr].status = "空闲";
                 }
-                dateInfo.map[datestr].price = '$' + to_string(price);
-                dateInfo.update();
-                dateInfo.show();
+                map[datestr].price = '$' + to_string(price);
+                update();
+                show();
                 break;
             case 'r':
-                ShowDateInfo();
-                flag = 0;
-                break;
-            case 'q':
-                Menu();
-                flag = 0;
-                break;
-            case 'e':
-                showMainMenu();
                 flag = 0;
                 break;
             default:
@@ -347,7 +242,28 @@ void Housing::DatePrice()
     }
 }
 
-void Housing::DateSpare()
+void Dateinfo::showChangeSpare()
+{
+    system("cls");
+    pos(30, 10);
+    cout << "**********增删空闲时间*********************" << endl;
+    pos(30, 12);
+    cout << "*                                       " << endl;
+    pos(30, 14);
+    cout << "* 1.修改空闲状态                           " << endl;
+    pos(30, 16);
+    cout << "*                               " << endl;
+    pos(30, 18);
+    cout << "*                                       " << endl;
+    pos(30, 20);
+    cout << "********************************************" << endl;
+
+    show();
+
+    keyc = _getch();
+}
+
+void Dateinfo::ChangeDateSpare()
 {
 
     string status;
@@ -357,54 +273,37 @@ void Housing::DateSpare()
 
     while (flag)
     {
-        system("cls");
-        pos(30, 10);
-        cout << "**********增删空闲时间*********************" << endl;
-        pos(30, 12);
-        cout << "*                                       " << endl;
-        pos(30, 14);
-        cout << "* 1.修改空闲状态                           " << endl;
-        pos(30, 16);
-        cout << "*                               " << endl;
-        pos(30, 18);
-        cout << "*                                       " << endl;
-        pos(30, 20);
-        cout << "********************************************" << endl;
-
-        dateInfo.show();
-
-        key = _getch();
-
-        if (key == -32)
+        showChangeSpare();
+        if (keyc == -32)
         {
-            key = _getch();
-            switch (key)
+            keyc = _getch();
+            switch (keyc)
             {
             case UPKEY:
-                dateInfo.month--;
-                if (dateInfo.month == 0)
+                month--;
+                if (month == 0)
                 {
-                    dateInfo.month = 12;
-                    dateInfo.year--;
+                    month = 12;
+                    year--;
                 }
-                ShowDateInfo();
+                showChangeSpare();
                 break;
             case DOWNKEY:
-                dateInfo.month++;
-                if (dateInfo.month == 13)
+                month++;
+                if (month == 13)
                 {
-                    dateInfo.month = 1;
-                    dateInfo.year++;
+                    month = 1;
+                    year++;
                 }
-                ShowDateInfo();
+                showChangeSpare();
                 break;
             case LEFTKEY:
-                dateInfo.year--;
-                ShowDateInfo();
+                year--;
+                showChangeSpare();
                 break;
             case RIGHTKEY:
-                dateInfo.year++;
-                ShowDateInfo();
+                year++;
+                showChangeSpare();
                 break;
             default:
                 pos(30, 22);
@@ -413,30 +312,30 @@ void Housing::DateSpare()
             }
         }
         else
-            switch (key)
+            switch (keyc)
             {
             case '1':
                 pos(30, 22);
-                cout << "日期(如：21):" << endl;
+                cout << "日期(如:21):" << endl;
                 pos(30, 23);
                 cin >> date;
-                datestr = toString(dateInfo.year) + '.' + toString(dateInfo.month) + '.' + toString(date);
-                //pos(30, 24);
-                //cout << "状态: " << endl;
-                //pos(30, 25);
-                //cin >> status;
-                if (dateInfo.map.find(datestr) == dateInfo.map.end() )
+                datestr = toString(year) + '.' + toString(month) + '.' + toString(date);
+                // pos(30, 24);
+                // cout << "状态: " << endl;
+                // pos(30, 25);
+                // cin >> status;
+                if (map.find(datestr) == map.end())
                 {
-                    dateInfo.map[datestr].price = "-1";
-                    dateInfo.map[datestr].status = "房主占用";
+                    map[datestr].price = "-1";
+                    map[datestr].status = "房主占用";
                 }
-                else if(dateInfo.map[datestr].status == "空闲")
+                else if (map[datestr].status == "空闲")
                 {
-                    dateInfo.map[datestr].status = "房主占用";
+                    map[datestr].status = "房主占用";
                 }
-                else if(dateInfo.map[datestr].status == "房主占用")
+                else if (map[datestr].status == "房主占用")
                 {
-                    dateInfo.map[datestr].status = "空闲";
+                    map[datestr].status = "空闲";
                 }
                 else
                 {
@@ -445,21 +344,12 @@ void Housing::DateSpare()
                     pos(30, 27);
                     system("pause");
 
-                    //可以增加联系客户的功能
+                    // 可以增加联系客户的功能
                 }
-                dateInfo.update();
-                dateInfo.show();
+                update();
+                show();
                 break;
             case 'r':
-                ShowDateInfo();
-                flag = 0;
-                break;
-            case 'q':
-                Menu();
-                flag = 0;
-                break;
-            case 'e':
-                showMainMenu();
                 flag = 0;
                 break;
             default:

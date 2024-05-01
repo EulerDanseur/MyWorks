@@ -9,17 +9,12 @@ bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b)
 
 Moneyinfo::Moneyinfo()
 {
-    DateYMD date;
-    string money;
-    string source;
     fstream file;
     file.open("moneyinfo.txt", ios::in);
     for (int i = 0; !file.eof(); i++)
     {
-        file >> date;
-        file >> money;
-        file >> source;
-        vec.push_back({date, money, source});
+        vec.push_back({});
+        file >> vec[i].date >> vec[i].money >> vec[i].source;
     }
     file.close();
 
@@ -34,6 +29,8 @@ Moneyinfo::Moneyinfo()
         else
             totalIncome += atoi(i.money.c_str());
     }
+
+    update();
 }
 
 Moneyinfo::~Moneyinfo()
@@ -43,6 +40,23 @@ Moneyinfo::~Moneyinfo()
 
 void Moneyinfo::update()
 {
+    for (auto i = vec.begin(); i != vec.end(); i++)
+    {
+        if (i->date == "")
+        {
+            i--;
+            vec.erase(i + 1);
+        }
+    }
+
+    fstream file;
+    file.open("moneyinfo.txt", ios::out);
+    for (auto i : vec)
+    {
+        file << i.date << ' ' << i.money << ' ' << i.source << endl;
+    }
+    file.close();
+
     totalExpenditure = 0;
     totalIncome = 0;
     total = 0;
@@ -54,14 +68,6 @@ void Moneyinfo::update()
         else
             totalIncome += atoi(i.money.c_str());
     }
-
-    fstream file;
-    file.open("moneyinfo.txt", ios::out);
-    for (auto i : vec)
-    {
-        file << i.date << ' ' << i.money << ' ' << i.source << endl;
-    }
-    file.close();
 }
 
 void Moneyinfo::show()
@@ -70,7 +76,7 @@ void Moneyinfo::show()
     pos(30, 9);
     cout << "**********资金流水**********" << endl;
     pos(30, 11);
-    cout << " 1. 请选择:" << endl;
+    cout << "* 1.删除资金流水 " << endl;
     pos(30, 13);
     cout << "* 2.修改资金流水" << endl;
     pos(30, 15);
@@ -172,7 +178,7 @@ void Moneyinfo::DeleteMoneyInfo()
     cout << "请选择要删除的项:";
     pos(36, 21);
     cin >> i;
-    vec.erase(vec.begin() + i);
+    vec.erase(vec.begin() + i - 1);
     update();
     show();
     pos(30, 28);

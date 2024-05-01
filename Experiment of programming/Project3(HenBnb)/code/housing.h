@@ -22,24 +22,17 @@ public:
     string password;
 
     Housing();
-    //~Housing();
+    ~Housing();
     void Menu();
     void Login();
-    void Reservedinfo();
-    
+    void Reservedinfo();    
     void DoRepairInfo();
-    void DeleteRepairInfo();
-    void ShowDeleteRepairInfo();
-    void ReviseRepairInfo();
-
     void DoDateInfo();
-    void ShowDateInfo();
-    void DatePrice();
-    void DateSpare();  
 
     void HousingInfo();
     void ChangePassword();
-
     void DoMoneyInfo();
+
+    void update();
 
 };

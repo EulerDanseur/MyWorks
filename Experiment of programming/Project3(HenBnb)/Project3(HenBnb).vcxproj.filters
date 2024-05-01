@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\guests.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="code\housing.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -35,9 +32,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="code\guests.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="code\housing.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
