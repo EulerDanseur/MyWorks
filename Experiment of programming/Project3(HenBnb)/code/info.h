@@ -3,11 +3,13 @@
 #include <map>
 #include <fstream>
 #include <algorithm>
-#include "surface.h"
+#include <ctime>
+#include "interface.h"
 #include "calendar.h"
 #include <string>
 using namespace std;
 typedef string DateYMD;
+typedef time_t Time;
 
 inline string toString(int num)
 {
@@ -18,7 +20,7 @@ typedef struct ReserveinfoSt
 {
     DateYMD checkin;
     DateYMD checkout;
-    string client;
+    string guest;
 
 } ReserveinfoSt;
 
@@ -68,9 +70,9 @@ public:
     ~Repairinfo();
     void update();
     void show(string status = "È«²¿");
-    void showDeleteSurface();
+    void showDeleteInterface();
     void DeleteRepairInfo();
-    void showReviseSurface();
+    void showReviseInterface();
     void ReviseRepairChoose();
     void showReviseInfo();
     void ReviseRepairInfo();
@@ -89,7 +91,7 @@ public:
     ~Dateinfo();
 
     void show();
-    void showHousing();
+    void showLandlord();
     void showChangePrice();
     void showChangeSpare();
     void update();
@@ -138,7 +140,7 @@ inline void ReserveinfoToDateinfo()
             daytemp = toString(checkInDay);
             monthtemp = toString(checkInMonth);
             datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-            dateInfo.map[datetemp].status = i.client;
+            dateInfo.map[datetemp].status = i.guest;
             if (dateInfo.map[datetemp].price == "")
                 dateInfo.map[datetemp].price = "-1";
 
@@ -157,7 +159,7 @@ inline void ReserveinfoToDateinfo()
         daytemp = toString(checkInDay);
         monthtemp = toString(checkInMonth);
         datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-        dateInfo.map[datetemp].status = i.client;
+        dateInfo.map[datetemp].status = i.guest;
         if (dateInfo.map[datetemp].price == "")
             dateInfo.map[datetemp].price = "-1";
     }

@@ -1,18 +1,18 @@
-#include "housing.h"
-Housing::Housing()
+#include "landlord.h"
+Landlord::Landlord()
 {
     fstream file;
-    file.open("housinginfo.txt", ios::in);
+    file.open("landlordinfo.txt", ios::in);
     file >> password;
     file.close();
 }
 
-Housing::~Housing()
+Landlord::~Landlord()
 {
     update();
 }
 
-void Housing::Login()
+void Landlord::Login()
 {
 
     system("cls");
@@ -47,30 +47,31 @@ void Housing::Login()
     }
 }
 
-void Housing::Menu()
+void Landlord::Menu()
 {
-    system("cls");
-    pos(30, 10);
-    cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
-    pos(30, 11);
-    cout << "*                                       " << endl;
-    pos(30, 13);
-    cout << "* 1.已预订信息管理      2.维修信息查看                  " << endl;
-    pos(30, 15);
-    cout << "* 3.房间信息修改      4.我的信息                 " << endl;
-    pos(30, 17);
-    cout << "* 5.我的消息         6. 返回主菜单              " << endl;
-    pos(30, 19);
-    cout << "*                            " << endl;
-    pos(30, 21);
-    cout << "*                        " << endl;
-    pos(30, 23);
-    cout << "********************************************" << endl;
 
     keyc = 0;
     bool flag = 1;
     while (flag)
     {
+        system("cls");
+        pos(30, 10);
+        cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
+        pos(30, 11);
+        cout << "*                                       " << endl;
+        pos(30, 13);
+        cout << "* 1.已预订信息管理      2.维修信息查看                  " << endl;
+        pos(30, 15);
+        cout << "* 3.房间信息修改      4.我的信息                 " << endl;
+        pos(30, 17);
+        cout << "* 5.我的消息         6. 返回主菜单              " << endl;
+        pos(30, 19);
+        cout << "*                            " << endl;
+        pos(30, 21);
+        cout << "*                        " << endl;
+        pos(30, 23);
+        cout << "********************************************" << endl;
+
         keyc = _getch();
         switch (keyc)
         {
@@ -84,7 +85,7 @@ void Housing::Menu()
             DoDateInfo();
             break;
         case '4':
-            HousingInfo();
+            LandlordInfo();
             break;
         case '6':
             flag = 0;
@@ -96,7 +97,7 @@ void Housing::Menu()
     }
 }
 
-void Housing::Reservedinfo()
+void Landlord::Reservedinfo()
 {
     reserveInfo.show();
     keyc = _getch();
@@ -121,7 +122,7 @@ void Housing::Reservedinfo()
     }
 }
 
-void Housing::DoDateInfo()
+void Landlord::DoDateInfo()
 {
     system("cls");
     pos(30, 2);
@@ -145,7 +146,7 @@ void Housing::DoDateInfo()
     bool flag = 1;
     while (flag)
     {
-        dateInfo.showHousing();
+        dateInfo.showLandlord();
         if (keyc == -32)
         {
             keyc = _getch();
@@ -158,7 +159,7 @@ void Housing::DoDateInfo()
                     dateInfo.month = 12;
                     dateInfo.year--;
                 }
-                dateInfo.showHousing();
+                dateInfo.showLandlord();
                 break;
             case DOWNKEY:
                 dateInfo.month++;
@@ -167,15 +168,15 @@ void Housing::DoDateInfo()
                     dateInfo.month = 1;
                     dateInfo.year++;
                 }
-                dateInfo.showHousing();
+                dateInfo.showLandlord();
                 break;
             case LEFTKEY:
                 dateInfo.year--;
-                dateInfo.showHousing();
+                dateInfo.showLandlord();
                 break;
             case RIGHTKEY:
                 dateInfo.year++;
-                dateInfo.showHousing();
+                dateInfo.showLandlord();
                 break;
             default:
                 pos(30, 22);
@@ -208,7 +209,7 @@ void Housing::DoDateInfo()
     }
 }
 
-void Housing::DoRepairInfo()
+void Landlord::DoRepairInfo()
 {
     repairInfo.show("全部");
     keyc = 0;
@@ -276,25 +277,27 @@ void Housing::DoRepairInfo()
     }
 }
 
-void Housing::HousingInfo()
+void Landlord::LandlordInfo()
 {
-    system("cls");
-    pos(30, 10);
-    cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
-    pos(30, 11);
-    cout << "* 1.修改密码" << endl;
-    pos(30, 13);
-    cout << "* 2.资金流水" << endl;
-    pos(30, 15);
-    cout << "* 3.查看客户名单" << endl;
-    pos(30, 17);
-    cout << "* 4.返回主菜单" << endl;
-    pos(30, 19);
-    cout << "********************************************" << endl;
 
     keyc = 0;
-    while (keyc != '1' && keyc != '2' && keyc != '3' && keyc != '4')
+    bool flag = 1;
+    while (flag)
     {
+        system("cls");
+        pos(30, 10);
+        cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
+        pos(30, 11);
+        cout << "* 1.修改密码" << endl;
+        pos(30, 13);
+        cout << "* 2.资金流水" << endl;
+        pos(30, 15);
+        cout << "* 3.查看客户名单" << endl;
+        pos(30, 17);
+        cout << "* 4.返回主菜单" << endl;
+        pos(30, 19);
+        cout << "********************************************" << endl;
+
         keyc = _getch();
         switch (keyc)
         {
@@ -305,10 +308,9 @@ void Housing::HousingInfo()
             DoMoneyInfo();
             break;
         case '3':
-            // clientInfo.show();
             break;
         case '4':
-            showMainMenu();
+            flag = 0;
             break;
         default:
             pos(30, 25);
@@ -317,7 +319,7 @@ void Housing::HousingInfo()
     }
 }
 
-void Housing::DoMoneyInfo()
+void Landlord::DoMoneyInfo()
 {
     bool flag = 1;
     while (flag)
@@ -337,7 +339,7 @@ void Housing::DoMoneyInfo()
             moneyInfo.AddMoneyInfo();
             break;
         case 'r':
-            HousingInfo();
+            LandlordInfo();
             flag = 0;
             break;
         case 'q':
@@ -351,7 +353,7 @@ void Housing::DoMoneyInfo()
     }
 }
 
-void Housing::ChangePassword()
+void Landlord::ChangePassword()
 {
     system("cls");
     pos(30, 10);
@@ -366,8 +368,10 @@ void Housing::ChangePassword()
     if (inputpassword == password)
     {
         pos(30, 15);
-        cout << "请输入新密码" << endl;
+        cout << "* 请输入新密码" << endl;
         pos(30, 17);
+        cout << "*: " << endl;
+        pos(32, 17);
         cin >> password;
         pos(30, 19);
         cout << "密码修改成功" << endl;
@@ -382,12 +386,12 @@ void Housing::ChangePassword()
         system("pause");
         ChangePassword();
     }
-
+    update();
 }
 
-void Housing::update()
+void Landlord::update()
 {
     ofstream fout;
-    fout.open("housing.txt");
+    fout.open("landlordinfo.txt");
     fout << password << endl;
 }

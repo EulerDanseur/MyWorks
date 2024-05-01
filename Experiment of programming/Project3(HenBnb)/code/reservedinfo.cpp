@@ -1,4 +1,4 @@
-#include "housing.h"
+#include "landlord.h"
 
 Reserveinfo reserveInfo;
 
@@ -9,7 +9,7 @@ Reserveinfo::Reserveinfo()
     for (int i = 0; !file.eof(); i++)
     {
         vec.push_back({});
-        file >> vec[i].client >> vec[i].checkin >> vec[i].checkout;
+        file >> vec[i].guest >> vec[i].checkin >> vec[i].checkout;
     }
     file.close();
     update();
@@ -46,7 +46,7 @@ void Reserveinfo::show()
         pos(30, 16 + order);
         cout << order;
         pos(40, 16 + order);
-        cout << i.client;
+        cout << i.guest;
         pos(60, 16 + order);
         cout << i.checkin;
         pos(75, 16 + order);
@@ -59,7 +59,7 @@ void Reserveinfo::update()
 {
     for (auto i = vec.begin(); i != vec.end(); i++)
     {
-        if (i->client == "")
+        if (i->guest == "")
         {
             i--;
             vec.erase(i + 1);
@@ -70,7 +70,7 @@ void Reserveinfo::update()
     file.open("reservedinfo.txt", ios::out);
     for (auto i : vec)
     {
-        file << i.client << ' ' << i.checkin << ' ' << i.checkout << endl;
+        file << i.guest << ' ' << i.checkin << ' ' << i.checkout << endl;
     }
     file.close();
 }

@@ -1,11 +1,12 @@
-#include "surface.h"
-#include "housing.h"
+#include "interface.h"
+#include "landlord.h"
+#include "guest.h"
 HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); // 获取标准输出句柄
 
 char keyc = 0;
 string keys = "";
 int keynum = 0;
-Housing housing;
+Landlord landlord;
 
 void pos(int x, int y)
 {
@@ -38,9 +39,10 @@ void showMainMenu()
         switch (keyc)
         {
         case '1':
-            housing.Login();
+            landlord.Login();
             break;
         case '2':
+            guestclass.GuestInterface();
             break;
         case '3':
             exit(0);

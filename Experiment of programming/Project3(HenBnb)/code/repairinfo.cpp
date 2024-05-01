@@ -1,4 +1,4 @@
-#include "housing.h"
+#include "landlord.h"
 
 Repairinfo repairInfo;
 
@@ -108,7 +108,7 @@ void Repairinfo::update()
 
 
 
-void Repairinfo::showDeleteSurface()
+void Repairinfo::showDeleteInterface()
 {
     system("cls");
     pos(30, 4);
@@ -133,7 +133,7 @@ void Repairinfo::DeleteRepairInfo()
     bool flag = 1;
     while (flag)
     {
-        showDeleteSurface();
+        showDeleteInterface();
         if (isnumber(keys) && stoi(keys) <= vec.size())
         {
             int position = stoi(keys);
@@ -173,7 +173,7 @@ void Repairinfo::DeleteRepairInfo()
     keyc = 0;
 }
 
-void Repairinfo::showReviseSurface()
+void Repairinfo::showReviseInterface()
 {
     system("cls");
     pos(30, 4);
@@ -196,7 +196,7 @@ void Repairinfo::ReviseRepairChoose()
     bool flag = 1;
     while (flag)
     {
-        showReviseSurface();
+        showReviseInterface();
 
         if (isnumber(keys) && stoi(keys) <= vec.size())
         {

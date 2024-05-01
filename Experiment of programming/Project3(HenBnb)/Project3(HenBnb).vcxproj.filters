@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="code\housing.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="code\surface.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -30,11 +27,11 @@
     <ClInclude Include="code\client.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="code\landlord.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="code\housing.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="code\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -60,6 +57,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="code\reservedinfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\landlord.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

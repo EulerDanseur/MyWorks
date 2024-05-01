@@ -1,4 +1,4 @@
-#include "housing.h"
+#include "landlord.h"
 
 Dateinfo dateInfo;
 
@@ -111,7 +111,7 @@ void Dateinfo::update()
     file.close();
 }
 
-void Dateinfo::showHousing()
+void Dateinfo::showLandlord()
 {
     system("cls");
     pos(30, 10);
