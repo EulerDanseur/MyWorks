@@ -1,8 +1,8 @@
 #include <tchar.h>
-#include <ctype.h>
+//#include <ctype.h>
 #include <vector>
 #include <string>
-#include <iostream>
+//#include <iostream>
 using namespace std;
 
 #define TEXT(x) _T(x)

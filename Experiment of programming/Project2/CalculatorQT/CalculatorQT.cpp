@@ -7,7 +7,6 @@ CalculatorQT::CalculatorQT(QWidget *parent)
 {
     // ui.setupUi(this);
 
-
     resize(500, 900);
     //主布局
     mainLayout = new QVBoxLayout();
@@ -119,17 +118,22 @@ void CalculatorQT::createswitchButton()
 
 void CalculatorQT::showscreen()
 {
+    //清除按钮
     for (auto i : buttons)
     {
         i.second->setParent(0);
         delete i.second;
     }
+    //刷新按钮
     showsbutton();
 
+    //设置背景样式
     if (lightmode)
         setStyleSheet("CalculatorQT { background-color: rgb(255,255,255) }");
     else
         setStyleSheet("CalculatorQT { background-color: rgb(85, 90, 96) }");
+    
+    //更新显示
     showinput();
     showresult();
     showwarningbar(QString::fromStdTString(expn.warning));
@@ -137,6 +141,7 @@ void CalculatorQT::showscreen()
 
 void CalculatorQT::showinput(TCHAR key)
 {
+    //设置输入框样式
     if (lightmode)
         inputBox->setStyleSheet(
             "max-height: 50px;\n"
@@ -159,6 +164,7 @@ void CalculatorQT::showinput(TCHAR key)
 
 void CalculatorQT::showresult(TCHAR key)
 {
+    //设置结果框样式
     if (lightmode)
         if (key != 'C')
             resultBox->setStyleSheet(
@@ -193,6 +199,7 @@ void CalculatorQT::showresult(TCHAR key)
 
 void CalculatorQT::showwarningbar(QString warn, TCHAR key)
 {
+    //设置警告框样式
     if (lightmode)
         if (key != 'C')
             warnBox->setStyleSheet(
@@ -300,10 +307,13 @@ void CalculatorQT::showsbutton()
         }
     }
 
+    //左移
     createOptButtons(TEXT("<"), 0, 0);
-
+    
+    //右移
     createOptButtons(TEXT(">"), 0, 1);
 
+    // 按钮布局
     mainLayout->insertLayout(3, buttonLayout, 0);
 }
 
@@ -491,6 +501,8 @@ bool CalculatorQT::buttonsPressed(TCHAR key)
             }
             break;
         }
+
+    //计算
     expn.calculate();
 
     showinput(key);
@@ -507,7 +519,10 @@ void CalculatorQT::inputInsert(TCHAR ch)
 {
     if (expn.input.length() < 22)
     {
+        //插入字符
         expn.input.insert(cursorPosition, 1, ch);
+        
+        //移动光标
         cursorPosition++;
         inputBox->setCursorPosition(cursorPosition);
     }
@@ -517,6 +532,7 @@ void CalculatorQT::backSpace()
 {
     if (expn.input.size() && cursorPosition > 0)
     {
+        //判断是否为括号
         if ((cursorPosition > 1) &&
             ((expn.input[cursorPosition - 2] == TEXT('·') && expn.input[cursorPosition - 1] == '(') || (expn.input[cursorPosition - 2] == ')' && expn.input[cursorPosition - 1] == TEXT('��'))))
         {
@@ -546,7 +562,8 @@ void CalculatorQT::equalPress()
     else
     {
         if (expn.input.size())
-            showwarningbar("Invalid expression!");
+            //showwarningbar("Invalid expression!");
+            showwarningbar(QString::fromStdTString(expn.warning));
         else
             showwarningbar("No input!");
     }
@@ -554,10 +571,15 @@ void CalculatorQT::equalPress()
 
 void CalculatorQT::Clear()
 {
+    //清除表达式
     expn.input = TEXT("");
     expn.result = TEXT("");
     expn.inputRPN = {};
+
+    //清除光标
     cursorPosition = 0;
+
+    //清除显示界面
     inputBox->setText("");
     resultBox->setText("Result Box");
     warnBox->setText("Warning Box");

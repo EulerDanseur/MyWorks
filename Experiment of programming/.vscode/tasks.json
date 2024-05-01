@@ -23,27 +23,7 @@
                 "isDefault": true
             },
             "detail": "调试器生成的任务。"
-        }/* ,
-        {
-            "label": "msvc build",
-            "type": "shell",
-            "command": "cl.exe",
-            "args": [
-                "/EHsc",
-                "/Zi",
-                "/Fe:",
-                "hello.exe",
-                "hello.cpp"
-            ],
-            "group":  {
-                "kind": "build",
-                "isDefault": true
-            },
-            "presentation": {
-                "reveal":"always"
-            },
-            "problemMatcher": "$msCompile"
-        } */
+        }
     ],
     "version": "2.0.0"
 }

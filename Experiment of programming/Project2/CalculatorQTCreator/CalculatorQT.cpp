@@ -6,20 +6,18 @@ CalculatorQT::CalculatorQT(QWidget *parent)
     : QWidget(parent)
 {
     // ui.setupUi(this);
-
     resize(500, 900);
-
-    //主面板
+    //主布局
     mainLayout = new QVBoxLayout();
     setLayout(mainLayout);
     setStyleSheet("CalculatorQT { background-color: rgb(85, 90, 96) }");
 
-    //创建组件（输入框、结果框、警告框）
+    //创建各种控件（输入框、结果框、警告框）
     createInputBox();
     createResultBox();
     createWarnBox();
 
-    //创建按钮
+    //创建按钮布局
     buttonLayout = new QGridLayout();
     createswitchButton();
     showsbutton();
@@ -34,21 +32,20 @@ void CalculatorQT::createInputBox()
 {
     //输入框
     inputBox = new QLineEdit();
-    
-    //设置样式
     inputBox->setStyleSheet(
         "max-height: 50px;\n"
         "min-height: 50px;\n"
         "border-radius: 50px;\n"
         "background: rgb(85, 90, 96); color: rgba(116, 119, 122, 0.5); font: 20pt \"consolas\";}\n ");
 
-    //设置正则表达式，排除非法字符
+    //设置输入合法性
     QRegularExpression regx("[0-9\\+\\-\\*/·×)(]+$");
     QValidator *validator = new QRegularExpressionValidator(regx, inputBox);
     inputBox->setValidator(validator);
 
-    //设置光标位置
+    //设置输入框事件
     buttonPressflag = 0;
+    //文字改变
     connect(inputBox, &QLineEdit::textChanged, this, [=]
             {
         if (buttonPressflag == 0)
@@ -58,6 +55,7 @@ void CalculatorQT::createInputBox()
             buttonsPressed(0);
         }
         buttonPressflag = 0; });
+    //回车输出结果
     connect(inputBox, &QLineEdit::returnPressed, this, [=]
             { 
         equalPress(); 
@@ -69,15 +67,12 @@ void CalculatorQT::createResultBox()
 {
     //结果框
     resultBox = new QLineEdit();
-    
-    //设置样式
     resultBox->setStyleSheet(
         "max-height: 100px;\n"
         "min-height: 100px;\n"
         "border-radius: 60px;\n"
-        "background: rgb(85, 90, 96); color: rgba(243, 170, 76, 0.5); font: 30pt \"consolas\";}\n ");
+        "background: rgb(85, 90, 96); color: rgba(243, 170, 76, 0.5); font: bold 20pt  \"JetBrains Mono\";}\n ");
     resultBox->setReadOnly(true);
-    
     resultBox->setText("Result Box");
 
     mainLayout->insertWidget(1, resultBox, 0);
@@ -91,14 +86,15 @@ void CalculatorQT::createWarnBox()
         "max-height: 50px;\n"
         "min-height: 50px;\n"
         "border-radius: 50px;\n"
-        "background: rgb(85, 90, 96); color: rgba(255, 90, 96, 0.5); font: 30pt \"consolas\";}\n ");
+        "background: rgb(85, 90, 96); color: rgba(255, 90, 96, 0.5); font: bold 20pt  \"JetBrains Mono\";}\n ");
     warnBox->setReadOnly(true);
     warnBox->setText("Warning Box");
-    mainLayout->insertWidget(2, warnBox, 0, Qt::AlignCenter);
+    mainLayout->insertWidget(2, warnBox, 0);
 }
 
 void CalculatorQT::createswitchButton()
 {
+    //黑白切换按钮
     switchButton = new SwitchButton();
     switchButton->setFixedWidth(200);
     switchButton->setFixedHeight(50);
@@ -121,17 +117,22 @@ void CalculatorQT::createswitchButton()
 
 void CalculatorQT::showscreen()
 {
+    //清除按钮
     for (auto i : buttons)
     {
         i.second->setParent(0);
         delete i.second;
     }
+    //刷新按钮
     showsbutton();
 
+    //设置背景样式
     if (lightmode)
         setStyleSheet("CalculatorQT { background-color: rgb(255,255,255) }");
     else
         setStyleSheet("CalculatorQT { background-color: rgb(85, 90, 96) }");
+    
+    //更新显示
     showinput();
     showresult();
     showwarningbar(QString::fromStdTString(expn.warning));
@@ -139,6 +140,7 @@ void CalculatorQT::showscreen()
 
 void CalculatorQT::showinput(TCHAR key)
 {
+    //设置输入框样式
     if (lightmode)
         inputBox->setStyleSheet(
             "max-height: 50px;\n"
@@ -161,6 +163,7 @@ void CalculatorQT::showinput(TCHAR key)
 
 void CalculatorQT::showresult(TCHAR key)
 {
+    //设置结果框样式
     if (lightmode)
         if (key != 'C')
             resultBox->setStyleSheet(
@@ -173,7 +176,7 @@ void CalculatorQT::showresult(TCHAR key)
                 "max-height: 100px;\n"
                 "min-height: 100px;\n"
                 "border-radius: 60px;\n"
-                "background: rgb(255, 255, 255); color: rgba(243, 170, 76, 0.5); font: 30pt \"consolas\";}\n ");
+                "background: rgb(255, 255, 255); color: rgba(243, 170, 76, 0.5); font: bold 20pt  \"JetBrains Mono\";}\n ");
     else
         if (key != 'C')
             resultBox->setStyleSheet(
@@ -186,7 +189,7 @@ void CalculatorQT::showresult(TCHAR key)
                 "max-height: 100px;\n"
                 "min-height: 100px;\n"
                 "border-radius: 60px;\n"
-                "background: rgb(85, 90, 96); color: rgba(243, 170, 76, 0.5); font: 30pt \"consolas\";}\n ");
+                "background: rgb(85, 90, 96); color: rgba(243, 170, 76, 0.5); font: bold 20pt  \"JetBrains Mono\";}\n ");
     if (key != 'C')
         resultBox->setText(QString::fromStdTString(expn.result));
     resultBox->setReadOnly(true);
@@ -195,6 +198,7 @@ void CalculatorQT::showresult(TCHAR key)
 
 void CalculatorQT::showwarningbar(QString warn, TCHAR key)
 {
+    //设置警告框样式
     if (lightmode)
         if (key != 'C')
             warnBox->setStyleSheet(
@@ -207,7 +211,7 @@ void CalculatorQT::showwarningbar(QString warn, TCHAR key)
                 "max-height: 50px;\n"
                 "min-height: 50px;\n"
                 "border-radius: 50px;\n"
-                "background: rgb(255, 255, 255); color: rgba(255, 90, 96, 0.5); font: 30pt \"consolas\";}\n ");
+                "background: rgb(255, 255, 255); color: rgba(255, 90, 96, 0.5); font: bold 20pt  \"JetBrains Mono\";}\n ");
     else
         if(key != 'C')
         warnBox->setStyleSheet(
@@ -220,7 +224,7 @@ void CalculatorQT::showwarningbar(QString warn, TCHAR key)
                 "max-height: 50px;\n"
                 "min-height: 50px;\n"
                 "border-radius: 50px;\n"
-                "background: rgb(85, 90, 96); color: rgba(255, 90, 96,0.5); font: 30pt \"consolas\";}\n ");
+                "background: rgb(85, 90, 96); color: rgba(255, 90, 96,0.5); font: bold 20pt  \"JetBrains Mono\";}\n ");
     if (key != 'C')
         warnBox->setText(warn);
     warnBox->setReadOnly(true);
@@ -253,7 +257,7 @@ void CalculatorQT::showsbutton()
                     createOptButtons(TEXT("."), 5 - j, i);
                 }
 
-                // 退�??
+                // 退格
                 else if (j == 0 && i == 2)
                 {
                     createOptButtons(TEXT("Del"), 5 - j, i);
@@ -302,10 +306,13 @@ void CalculatorQT::showsbutton()
         }
     }
 
+    //左移
     createOptButtons(TEXT("<"), 0, 0);
-
+    
+    //右移
     createOptButtons(TEXT(">"), 0, 1);
 
+    // 按钮布局
     mainLayout->insertLayout(3, buttonLayout, 0);
 }
 
@@ -493,6 +500,8 @@ bool CalculatorQT::buttonsPressed(TCHAR key)
             }
             break;
         }
+
+    //计算
     expn.calculate();
 
     showinput(key);
@@ -507,9 +516,12 @@ bool CalculatorQT::buttonsPressed(TCHAR key)
 
 void CalculatorQT::inputInsert(TCHAR ch)
 {
-    if (expn.input.length() < 22)
+    if (expn.input.length() < 40)
     {
+        //插入字符
         expn.input.insert(cursorPosition, 1, ch);
+        
+        //移动光标
         cursorPosition++;
         inputBox->setCursorPosition(cursorPosition);
     }
@@ -519,6 +531,7 @@ void CalculatorQT::backSpace()
 {
     if (expn.input.size() && cursorPosition > 0)
     {
+        //判断是否为括号
         if ((cursorPosition > 1) &&
             ((expn.input[cursorPosition - 2] == TEXT('·') && expn.input[cursorPosition - 1] == '(') || (expn.input[cursorPosition - 2] == ')' && expn.input[cursorPosition - 1] == TEXT('��'))))
         {
@@ -540,6 +553,7 @@ void CalculatorQT::backSpace()
 
 void CalculatorQT::equalPress()
 {
+    //如果
     if (expn.inputRPN.size())
     {
         showwarningbar(QString::fromStdTString(expn.result));
@@ -547,7 +561,8 @@ void CalculatorQT::equalPress()
     else
     {
         if (expn.input.size())
-            showwarningbar("Invalid expression!");
+            //showwarningbar("Invalid expression!");
+            showwarningbar(QString::fromStdTString(expn.warning));
         else
             showwarningbar("No input!");
     }
@@ -555,12 +570,16 @@ void CalculatorQT::equalPress()
 
 void CalculatorQT::Clear()
 {
+    //清除表达式
     expn.input = TEXT("");
     expn.result = TEXT("");
     expn.inputRPN = {};
+
+    //清除光标
     cursorPosition = 0;
+
+    //清除显示界面
     inputBox->setText("");
     resultBox->setText("Result Box");
     warnBox->setText("Warning Box");
-
 }

@@ -123,14 +123,12 @@ bool Expression::RPN()
                 {
                     warning = (TEXT("Unmatched brackets"));
                     inputRPN.clear();
-                    inputRPN.push_back(TEXT("need backspace"));
                     return false;
                 }
                 if (isAfterPlusOrMinus || isAfterMultiOrDiv) // 出现符号重叠
                 {
                     warning = (TEXT("Operator Duplication"));
                     inputRPN.clear();
-                    // exprRPN.push_back(TEXT("need backspace"));
                     return false;
                 }
                 while (optStack.back() != '(') // 括号内全部出栈
@@ -159,7 +157,6 @@ bool Expression::RPN()
                 {
                     warning = (TEXT("Operator Duplication"));
                     inputRPN.clear();
-                    // exprRPN.push_back(TEXT("need backspace"));
                     return false;
                 }
 
@@ -190,7 +187,6 @@ bool Expression::RPN()
                 {
                     warning = (TEXT("Operator Duplication"));
                     inputRPN.clear();
-                    // exprRPN.push_back(TEXT("need backspace"));
                     return false;
                 }
 

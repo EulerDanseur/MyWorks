@@ -1,0 +1,33 @@
+# ninja log v5
+33	984	7357334984024564	untitled_autogen/timestamp	3779aec17138ffc
+33	984	7357334984024564	untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+33	984	7357334984024564	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/timestamp	3779aec17138ffc
+33	984	7357334984024564	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+1011	2230	7357334998170140	CMakeFiles/untitled.dir/RPN.cpp.obj	f564f1683dd305f8
+1018	3590	7357335011749521	CMakeFiles/untitled.dir/SwitchButton.cpp.obj	f25e165ebfe2f821
+999	4050	7357335016353609	CMakeFiles/untitled.dir/main.cpp.obj	9dcc81f349e8b89b
+1006	4182	7357335017631072	CMakeFiles/untitled.dir/CalculatorQT.cpp.obj	ca4f6c9b861a1b93
+994	4237	7357335018245813	CMakeFiles/untitled.dir/untitled_autogen/mocs_compilation.cpp.obj	4afbf48521be63ed
+4237	6798	7357335043618522	untitled.exe	7e2f812500fd71af
+55	365	7358349859373000	untitled_autogen/timestamp	3779aec17138ffc
+55	365	7358349859373000	untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+55	365	7358349859373000	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/timestamp	3779aec17138ffc
+55	365	7358349859373000	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+432	3866	7358349894362494	CMakeFiles/untitled.dir/main.cpp.obj	9dcc81f349e8b89b
+438	3944	7358349895152493	CMakeFiles/untitled.dir/CalculatorQT.cpp.obj	ca4f6c9b861a1b93
+3945	4267	7358349897769252	untitled.exe	7e2f812500fd71af
+42	1068	7359879372396839	untitled_autogen/timestamp	3779aec17138ffc
+42	1068	7359879372396839	untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+42	1068	7359879372396839	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/timestamp	3779aec17138ffc
+42	1068	7359879372396839	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+1099	2120	7359879384611569	CMakeFiles/untitled.dir/RPN.cpp.obj	f564f1683dd305f8
+1086	3856	7359879402013693	CMakeFiles/untitled.dir/main.cpp.obj	9dcc81f349e8b89b
+1093	4045	7359879403897278	CMakeFiles/untitled.dir/CalculatorQT.cpp.obj	ca4f6c9b861a1b93
+1077	4141	7359879404811993	CMakeFiles/untitled.dir/untitled_autogen/mocs_compilation.cpp.obj	4afbf48521be63ed
+4142	4492	7359879407780730	untitled.exe	7e2f812500fd71af
+37	275	7359888751102906	untitled_autogen/timestamp	3779aec17138ffc
+37	275	7359888751102906	untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+37	275	7359888751102906	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/timestamp	3779aec17138ffc
+37	275	7359888751102906	D:/MyWorks/MyWorks/Experiment of programming/Project2/untitled/build/Desktop_Qt_6_7_0_MSVC2019_64bit-Debug/untitled_autogen/mocs_compilation.cpp	3779aec17138ffc
+323	3087	7359888779159790	CMakeFiles/untitled.dir/CalculatorQT.cpp.obj	ca4f6c9b861a1b93
+3088	3365	7359888781535459	untitled.exe	7e2f812500fd71af

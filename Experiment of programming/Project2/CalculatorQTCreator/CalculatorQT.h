@@ -8,9 +8,9 @@
 #include <QPushButton>
 #include <QGraphicsDropShadowEffect>
 #include <map>
-#include <string>
+//#include <string>
 #include <tchar.h>
-#include <iostream>
+//#include <iostream>
 #include <QLineEdit>
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
@@ -33,11 +33,11 @@ public:
 
     ~CalculatorQT();
 
-    //创建输入�?
+    //创建输入框
     void createInputBox();
-    //创建结果�?
+    //创建结果框
     void createResultBox();
-    //创建警告�?
+    //创建警告框
     void createWarnBox();
     //创建明暗按钮
     void createswitchButton();
@@ -66,13 +66,13 @@ public:
     // 按键响应
     bool buttonsPressed(TCHAR key);
 
-    // 插入数字或算�?
+    // 插入数字或算符
     void inputInsert(TCHAR ch);
 
-    // 退�?
+    // 退格
     void backSpace();
 
-    // 等号出结�?
+    // 等号出结果
     void equalPress();
 
     // 清空
@@ -87,25 +87,25 @@ private:
     // 按钮布局
     QGridLayout *buttonLayout;
 
-    // 输入�?
+    // 输入框
     QLineEdit *inputBox;
 
-    // 结果�?
+    // 结果框
     QLineEdit *resultBox;
 
-    // 警告�?
+    // 警告框
     QLineEdit *warnBox;
 
     // 按钮
     map<TCHAR, Buttons *> buttons;
 
-    // 是否已按�?
+    // 是否已按键
     bool buttonPressflag;
 
     // 切换按钮
     SwitchButton *switchButton;
 
-    // 表达式求�?
+    // 表达式求值
     Expression expn;
 private slots:
 };
@@ -116,7 +116,7 @@ class Buttons : public QPushButton
 
 public:
 
-    //数字的样�?
+    //数字的样式
     void styleNum(int num);
 
     //操作符的样式
