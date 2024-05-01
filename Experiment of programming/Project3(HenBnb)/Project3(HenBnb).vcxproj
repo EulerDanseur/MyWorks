@@ -128,22 +128,22 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="code\calendar.h" />
-    <ClInclude Include="code\client.h" />
+    <ClInclude Include="code\guest.h" />
     <ClInclude Include="code\info.h" />
+    <ClInclude Include="code\interface.h" />
     <ClInclude Include="code\landlord.h" />
-    <ClInclude Include="code\surface.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\calendar.cpp" />
-    <ClCompile Include="code\client.cpp" />
     <ClCompile Include="code\dateinfo.cpp" />
+    <ClCompile Include="code\guest.cpp" />
     <ClCompile Include="code\info.cpp" />
+    <ClCompile Include="code\interface.cpp" />
     <ClCompile Include="code\landlord.cpp" />
     <ClCompile Include="code\main.cpp" />
     <ClCompile Include="code\moneyinfo.cpp" />
     <ClCompile Include="code\repairinfo.cpp" />
     <ClCompile Include="code\reservedinfo.cpp" />
-    <ClCompile Include="code\surface.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

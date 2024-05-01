@@ -57,13 +57,17 @@ void GuestClass::Login()
     }
     else if (guestMap[id].password == password)
     {
+        pos(30, 23);
         cout << "登录成功!" << endl;
+        pos(30, 25);
         system("pause");
         guestMap[id].Menu();
     }
     else
     {
+        pos(30, 23);
         cout << "账号或密码错误!" << endl;
+        pos(30, 25);
         system("pause");
     }
 }
@@ -121,9 +125,11 @@ void GuestClass::Register()
     cin >> email;
     time_t now = time(0);
 
-    tm *t = localtime(&now);
+    tm t;
 
-    registerDate = toString(1900 + t->tm_year) + '.' + toString(t->tm_mon + 1) + '.' + toString(t->tm_mday);
+    localtime_s(&t, &now);
+
+    registerDate = toString(1900 + t.tm_year) + '.' + toString(t.tm_mon + 1) + '.' + toString(t.tm_mday);
     guestMap[id] = Guest(id, password, name, gender, registerDate, phone, email);
     update();
     cout << "注册成功!" << endl;
@@ -162,6 +168,61 @@ void GuestClass::GuestInterface()
             Register();
             break;
         case '3':
+            flag = 0;
+            break;
+        }
+    }
+}
+
+Guest::Guest()
+: id(""), password(""), name(""), gender(""), registerDate(""), phone(""), email("") {}
+
+Guest::~Guest(){}
+
+Guest::Guest(string id, string password, string name, string gender, DateYMD registerDate, string phone, string email)
+: id(id), password(password), name(name), gender(gender), registerDate(registerDate), phone(phone), email(email) {}
+
+void Guest::Menu()
+{
+    keyc = 0;
+    bool flag = 1;
+    while (flag)
+    {
+        system("cls");
+        pos(30, 10);
+        cout << "**********欢迎来到 Henbnb的管理系统**********" << endl;
+        pos(30, 11);
+        cout << "*                                       " << endl;
+        pos(30, 13);
+        cout << "* 1.查看房间信息                             " << endl;
+        pos(30, 15);
+        cout << "* 2.查看我的订单                          " << endl;
+        pos(30, 17);
+        cout << "* 3.我的信息                               " << endl;
+        pos(30, 19);
+        cout << "* 4.我的消息                               " << endl;
+        pos(30, 21);
+        cout << "* 5.退出                                 " << endl;
+        pos(30, 23);
+        cout << "*                                       " << endl;
+        pos(30, 25);
+        cout << "********************************************" << endl;
+        keyc = _getch();
+        switch (keyc)
+        {
+        case '1':
+            HouseInfo();
+            break;
+        case '2':
+            MyOrderInfo();
+            break;
+        case '3':
+            MyInfo();
+            break;
+        case '4':
+            MyMessage();
+            break;
+        case '5':
             flag = 0;
             break;
         }
