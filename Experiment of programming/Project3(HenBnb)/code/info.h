@@ -11,16 +11,16 @@ typedef string DateYMD;
 
 inline string toString(int num)
 {
-    return  (num < 10) ? ('0' + to_string(num)) : to_string(num);
+    return (num < 10) ? ('0' + to_string(num)) : to_string(num);
 }
 
 typedef struct ReserveinfoSt
 {
-    DateYMD  checkin;
-    DateYMD  checkout;
+    DateYMD checkin;
+    DateYMD checkout;
     string guest;
 
-}ReserveinfoSt;
+} ReserveinfoSt;
 
 typedef struct RepairinfoSt
 {
@@ -30,39 +30,37 @@ typedef struct RepairinfoSt
     string status;
     string comment;
 
-}RepairinfoSt;
+} RepairinfoSt;
 
 typedef struct DateinfoSt
 {
     string status;
     string price;
 
-}DateinfoSt;
+} DateinfoSt;
 
 typedef struct moneyInfoSt
 {
+    DateYMD date;
     string money;
     string source;
 
-}moneyInfoSt;
+} moneyInfoSt;
 
 class Reserveinfo
 {
 public:
     vector<ReserveinfoSt> vec;
-    //TODO: 淇敼涓簃ap
+    // TODO: 修改为map
     Reserveinfo();
     ~Reserveinfo();
     void update();
     void show();
-
 };
-
 
 class Repairinfo
 {
 public:
-
     RepairinfoSt rpTitle;
     vector<RepairinfoSt> vec;
 
@@ -73,8 +71,6 @@ public:
 };
 
 bool cmpRepair(RepairinfoSt a, RepairinfoSt b);
-
-
 
 class Dateinfo
 {
@@ -93,95 +89,81 @@ public:
 class Moneyinfo
 {
 public:
-    multimap<DateYMD, moneyInfoSt> mmap;
+    int total, totalExpenditure, totalIncome;
+
+    vector<moneyInfoSt> vec;
 
     Moneyinfo();
     ~Moneyinfo();
     void update();
     void show();
+    void AddMoneyInfo();
+    void ChangeMoneyInfo();
 };
-
-
-Moneyinfo::Moneyinfo()
+bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b)
 {
-    DateYMD date;
-    string money;
-    string source;
-    fstream file;
-    file.open("moneyinfo.txt", ios::in);
-    for (int i = 0; !file.eof(); i++)
-    {
-        file >> date;
-        file >> money;
-        file >> source;
-        mmap.insert({date, {money, source}});
-    }
-    file.close();
+    return a.date < b.date;
 }
 
-Moneyinfo::~Moneyinfo()
+void Moneyinfo::AddMoneyInfo()
 {
+    string date, money, source;
+    pos(30, 22);
+    cout << "日期:";
+    pos(36, 22);
+    cin >> date;
+    pos(30, 24);
+    cout << "金额:";
+    pos(36, 24);
+    cin >> money;
+    pos(30, 26);
+    cout << "来源:";
+    pos(36, 26);
+    cin >> source;
+    vec.push_back(moneyInfoSt{date, money, source});
+    sort(vec.begin(), vec.end(), cmpMoneyInfo);
     update();
+    show();
+    pos(30, 28);
+    cout << "添加成功" << endl;
+    pos(30, 30);
+    system("pause");
 }
 
-
-void Moneyinfo::update()
+void Moneyinfo::ChangeMoneyInfo()
 {
-    fstream file;
-    file.open("moneyinfo.txt", ios::out);
-    for (auto i : mmap)
-    {
-        file << i.first << ' ' << i.second.money << ' ' << i.second.source << endl;
-    }
-    file.close();
+    string date, money, source;
+    int i = 0;
+    pos(30, 21);
+    cout << "请选择要修改的项:";
+    pos(36, 21);
+    cin >> i;
+    pos(30, 22);
+    cout << "日期:";
+    pos(36, 22);
+    cin >> date;
+    pos(30, 24);
+    cout << "金额:";
+    pos(36, 24);
+    cin >> money;
+    pos(30, 26);
+    cout << "来源:";
+    pos(36, 26);
+    cin >> source;
+    vec[i] = moneyInfoSt{date, money, source};
+    sort(vec.begin(), vec.end(), cmpMoneyInfo);
+    update();
+    show();
+    pos(30, 28);
+    cout << "修改成功" << endl;
+    pos(30, 30);
+    system("pause");
 }
 
-void Moneyinfo::show()
-{
-    pos(30, 16);
-    pos(30, 16 );
-    cout << "搴忓彿";
-    pos(40, 16 );
-    cout << "鏃ユ湡";
-    pos(60, 16 );
-    cout << "娴佹按";
-    pos(75, 16 );
-    cout << "鏉ユ簮/鍘诲悜"<< endl;
-
-    int order = 1;
-    for (auto i : mmap)
-    {
-        pos(30, 16 + order);
-        cout << order;
-        pos(40, 16 + order);
-        cout << i.first;
-        pos(60, 16 + order);
-        cout << i.second.money;
-        pos(75, 16 + order);
-        cout << i.second.source << endl;
-        order++;
-    }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+extern Reserveinfo reserveInfo;
+extern Repairinfo repairInfo;
+extern Dateinfo dateInfo;
+extern Moneyinfo moneyInfo;
 
 inline void ReserveinfoToDateinfo()
 {
@@ -225,8 +207,3 @@ inline void ReserveinfoToDateinfo()
             dateInfo.map[datetemp].price = "-1";
     }
 }
-
-extern Reserveinfo reserveInfo;
-extern Repairinfo repairInfo;
-extern Dateinfo dateInfo;
-extern Moneyinfo moneyInfo;

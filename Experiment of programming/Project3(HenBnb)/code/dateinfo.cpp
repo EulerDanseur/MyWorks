@@ -35,7 +35,7 @@ void Dateinfo::show()
     int height = 5;
 
     pos(startx + 8, starty - 4);
-    cout << "ÂΩìÂâçÂπ¥Êúà‰∏∫:" << year << " Âπ¥ " << month << "Êúà" << endl;
+    cout << "µ±«∞ƒÍ‘¬Œ™:" << year << " ƒÍ " << month << "‘¬" << endl;
 
     int daysAmount = DaysAmount(month, year);
     int DayOfWeek = CalcDayOfWeek(year, month, 1) - 1;
@@ -79,7 +79,7 @@ void Dateinfo::show()
             printf("%s\t", basicPrice.c_str());
 
             pos(startx + width * DayOfWeek, starty + row * height + 2);
-            printf("%s\t", "Á©∫Èó≤");
+            printf("%s\t", "ø’œ–");
         }
         else
         {
@@ -114,15 +114,15 @@ void Housing::DoDateInfo()
 {
     system("cls");
     pos(30, 2);
-    cout << "ËØ∑ËæìÂÖ•ÊÉ≥Êü•ÁúãÁöÑÂπ¥Êúà‰ªΩ:" << endl;
+    cout << "«Î ‰»ÎœÎ≤Èø¥µƒƒÍ‘¬∑›:" << endl;
     pos(30, 10);
-    cout << "**********ÊàøÈó¥‰ø°ÊÅØ‰øÆÊîπ*******************" << endl;
+    cout << "**********∑øº‰–≈œ¢–ﬁ∏ƒ*******************" << endl;
     pos(30, 12);
-    cout << "* ÊåâqËøîÂõûÊàø‰∏ªÁïåÈù¢                            " << endl;
+    cout << "* ∞¥q∑µªÿ∑ø÷˜ΩÁ√Ê                            " << endl;
     pos(30, 14);
-    cout << "* 1.‰øÆÊîπÊàø‰ª∑                               " << endl;
+    cout << "* 1.–ﬁ∏ƒ∑øº€                               " << endl;
     pos(30, 16);
-    cout << "* 2.Â¢ûÂà†Á©∫Èó≤Êó∂Èó¥                           " << endl;
+    cout << "* 2.‘ˆ…æø’œ– ±º‰                           " << endl;
     pos(30, 18);
     cout << "*                         " << endl;
     pos(30, 20);
@@ -133,7 +133,7 @@ void Housing::DoDateInfo()
     while (dateInfo.year < 1000 || dateInfo.month > 12 || dateInfo.year > 2050 || dateInfo.month < 1)
     {
         pos(30, 3);
-        cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+        cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
         pos(30, 4);
         system("pause");
         pos(30, 3);
@@ -183,7 +183,7 @@ void Housing::DoDateInfo()
                 break;
             default:
                 pos(30, 22);
-                cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+                cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
                 break;
             }
         }
@@ -206,7 +206,7 @@ void Housing::DoDateInfo()
                 break;
             default:
                 pos(30, 22);
-                cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+                cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
                 break;
             }
         key = _getch();
@@ -217,13 +217,13 @@ void Housing::ShowDateInfo()
 {
     system("cls");
     pos(30, 10);
-    cout << "**********ÊàøÈó¥‰ø°ÊÅØ‰øÆÊîπ*******************" << endl;
+    cout << "**********∑øº‰–≈œ¢–ﬁ∏ƒ*******************" << endl;
     pos(30, 12);
-    cout << "* ÊåâqËøîÂõûÊàø‰∏ªÁïåÈù¢                            " << endl;
+    cout << "* ∞¥q∑µªÿ∑ø÷˜ΩÁ√Ê                            " << endl;
     pos(30, 14);
-    cout << "* 1.‰øÆÊîπÊàø‰ª∑                               " << endl;
+    cout << "* 1.–ﬁ∏ƒ∑øº€                               " << endl;
     pos(30, 16);
-    cout << "* 2.Â¢ûÂà†Á©∫Èó≤Êó∂Èó¥                           " << endl;
+    cout << "* 2.‘ˆ…æø’œ– ±º‰                           " << endl;
     pos(30, 18);
     cout << "*                         " << endl;
     pos(30, 20);
@@ -244,13 +244,13 @@ void Housing::DatePrice()
     {
         system("cls");
         pos(30, 10);
-        cout << "**********‰øÆÊîπÊàø‰ª∑*************************" << endl;
+        cout << "**********–ﬁ∏ƒ∑øº€*************************" << endl;
         pos(30, 12);
-        cout << "* ÊåâqËøîÂõûÊàø‰∏ªÁïåÈù¢ ÊåârËøîÂõû‰∏ä‰∏ÄÁ∫ß           " << endl;
+        cout << "* ∞¥q∑µªÿ∑ø÷˜ΩÁ√Ê ∞¥r∑µªÿ…œ“ªº∂           " << endl;
         pos(30, 14);
-        cout << "* 1.Âü∫Êú¨‰ª∑Ê†º                               " << endl;
+        cout << "* 1.ª˘±æº€∏Ò                               " << endl;
         pos(30, 16);
-        cout << "* 2.ÁâπÂÆöÊó•ÊúüÁöÑ‰ª∑Ê†º                         " << endl;
+        cout << "* 2.Ãÿ∂®»’∆⁄µƒº€∏Ò                         " << endl;
         pos(30, 18);
         cout << "*                                       " << endl;
         pos(30, 20);
@@ -293,7 +293,7 @@ void Housing::DatePrice()
                 break;
             default:
                 pos(30, 22);
-                cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+                cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
                 break;
             }
         }
@@ -302,7 +302,7 @@ void Housing::DatePrice()
             {
             case '1':
                 pos(30, 22);
-                cout << "Âü∫Êú¨‰ª∑Ê†º:" << endl;
+                cout << "ª˘±æº€∏Ò:" << endl;
                 pos(30, 23);
                 cin >> price;
                 dateInfo.basicPrice = '$' + to_string(price);
@@ -311,17 +311,17 @@ void Housing::DatePrice()
                 break;
             case '2':
                 pos(30, 22);
-                cout << "Êó•Êúü(Â¶ÇÔºö21):" << endl;
+                cout << "»’∆⁄(»Á£∫21):" << endl;
                 pos(30, 23);
                 cin >> date;
                 datestr = toString(dateInfo.year) + '.' + toString(dateInfo.month) + '.' + toString(date);
                 pos(30, 24);
-                cout << "‰ª∑Ê†º:" << endl;
+                cout << "º€∏Ò:" << endl;
                 pos(30, 25);
                 cin >> price;
                 if (dateInfo.map.find(datestr) == dateInfo.map.end())
                 {
-                    dateInfo.map[datestr].status = "Á©∫Èó≤";
+                    dateInfo.map[datestr].status = "ø’œ–";
                 }
                 dateInfo.map[datestr].price = '$' + to_string(price);
                 dateInfo.update();
@@ -341,7 +341,7 @@ void Housing::DatePrice()
                 break;
             default:
                 pos(30, 22);
-                cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+                cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
                 break;
             }
     }
@@ -359,11 +359,11 @@ void Housing::DateSpare()
     {
         system("cls");
         pos(30, 10);
-        cout << "**********Â¢ûÂà†Á©∫Èó≤Êó∂Èó¥*********************" << endl;
+        cout << "**********‘ˆ…æø’œ– ±º‰*********************" << endl;
         pos(30, 12);
         cout << "*                                       " << endl;
         pos(30, 14);
-        cout << "* 1.‰øÆÊîπÁ©∫Èó≤Áä∂ÊÄÅ                           " << endl;
+        cout << "* 1.–ﬁ∏ƒø’œ–◊¥Ã¨                           " << endl;
         pos(30, 16);
         cout << "*                               " << endl;
         pos(30, 18);
@@ -408,7 +408,7 @@ void Housing::DateSpare()
                 break;
             default:
                 pos(30, 22);
-                cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+                cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
                 break;
             }
         }
@@ -417,35 +417,35 @@ void Housing::DateSpare()
             {
             case '1':
                 pos(30, 22);
-                cout << "Êó•Êúü(Â¶ÇÔºö21):" << endl;
+                cout << "»’∆⁄(»Á£∫21):" << endl;
                 pos(30, 23);
                 cin >> date;
                 datestr = toString(dateInfo.year) + '.' + toString(dateInfo.month) + '.' + toString(date);
                 //pos(30, 24);
-                //cout << "Áä∂ÊÄÅ: " << endl;
+                //cout << "◊¥Ã¨: " << endl;
                 //pos(30, 25);
                 //cin >> status;
                 if (dateInfo.map.find(datestr) == dateInfo.map.end() )
                 {
                     dateInfo.map[datestr].price = "-1";
-                    dateInfo.map[datestr].status = "Êàø‰∏ªÂç†Áî®";
+                    dateInfo.map[datestr].status = "∑ø÷˜’º”√";
                 }
-                else if(dateInfo.map[datestr].status == "Á©∫Èó≤")
+                else if(dateInfo.map[datestr].status == "ø’œ–")
                 {
-                    dateInfo.map[datestr].status = "Êàø‰∏ªÂç†Áî®";
+                    dateInfo.map[datestr].status = "∑ø÷˜’º”√";
                 }
-                else if(dateInfo.map[datestr].status == "Êàø‰∏ªÂç†Áî®")
+                else if(dateInfo.map[datestr].status == "∑ø÷˜’º”√")
                 {
-                    dateInfo.map[datestr].status = "Á©∫Èó≤";
+                    dateInfo.map[datestr].status = "ø’œ–";
                 }
                 else
                 {
                     pos(30, 26);
-                    cout << "ËØ•Êó•ÊúüÂ∑≤Ë¢´ÂÆ¢Êà∑È¢ÑÂÆö" << endl;
+                    cout << "∏√»’∆⁄“—±ªøÕªß‘§∂®" << endl;
                     pos(30, 27);
                     system("pause");
 
-                    //ÂèØ‰ª•Â¢ûÂä†ËÅîÁ≥ªÂÆ¢Êà∑ÁöÑÂäüËÉΩ
+                    //ø…“‘‘ˆº”¡™œµøÕªßµƒπ¶ƒ‹
                 }
                 dateInfo.update();
                 dateInfo.show();
@@ -464,7 +464,7 @@ void Housing::DateSpare()
                 break;
             default:
                 pos(30, 22);
-                cout << "ËæìÂÖ•ÊúâËØØ,ËØ∑ÈáçÊñ∞ËæìÂÖ•" << endl;
+                cout << " ‰»Î”–ŒÛ,«Î÷ÿ–¬ ‰»Î" << endl;
                 break;
             }
     }

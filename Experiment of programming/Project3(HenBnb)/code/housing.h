@@ -40,4 +40,6 @@ public:
     void HousingInfo();
     void ChangePassword();
 
+    void DoMoneyInfo();
+
 };

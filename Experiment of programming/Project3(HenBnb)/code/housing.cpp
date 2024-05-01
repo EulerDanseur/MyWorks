@@ -1,10 +1,10 @@
 #include "housing.h"
 Housing::Housing()
 {
-   fstream file;
-   file.open("housinginfo.txt", ios::in);
-   file >> password;
-   file.close();
+    fstream file;
+    file.open("housinginfo.txt", ios::in);
+    file >> password;
+    file.close();
 }
 
 void Housing::Login()
@@ -92,13 +92,13 @@ void Housing::Menu()
 
 void Housing::HousingInfo()
 {
-    
+    system("cls");
     pos(30, 10);
     cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
     pos(30, 11);
     cout << "* 1.修改密码" << endl;
     pos(30, 13);
-    cout << "* 2.查看资金流水" << endl;
+    cout << "* 2.资金流水" << endl;
     pos(30, 15);
     cout << "* 3.查看客户名单" << endl;
     pos(30, 17);
@@ -116,16 +116,61 @@ void Housing::HousingInfo()
             ChangePassword();
             break;
         case '2':
-            moneyInfo.show();
+            DoMoneyInfo();
             break;
         case '3':
-            //clientInfo.show();
+            // clientInfo.show();
             break;
         case '4':
             showMainMenu();
             break;
         default:
             pos(30, 25);
+            cout << "输入有误,请重新输入" << endl;
+        }
+    }
+}
+void Housing::DoMoneyInfo()
+{
+    bool flag = 1;
+    while (flag)
+    {
+        system("cls");
+        pos(30, 10);
+        cout << "**********资金流水**********" << endl;
+        pos(30, 11);
+        cout << "* 1.查看资金流水" << endl;
+        pos(30, 13);
+        cout << "* 2.修改资金流水" << endl;
+        pos(30, 15);
+        cout << "* 3.增加资金流水" << endl;
+        pos(30, 17);
+        cout << "* 按q返回房主界面 按r返回上一级" << endl;
+        pos(30, 19);
+        cout << "********************************************" << endl;
+        key = _getch();
+
+        switch (key)
+        {
+        case '1':
+            moneyInfo.show();
+            break;
+        case '2':
+            moneyInfo.ChangeMoneyInfo();
+            break;
+        case '3':
+            moneyInfo.AddMoneyInfo();
+            break;
+        case 'r':
+            HousingInfo();
+            flag = 0;
+            break;
+        case 'q':
+            Menu();
+            flag = 0;
+            break;
+        default:
+            pos(30, 21);
             cout << "输入有误,请重新输入" << endl;
         }
     }
@@ -163,4 +208,3 @@ void Housing::ChangePassword()
         ChangePassword();
     }
 }
-

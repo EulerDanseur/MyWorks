@@ -30,6 +30,9 @@
     <ClInclude Include="code\calendar.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="code\client.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="code\guests.cpp">
@@ -51,6 +54,18 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="code\calendar.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\client.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\dateinfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\moneyinfo.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="code\reservedinfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
