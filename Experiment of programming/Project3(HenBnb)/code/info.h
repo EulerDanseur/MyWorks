@@ -4,17 +4,23 @@
 #include <map>
 #include <fstream>
 #include <algorithm>
+#include <string>
 #include <ctime>
+
 #include "interface.h"
 #include "calendar.h"
-#include <string>
+
 using namespace std;
-typedef string DateYMD;
-typedef time_t Time;
+
 #define UPKEY 72
 #define DOWNKEY 80
 #define LEFTKEY 75
 #define RIGHTKEY 77
+
+typedef time_t Time;
+typedef string DateYMD;
+
+class Guest;
 
 inline string toString(int num)
 {
@@ -23,6 +29,7 @@ inline string toString(int num)
 
 typedef struct ReserveinfoSt
 {
+    string room;
     DateYMD checkin;
     DateYMD checkout;
     string guest;
@@ -33,6 +40,7 @@ typedef struct RepairinfoSt
 {
     DateYMD date;
     string reporter;
+    string room;
     string description;
     string status;
     string comment;
@@ -48,6 +56,7 @@ typedef struct DateinfoSt
 
 typedef struct moneyInfoSt
 {
+
     DateYMD date;
     string money;
     string source;
@@ -62,9 +71,9 @@ public:
     Reserveinfo();
     ~Reserveinfo();
     void update();
-    void show();
+    void show(string id = "all");
     void MakeReserve(Guest *);
-    void deleteReserve(Guest *);
+    void deleteReserve(Guest *) {}
 };
 
 class Repairinfo
@@ -92,20 +101,34 @@ class Dateinfo
 public:
     int year, month;
     string basicPrice;
+    string id;
+    bool accesible;
     map<string, DateinfoSt> map;
 
-    Dateinfo();
-    ~Dateinfo();
-
+    void DoDateInfoLandlord();
+    void DoDateInfoGuest();
+    void MakeReserve();
     void show();
     void showLandlord();
     void showGuest();
     void showChangePrice();
     void showChangeSpare();
-    void update();
     void ChangeDatePrice();
     void ChangeDateSpare();
 };
+
+class Room
+{
+public:
+    vector<string> roomList;
+    map<string, Dateinfo> roomInfo;
+    Room();
+    ~Room();
+    void update();
+    void show();
+};
+
+extern Room room;
 
 class Moneyinfo
 {
@@ -124,13 +147,12 @@ public:
 };
 bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b);
 
-
 extern Reserveinfo reserveInfo;
 extern Repairinfo repairInfo;
-extern Dateinfo dateInfo;
+// extern Dateinfo dateInfo;
 extern Moneyinfo moneyInfo;
 
-inline void ReserveinfoToDateinfo()
+inline void RoomReserveinfoToRoomDateinfo()
 {
     for (auto i : reserveInfo.vec)
     {
@@ -148,9 +170,9 @@ inline void ReserveinfoToDateinfo()
             daytemp = toString(checkInDay);
             monthtemp = toString(checkInMonth);
             datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-            dateInfo.map[datetemp].status = i.guest;
-            if (dateInfo.map[datetemp].price == "")
-                dateInfo.map[datetemp].price = "-1";
+            room.roomInfo[i.room].map[datetemp].status = i.guest;
+            if (room.roomInfo[i.room].map[datetemp].price == "")
+                room.roomInfo[i.room].map[datetemp].price = "-1";
 
             checkInDay++;
             if (checkInDay > DaysAmount(checkInMonth, checkInYear))
@@ -167,21 +189,20 @@ inline void ReserveinfoToDateinfo()
         daytemp = toString(checkInDay);
         monthtemp = toString(checkInMonth);
         datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-        dateInfo.map[datetemp].status = i.guest;
-        if (dateInfo.map[datetemp].price == "")
-            dateInfo.map[datetemp].price = "-1";
+        room.roomInfo[i.room].map[datetemp].status = i.guest;
+        if (room.roomInfo[i.room].map[datetemp].price == "")
+            room.roomInfo[i.room].map[datetemp].price = "-1";
     }
 }
 
 inline bool isnumber(string a)
 {
-    for(auto i : a)
+    for (auto i : a)
     {
-        if(!isdigit(i))
+        if (!isdigit(i))
         {
             return false;
         }
     }
     return true;
 }
-

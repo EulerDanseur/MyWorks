@@ -1,6 +1,8 @@
-#include "info.h"
+#pragma once
 #include "interface.h"
+#include "info.h"
 
+typedef string DateYMD;
 class Guest
 {
 public:
@@ -19,7 +21,7 @@ public:
     ~Guest();
     void Menu();
     void update();
-    void DoDateInfo();
+    void DoRoomInfo();
 };
 
 class GuestClass

@@ -82,7 +82,7 @@ void Landlord::Menu()
             DoRepairInfo();
             break;
         case '3':
-            DoDateInfo();
+            DoRoomInfo();
             break;
         case '4':
             LandlordInfo();
@@ -99,10 +99,13 @@ void Landlord::Menu()
 
 void Landlord::Reservedinfo()
 {
-    reserveInfo.show();
-    keyc = _getch();
-    while (keyc)
+    
+    keys = "all";
+    bool flag = 0;
+    while (flag)
     {
+        reserveInfo.show(keys);
+        keyc = _getch();
         if (keyc == 'q')
         {
             Menu();
@@ -113,108 +116,64 @@ void Landlord::Reservedinfo()
             showMainMenu();
             break;
         }
+        else if (keyc == 'r')
+        {
+            pos(30, 7);
+            cout << "请输入要查看的房间号码(输入all表示全部)" << endl;
+            pos(30, 8);
+            cin >> keys;
+
+            if (keys != "all" && room.roomInfo.find(keys) == room.roomInfo.end())
+            {
+                pos(30, 10);
+                cout << "该房间不存在" << endl;
+                pos(30, 11);
+                system("pause");
+            }
+        }
         else
         {
             pos(30, 8);
             cout << "输入错误,请重新输入" << endl;
         }
-        keyc = _getch();
     }
 }
 
-void Landlord::DoDateInfo()
+void Landlord::DoRoomInfo()
 {
-    /*system("cls");
-    pos(30, 2);
-    cout << "请输入想查看的年月份:" << endl;
-    pos(30, 3);
-    cin >> dateInfo.year >> dateInfo.month;
-    while (dateInfo.year < 1000 || dateInfo.month > 12 || dateInfo.year > 2050 || dateInfo.month < 1)
-    {
-        pos(30, 3);
-        cout << "输入有误,请重新输入" << endl;
-        pos(30, 4);
-        system("pause");
-        pos(30, 3);
-        cout << "                           " << endl;
-        pos(30, 4);
-        cout << "                           " << endl;
-        pos(30, 3);
-        cin >> dateInfo.year >> dateInfo.month;
-    }*/
-
-    time_t now = time(0);
-    tm t;
-
-    localtime_s(&t, &now);
-
-    dateInfo.year = 1900 + t.tm_year;
-    dateInfo.month = t.tm_mon + 1;
-
+    keys = "";
     bool flag = 1;
     while (flag)
     {
-        dateInfo.showLandlord();
-        keyc = _getch();
-        if (keyc == -32)
+        system("cls");
+        pos(30, 10);
+        cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
+        pos(30, 12);
+        cout << "* 请输入您要查看的房间号码(按q返回上一级):                  " << endl;
+        pos(30, 13);
+        cin >> keys;
+        room.show();
+        if (keys == "q")
         {
-            keyc = _getch();
-            switch (keyc)
-            {
-            case UPKEY:
-                dateInfo.month--;
-                if (dateInfo.month == 0)
-                {
-                    dateInfo.month = 12;
-                    dateInfo.year--;
-                }
-                dateInfo.showLandlord();
-                break;
-            case DOWNKEY:
-                dateInfo.month++;
-                if (dateInfo.month == 13)
-                {
-                    dateInfo.month = 1;
-                    dateInfo.year++;
-                }
-                dateInfo.showLandlord();
-                break;
-            case LEFTKEY:
-                dateInfo.year--;
-                dateInfo.showLandlord();
-                break;
-            case RIGHTKEY:
-                dateInfo.year++;
-                dateInfo.showLandlord();
-                break;
-            default:
-                pos(30, 22);
-                cout << "输入有误,请重新输入" << endl;
-                break;
-            }
+            flag = 0;
+            break;
+        }
+        else if (room.roomInfo.find(keys) == room.roomInfo.end())
+        {
+            pos(30, 15);
+            cout << "该房间不存在" << endl;
+            pos(30, 16);
+            system("pause");
         }
         else
-            switch (keyc)
-            {
-            case '1':
-                dateInfo.ChangeDatePrice();
-                break;
-            case '2':
-                dateInfo.ChangeDateSpare();
-                break;
-            case 'q':
-                Menu();
-                flag = 0;
-                break;
-            case 'e':
-                showMainMenu();
-                flag = 0;
-                break;
-            default:
-                pos(30, 22);
-                cout << "输入有误,请重新输入" << endl;
-                break;
-            }
+        {
+            pos(30, 15);
+            cout << "房间号: " << keys << endl;
+            pos(30, 17);
+            system("pause");
+
+            room.roomInfo[keys].DoDateInfoLandlord();
+        }
     }
 }
 

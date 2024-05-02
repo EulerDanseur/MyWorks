@@ -62,5 +62,8 @@
     <ClCompile Include="code\interface.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="code\room.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

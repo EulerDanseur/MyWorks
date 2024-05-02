@@ -9,25 +9,31 @@ bool cmpRepair(RepairinfoSt a, RepairinfoSt b)
 
 Repairinfo::Repairinfo()
 {
+    rpTitle = { "日期", "报告用户", "房间", "问题", "状态", "备注" };
     fstream file;
     file.open("repairinfo.txt", ios::in);
     for (int i = 0; !file.eof(); i++)
     {
         vec.push_back({});
-        file >> vec[i].date >> vec[i].reporter >> vec[i].description >> vec[i].status >> vec[i].comment;
+        file >> vec[i].date >> vec[i].reporter >> vec[i].room >> vec[i].description >> vec[i].status >> vec[i].comment;
     }
     file.close();
-    rpTitle = vec[0];
-    for (auto i = vec.begin(); i != vec.end(); i++)
+    if (vec.size() == 1 && vec[0].date == "")
     {
-        if (i->date == "")
-        {
-            i--;
-            vec.erase(i + 1);
-        }
+        vec.clear();
     }
-
-    sort(vec.begin() + 1, vec.end(), cmpRepair);
+    else 
+    {
+        for (auto i = vec.begin(); !vec.empty() && i != vec.end(); i++)
+        {
+            if (i->date == "")
+            {
+                i--;
+                vec.erase(i + 1);
+            }
+        }
+        sort(vec.begin() + 1, vec.end(), cmpRepair);
+    }
     update();
 }
 
@@ -101,7 +107,7 @@ void Repairinfo::update()
     file.open("repairinfo.txt", ios::out);
     for (auto i : vec)
     {
-        file << i.date << ' ' << i.reporter << ' ' << i.description << ' ' << i.status << ' ' << i.comment << endl;
+        file << i.date << ' ' << i.reporter << ' ' << i.room << ' ' << i.description << ' ' << i.status << ' ' << i.comment << endl;
     }
     file.close();
 }

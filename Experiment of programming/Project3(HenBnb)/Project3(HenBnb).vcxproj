@@ -144,6 +144,7 @@
     <ClCompile Include="code\moneyinfo.cpp" />
     <ClCompile Include="code\repairinfo.cpp" />
     <ClCompile Include="code\reservedinfo.cpp" />
+    <ClCompile Include="code\room.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

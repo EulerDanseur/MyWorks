@@ -8,8 +8,6 @@
 #include "info.h"
 #include "calendar.h"
 using namespace std;
-
-
 extern HANDLE hOut;
 
 class Landlord
@@ -24,6 +22,7 @@ public:
     void Login();
     void Reservedinfo();    
     void DoRepairInfo();
+    void DoRoomInfo();
     void DoDateInfo();
 
     void LandlordInfo();
