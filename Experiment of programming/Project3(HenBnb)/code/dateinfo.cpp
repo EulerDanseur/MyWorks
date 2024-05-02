@@ -128,8 +128,23 @@ void Dateinfo::showLandlord()
     cout << "********************************************" << endl;
 
     show();
+}
 
-    keyc = _getch();
+void Dateinfo::showGuest()
+{
+    system("cls");
+    pos(30, 10);
+    cout << "**********房间信息修改*******************" << endl;
+    pos(30, 12);
+    cout << "* 按q返回菜单界面                            " << endl;
+    pos(30, 14);
+    cout << "* 1.预定                     " << endl;
+    pos(30, 16);
+    cout << "*                         " << endl;
+    pos(30, 18);
+    cout << "*                         " << endl;
+    pos(30, 20);
+    cout << "********************************************" << endl;
 }
 
 void Dateinfo::showChangePrice()

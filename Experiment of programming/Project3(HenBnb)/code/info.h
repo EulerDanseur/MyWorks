@@ -11,6 +11,10 @@
 using namespace std;
 typedef string DateYMD;
 typedef time_t Time;
+#define UPKEY 72
+#define DOWNKEY 80
+#define LEFTKEY 75
+#define RIGHTKEY 77
 
 inline string toString(int num)
 {
@@ -59,6 +63,8 @@ public:
     ~Reserveinfo();
     void update();
     void show();
+    void MakeReserve(Guest *);
+    void deleteReserve(Guest *);
 };
 
 class Repairinfo
@@ -93,6 +99,7 @@ public:
 
     void show();
     void showLandlord();
+    void showGuest();
     void showChangePrice();
     void showChangeSpare();
     void update();

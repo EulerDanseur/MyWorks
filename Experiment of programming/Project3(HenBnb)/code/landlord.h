@@ -8,10 +8,7 @@
 #include "info.h"
 #include "calendar.h"
 using namespace std;
-#define UPKEY 72
-#define DOWNKEY 80
-#define LEFTKEY 75
-#define RIGHTKEY 77
+
 
 extern HANDLE hOut;
 

@@ -105,26 +105,28 @@ void GuestClass::Register()
     cout << "*                                       " << endl;
     pos(30, 37);
     cout << "********************************************" << endl;
-    pos(32, 13);
+    pos(32, 15);
     cin >> id;
     if (guestMap.find(id) != guestMap.end())
     {
+        pos(30, 39);
         cout << "该账号已存在!" << endl;
+        pos(30, 41);
         system("pause");
         return;
     }
-    pos(32, 15);
-    cin >> password;
+
     pos(32, 19);
-    cin >> name;
+    cin >> password;
     pos(32, 23);
-    cin >> gender;
+    cin >> name;
     pos(32, 27);
-    cin >> phone;
+    cin >> gender;
     pos(32, 31);
+    cin >> phone;
+    pos(32, 35);
     cin >> email;
     time_t now = time(0);
-
     tm t;
 
     localtime_s(&t, &now);
@@ -132,7 +134,9 @@ void GuestClass::Register()
     registerDate = toString(1900 + t.tm_year) + '.' + toString(t.tm_mon + 1) + '.' + toString(t.tm_mday);
     guestMap[id] = Guest(id, password, name, gender, registerDate, phone, email);
     update();
+    pos(30, 39);
     cout << "注册成功!" << endl;
+    pos(30, 41);
     system("pause");
 }
 void GuestClass::GuestInterface()
@@ -175,12 +179,12 @@ void GuestClass::GuestInterface()
 }
 
 Guest::Guest()
-: id(""), password(""), name(""), gender(""), registerDate(""), phone(""), email("") {}
+    : id(""), password(""), name(""), gender(""), registerDate(""), phone(""), email("") {}
 
-Guest::~Guest(){}
+Guest::~Guest() {}
 
 Guest::Guest(string id, string password, string name, string gender, DateYMD registerDate, string phone, string email)
-: id(id), password(password), name(name), gender(gender), registerDate(registerDate), phone(phone), email(email) {}
+    : id(id), password(password), name(name), gender(gender), registerDate(registerDate), phone(phone), email(email) {}
 
 void Guest::Menu()
 {
@@ -211,20 +215,93 @@ void Guest::Menu()
         switch (keyc)
         {
         case '1':
-            HouseInfo();
+            DoDateInfo();
             break;
         case '2':
-            MyOrderInfo();
+            // MyOrderInfo();
             break;
         case '3':
-            MyInfo();
+            // MyInfo();
             break;
         case '4':
-            MyMessage();
+            // MyMessage();
             break;
         case '5':
             flag = 0;
             break;
         }
+    }
+}
+
+void Guest::DoDateInfo()
+{
+    time_t now = time(0);
+    tm t;
+
+    localtime_s(&t, &now);
+
+    dateInfo.year = 1900 + t.tm_year;
+    dateInfo.month = t.tm_mon + 1;
+    bool flag = 1;
+    while (flag)
+    {
+        dateInfo.showGuest();
+        keyc = _getch();
+        if (keyc == -32)
+        {
+            keyc = _getch();
+            switch (keyc)
+            {
+            case UPKEY:
+                dateInfo.month--;
+                if (dateInfo.month == 0)
+                {
+                    dateInfo.month = 12;
+                    dateInfo.year--;
+                }
+                dateInfo.showGuest();
+                break;
+            case DOWNKEY:
+                dateInfo.month++;
+                if (dateInfo.month == 13)
+                {
+                    dateInfo.month = 1;
+                    dateInfo.year++;
+                }
+                dateInfo.showGuest();
+                break;
+            case LEFTKEY:
+                dateInfo.year--;
+                dateInfo.showGuest();
+                break;
+            case RIGHTKEY:
+                dateInfo.year++;
+                dateInfo.showGuest();
+                break;
+            default:
+                pos(30, 22);
+                cout << "输入有误,请重新输入" << endl;
+                break;
+            }
+        }
+        else
+            switch (keyc)
+            {
+            case '1':
+                reserveInfo.MakeReserve(this);
+                break;
+            case 'q':
+                Menu();
+                flag = 0;
+                break;
+            case 'e':
+                showMainMenu();
+                flag = 0;
+                break;
+            default:
+                pos(30, 22);
+                cout << "输入有误,请重新输入" << endl;
+                break;
+            }
     }
 }

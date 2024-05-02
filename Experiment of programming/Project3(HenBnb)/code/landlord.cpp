@@ -124,7 +124,7 @@ void Landlord::Reservedinfo()
 
 void Landlord::DoDateInfo()
 {
-    system("cls");
+    /*system("cls");
     pos(30, 2);
     cout << "请输入想查看的年月份:" << endl;
     pos(30, 3);
@@ -141,12 +141,21 @@ void Landlord::DoDateInfo()
         cout << "                           " << endl;
         pos(30, 3);
         cin >> dateInfo.year >> dateInfo.month;
-    }
+    }*/
+
+    time_t now = time(0);
+    tm t;
+
+    localtime_s(&t, &now);
+
+    dateInfo.year = 1900 + t.tm_year;
+    dateInfo.month = t.tm_mon + 1;
 
     bool flag = 1;
     while (flag)
     {
         dateInfo.showLandlord();
+        keyc = _getch();
         if (keyc == -32)
         {
             keyc = _getch();

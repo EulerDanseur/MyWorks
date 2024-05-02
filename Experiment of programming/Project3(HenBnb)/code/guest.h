@@ -18,6 +18,8 @@ public:
     Guest(string id, string name, string password, string gender, DateYMD registerDate, string phone, string email);
     ~Guest();
     void Menu();
+    void update();
+    void DoDateInfo();
 };
 
 class GuestClass
