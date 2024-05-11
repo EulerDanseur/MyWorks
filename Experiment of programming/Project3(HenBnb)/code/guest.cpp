@@ -1,6 +1,35 @@
 #include "guest.h"
 
-GuestClass guestclass;
+istream &operator>>(istream &is, Guest &guest)
+{
+    is >> guest.password >> guest.name >> guest.gender >> guest.registerDate >> guest.phone >> guest.email;
+    return is;
+}
+
+ostream &operator<<(ostream &os, Guest &guest)
+{
+    os << guest.id << ' '
+       << guest.password << ' '
+       << guest.name << ' '
+       << guest.gender << ' '
+       << guest.registerDate << ' '
+       << guest.phone << ' '
+       << guest.email << endl;
+    return os;
+}
+
+ofstream &operator<<(ofstream &ofs, Guest &guest)
+{
+    ofs << guest.id << ' '
+        << guest.password << ' '
+        << guest.name << ' '
+        << guest.gender << ' '
+        << guest.registerDate << ' '
+        << guest.phone << ' '
+        << guest.email << endl;
+    return ofs;
+}
+
 GuestClass::GuestClass()
 {
     fstream file;
@@ -9,7 +38,8 @@ GuestClass::GuestClass()
     for (int i = 0; !file.eof(); i++)
     {
         file >> id;
-        file >> guestMap[id].password >> guestMap[id].name >> guestMap[id].gender >> guestMap[id].registerDate >> guestMap[id].phone >> guestMap[id].email;
+        file >> guestMap[id];
+        guestMap[id].id = id;
     }
     file.close();
 }
@@ -21,11 +51,11 @@ GuestClass::~GuestClass()
 
 void GuestClass::update()
 {
-    fstream file;
-    file.open("guestinfo.txt", ios::out);
+    ofstream file;
+    file.open("guestinfo.txt");
     for (auto i : guestMap)
     {
-        file << i.first << ' ' << i.second.password << ' ' << i.second.name << ' ' << i.second.gender << ' ' << i.second.registerDate << ' ' << i.second.phone << ' ' << i.second.email << endl;
+        file << i.second;
     }
     file.close();
 }
@@ -34,8 +64,9 @@ void GuestClass::Login()
 {
     string id, password;
     system("cls");
+    showNow();
     pos(30, 11);
-    cout << "**********欢迎来到Henbnb的管理系统**********" << endl;
+    cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
     pos(30, 13);
     cout << "* 请输入您的账号:                          " << endl;
     pos(30, 15);
@@ -60,6 +91,14 @@ void GuestClass::Login()
     {
         pos(30, 23);
         cout << "登录成功!" << endl;
+        for (auto i = 0; i < reserveInfo.vec.size(); i++)
+        {
+            if (reserveInfo.vec[i].guest == id)
+            {
+                if (find(guestMap[id].myReserve.begin(), guestMap[id].myReserve.end(), &reserveInfo.vec[i]) == guestMap[id].myReserve.end())
+                    guestMap[id].myReserve.push_back(&reserveInfo.vec[i]);
+            }
+        }
         pos(30, 25);
         system("pause");
         guestMap[id].Menu();
@@ -76,34 +115,35 @@ void GuestClass::Login()
 void GuestClass::Register()
 {
     system("cls");
+    showNow();
     string id, name, password, gender, phone, email;
-    DateYMD registerDate;
+    Date registerDate;
     pos(30, 11);
-    cout << "**********欢迎来到Henbnb的管理系统**********" << endl;
+    cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
     pos(30, 13);
     cout << "* 请输入您的账号:                          " << endl;
     pos(30, 15);
-    cout << "*                            " << endl;
+    cout << "*                                        " << endl;
     pos(30, 17);
-    cout << "* 请输入您的密码:                                " << endl;
+    cout << "* 请输入您的密码:                          " << endl;
     pos(30, 19);
-    cout << "*                                       " << endl;
+    cout << "*                                        " << endl;
     pos(30, 21);
-    cout << "* 请输入您的姓名:                                " << endl;
+    cout << "* 请输入您的姓名:                                   " << endl;
     pos(30, 23);
-    cout << "*                                       " << endl;
+    cout << "*                                                " << endl;
     pos(30, 25);
-    cout << "* 请输入您的性别:                                " << endl;
+    cout << "* 请输入您的性别:                                  " << endl;
     pos(30, 27);
-    cout << "*                                       " << endl;
+    cout << "*                                                " << endl;
     pos(30, 29);
     cout << "* 请输入您的手机号:                                " << endl;
     pos(30, 31);
-    cout << "*                                       " << endl;
+    cout << "*                                               " << endl;
     pos(30, 33);
-    cout << "* 请输入您的邮箱:                                " << endl;
+    cout << "* 请输入您的邮箱:                                  " << endl;
     pos(30, 35);
-    cout << "*                                       " << endl;
+    cout << "*                                               " << endl;
     pos(30, 37);
     cout << "********************************************" << endl;
     pos(32, 15);
@@ -116,23 +156,67 @@ void GuestClass::Register()
         system("pause");
         return;
     }
+    else if (id.length() > 8)
+    {
+        pos(30, 39);
+        cout << "账号过长!" << endl;
+        pos(30, 41);
+        system("pause");
+        return;
+    }
+    cin.ignore();
 
     pos(32, 19);
     cin >> password;
+    cin.ignore();
+
     pos(32, 23);
-    cin >> name;
+    name = "\n";
+    getline(cin, name);
+    for (int i = 0; i < name.length(); i++)
+    {
+        if (name[i] == ' ')
+        {
+            name[i] = '_';
+        }
+    }
+
     pos(32, 27);
     cin >> gender;
+    cin.ignore();
+
     pos(32, 31);
     cin >> phone;
+    for (int i = 0; i < phone.length(); i++)
+    {
+        if (phone[i] < '0' || phone[i] > '9')
+        {
+            pos(30, 39);
+            cout << "手机号有误!" << endl;
+            pos(30, 41);
+            system("pause");
+            return;
+        }
+    }
+
     pos(32, 35);
     cin >> email;
-    time_t now = time(0);
+    if (cin.peek() != '\n')
+    {
+        pos(30, 39);
+        cout << "邮箱有误!" << endl;
+        pos(30, 41);
+        system("pause");
+        return;
+    }
+
+    time_t today = time(0);
     tm t;
+    localtime_s(&t, &today);
+    registerDate.year = t.tm_year + 1900;
+    registerDate.month = t.tm_mon + 1;
+    registerDate.day = t.tm_mday;
 
-    localtime_s(&t, &now);
-
-    registerDate = toString(1900 + t.tm_year) + '.' + toString(t.tm_mon + 1) + '.' + toString(t.tm_mday);
     guestMap[id] = Guest(id, password, name, gender, registerDate, phone, email);
     update();
     pos(30, 39);
@@ -147,8 +231,9 @@ void GuestClass::GuestInterface()
     while (flag)
     {
         system("cls");
+        showNow();
         pos(30, 10);
-        cout << "**********欢迎来到Henbnb的管理系统**********" << endl;
+        cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
         pos(30, 11);
         cout << "*                                       " << endl;
         pos(30, 13);
@@ -180,11 +265,13 @@ void GuestClass::GuestInterface()
 }
 
 Guest::Guest()
-    : id(""), password(""), name(""), gender(""), registerDate(""), phone(""), email("") {}
+    : id(""), password(""), name(""), gender(""), registerDate({}), phone(""), email("")
+{
+}
 
 Guest::~Guest() {}
 
-Guest::Guest(string id, string password, string name, string gender, DateYMD registerDate, string phone, string email)
+Guest::Guest(string id, string password, string name, string gender, Date registerDate, string phone, string email)
     : id(id), password(password), name(name), gender(gender), registerDate(registerDate), phone(phone), email(email) {}
 
 void Guest::Menu()
@@ -194,8 +281,11 @@ void Guest::Menu()
     while (flag)
     {
         system("cls");
+        showNow();
+        pos(30, 9);
+        cout << name + "您好" << endl;
         pos(30, 10);
-        cout << "**********欢迎来到 Henbnb的管理系统**********" << endl;
+        cout << "********欢迎来到 Henbnb的用户系统**********" << endl;
         pos(30, 11);
         cout << "*                                       " << endl;
         pos(30, 13);
@@ -203,13 +293,13 @@ void Guest::Menu()
         pos(30, 15);
         cout << "* 2.查看我的订单                          " << endl;
         pos(30, 17);
-        cout << "* 3.我的信息                               " << endl;
+        cout << "* 3.报修                               " << endl;
         pos(30, 19);
-        cout << "* 4.我的消息                               " << endl;
+        cout << "* 4.我的信息                               " << endl;
         pos(30, 21);
         cout << "* 5.退出                                 " << endl;
         pos(30, 23);
-        cout << "*                                       " << endl;
+        cout << "* 6.我的消息                                      " << endl;
         pos(30, 25);
         cout << "********************************************" << endl;
         keyc = _getch();
@@ -219,10 +309,10 @@ void Guest::Menu()
             DoRoomInfo();
             break;
         case '2':
-            // MyOrderInfo();
+            MyReserveInfo();
             break;
         case '3':
-            // MyInfo();
+            DoRepairInfo();
             break;
         case '4':
             // MyMessage();
@@ -241,19 +331,23 @@ void Guest::DoRoomInfo()
     while (flag)
     {
         system("cls");
+        showNow();
+        roomclass.show();
+        pos(30, 9);
+        cout << name + "您好" << endl;
         pos(30, 10);
         cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
         pos(30, 12);
         cout << "* 请输入您要查看的房间号码(按q返回上一级):                  " << endl;
         pos(30, 13);
         cin >> keys;
-        room.show();
+
         if (keys == "q")
         {
             flag = 0;
             break;
         }
-        else if (room.roomInfo.find(keys) == room.roomInfo.end())
+        else if (roomclass.room.find(keys) == roomclass.room.end())
         {
             pos(30, 15);
             cout << "该房间不存在" << endl;
@@ -267,7 +361,319 @@ void Guest::DoRoomInfo()
             pos(30, 17);
             system("pause");
 
-            room.roomInfo[keys].DoDateInfoLandlord();
+            roomclass.room[keys].DoRoomInfoGuest(id);
         }
+    }
+}
+
+void Guest::MyReserveInfo()
+{
+    keys = "";
+    bool flag = 1;
+    while (flag)
+    {
+        showReserve();
+        keyc = _getch();
+
+        if (keyc == 'q')
+        {
+            break;
+        }
+        else if (keyc == 's')
+        {
+            ScoreReserve();
+        }
+        else if (keyc == 'r')
+        {
+            DeleteReserve();
+        }
+    }
+}
+
+void Guest::showReserve()
+{
+    system("cls");
+    showNow();
+    pos(30, 10);
+    cout << "**********已预订信息管理**********************" << endl;
+    pos(30, 12);
+    cout << "*  按q返回菜单   按s为订单评分   按r取消订单 " << endl;
+    pos(30, 14);
+    cout << "********************************************" << endl;
+
+    pos(20, 16);
+    cout << "序号";
+    pos(30, 16);
+    cout << "房间号";
+    pos(40, 16);
+    cout << "入住日期";
+    pos(55, 16);
+    cout << "退房日期";
+    pos(70, 16);
+    cout << "状态";
+    pos(80, 16);
+    cout << "费用";
+    pos(90, 16);
+    cout << "评分";
+
+    int order = 1;
+    for (auto i : myReserve)
+    {
+        pos(20, 16 + order);
+        cout << order;
+        pos(30, 16 + order);
+        cout << i->room;
+        pos(40, 16 + order);
+        cout << i->checkin;
+        pos(55, 16 + order);
+        cout << i->checkout;
+        pos(70, 16 + order);
+        cout << i->status;
+        pos(80, 16 + order);
+        cout << i->money;
+        pos(90, 16 + order);
+        if (i->status == "已完成")
+            i->score == -1 ? cout << "未评分" : cout << i->score;
+        else
+            cout << "-";
+
+        order++;
+    }
+}
+
+void Guest::DeleteReserve()
+{
+    showReserve();
+    pos(20, 15);
+    cout << "请输入您要取消的订单的序号:                             ";
+    pos(48, 15);
+    int order;
+    cin >> order;
+
+    Date today;
+
+    if (order > myReserve.size() || order < 1)
+    {
+        pos(30, 2);
+        cout << "不存在该订单" << endl;
+        pos(30, 3);
+        system("pause");
+        return;
+    }
+    else if (myReserve[order - 1]->checkin < today + 2)
+    {
+        pos(30, 2);
+        cout << "距离入住时间不足两天，无法取消订单" << endl;
+        pos(30, 3);
+        system("pause");
+        return;
+    }
+    else if (myReserve[order - 1]->status == "已取消")
+    {
+        pos(30, 2);
+        cout << "该订单已取消" << endl;
+        pos(30, 3);
+        system("pause");
+        return;
+    }
+    else
+    {
+        moneyInfo.vec.push_back({today, '-' + myReserve[order - 1]->money, id + "取消订单"});
+        moneyInfo.update();
+
+        myReserve[order - 1]->status = "已取消";
+        reserveInfo.update();
+        roomclass.update();
+
+        showReserve();
+
+        pos(30, 2);
+        cout << "取消成功，" << myReserve[order - 1]->money << "元按原支付方式返回" << endl;
+        pos(30, 3);
+        system("pause");
+    }
+}
+
+void Guest::ScoreReserve()
+{
+    showReserve();
+    pos(20, 15);
+    cout << "请输入您要评分的订单的序号:                             ";
+    pos(48, 15);
+    int order;
+    cin >> order;
+    if (order > myReserve.size() || order < 1)
+    {
+        pos(30, 2);
+        cout << "不存在该订单" << endl;
+        pos(30, 3);
+        system("pause");
+        return;
+    }
+    else if (myReserve[order - 1]->status != "已完成")
+    {
+        pos(30, 2);
+        cout << "该订单未完成" << endl;
+        pos(30, 3);
+        system("pause");
+        return;
+    }
+    else if (myReserve[order - 1]->score != -1)
+    {
+        pos(30, 2);
+        cout << "该订单已评分, 确认修改评分？(y/n)" << endl;
+        pos(30, 3);
+        char choice;
+        cin >> choice;
+        if (choice != 'y')
+        {
+            pos(30, 2);
+            cout << "已取消" << endl;
+            pos(30, 3);
+            system("pause");
+            return;
+        }
+        else
+        {
+            double score;
+            while (true)
+            {
+                pos(30, 2);
+                cout << "请输入您的评分(0-10):                                        ";
+                pos(51, 2);
+                cin >> score;
+                if (score >= 0 && score <= 10)
+                    break;
+                else
+                {
+                    pos(30, 2);
+                    cout << "评分范围为0-10                         " << endl;
+                    pos(50, 2);
+                    system("pause");
+                    pos(30, 3);
+                }
+            }
+            myReserve[order - 1]->score = score;
+            Reserveinfo_to_Roomscoreinfo();
+            reserveInfo.update();
+            pos(30, 3);
+            cout << "评分成功" << endl;
+            pos(30, 4);
+            system("pause");
+        }
+    }
+    else
+    {
+
+        double score;
+        while (true)
+        {
+            pos(30, 2);
+            cout << "请输入您的评分(0-10):                                        ";
+            pos(51, 2);
+            cin >> score;
+            if (score >= 0 && score <= 10)
+                break;
+            else
+            {
+                pos(30, 2);
+                cout << "评分范围为0-10                                           " << endl;
+                pos(40, 2);
+                system("pause");
+                pos(30, 3);
+            }
+        }
+        myReserve[order - 1]->score = score;
+
+        roomclass.room[myReserve[order - 1]->room].score += score;
+        roomclass.room[myReserve[order - 1]->room].scoreTimes++;
+        reserveInfo.update();
+        pos(30, 3);
+        cout << "评分成功" << endl;
+        pos(30, 4);
+        system("pause");
+    }
+}
+
+void Guest::DoRepairInfo()
+{
+
+    while (true)
+    {
+        system("cls");
+        showNow();
+        int order = 1;
+        pos(10, 10);
+        cout << "按a新增报修，按q返回:" << endl;
+        char keyc;
+        pos(10, 12);
+        cout << "您的报修信息如下:" << endl;
+        pos(10, 15);
+        cout.setf(ios::left); // 设置对齐方式为left
+        cout << setw(10) << "序号" << repairInfo.rpTitle << endl;
+
+        for (auto i : repairInfo.vec)
+        {
+            if (i.reporter == id)
+            {
+                pos(10, 15 + order);
+                cout.setf(ios::left); // 设置对齐方式为left
+                cout << setw(10) << order << i;
+                order++;
+            }
+        }
+
+        keyc = _getch();
+        if (keyc == 'a')
+        {
+            RepairReport();
+        }
+        else if (keyc == 'q')
+        {
+            return;
+        }
+    }
+}
+
+void Guest::RepairReport()
+{
+    system("cls");
+    showNow();
+    pos(20, 15);
+    cout << "请输入您要报修的房间号:                             ";
+    roomclass.show();
+    pos(48, 15);
+    string roomNum;
+    cin >> roomNum;
+    if (roomclass.room.find(roomNum) == roomclass.room.end())
+    {
+        pos(30, 16);
+        cout << "不存在该房间" << endl;
+        pos(30, 17);
+        system("pause");
+        return;
+    }
+    else
+    {
+        pos(30, 16);
+        cout << "请输入房间问题" << endl;
+        pos(30, 17);
+        string problem;
+        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n');
+        getline(cin, problem);
+        for (int i = 0; i < problem.size(); i++)
+        {
+            if (problem[i] == ' ')
+            {
+                problem[i] = '-';
+            }
+        }
+        Date today;
+        repairInfo.vec.push_back({today, id, roomNum, problem, "未处理", "无", "0"});
+        pos(30, 18);
+        cout << "报修成功" << endl;
+        pos(30, 19);
+        system("pause");
+        repairInfo.update();
     }
 }

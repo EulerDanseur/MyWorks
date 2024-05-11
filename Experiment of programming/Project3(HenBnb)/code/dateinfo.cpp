@@ -1,7 +1,10 @@
 #include "landlord.h"
+#include "guest.h"
 
-void Dateinfo::show()
+void Room::showCalendar()
 {
+    showNow();
+
     int startx = 76;
     int starty = 10;
     int width = 12;
@@ -12,8 +15,7 @@ void Dateinfo::show()
 
     int daysAmount = DaysAmount(month, year);
     int DayOfWeek = CalcDayOfWeek(year, month, 1) - 1;
-    string dateStr, monthStr = toString(month), yearStr = toString(year);
-    string dateTempStr = yearStr + '.' + monthStr;
+    Date dateTemp = Date(year, month, 1);
 
     pos(startx + width * 1, starty - 2);
     printf("%s\t", "Mon.");
@@ -42,11 +44,9 @@ void Dateinfo::show()
         DayOfWeek = CalcDayOfWeek(year, month, date);
         pos(startx + width * DayOfWeek, starty + row * height);
         printf("%d\t", date);
+        dateTemp = Date(year, month, date);
 
-        dateStr = toString(date);
-        dateTempStr = yearStr + '.' + monthStr + '.' + dateStr;
-
-        if (map.find(dateTempStr) == map.end())
+        if (map.find(dateTemp) == map.end())
         {
             pos(startx + width * DayOfWeek, starty + row * height + 1);
             printf("%s\t", basicPrice.c_str());
@@ -57,13 +57,13 @@ void Dateinfo::show()
         else
         {
             pos(startx + width * DayOfWeek, starty + row * height + 1);
-            if (map[dateTempStr].price == "-1")
+            if (map[dateTemp].price == "-1")
                 printf("%s\t", basicPrice.c_str());
             else
-                printf("%s\t", map[dateTempStr].price.c_str());
+                printf("%s\t", map[dateTemp].price.c_str());
 
             pos(startx + width * DayOfWeek, starty + row * height + 2);
-            printf("%s\t", map[dateTempStr].status.c_str());
+            printf("%s\t", map[dateTemp].status.c_str());
         }
         if (DayOfWeek == 7)
             row++;
@@ -71,9 +71,10 @@ void Dateinfo::show()
     cout << endl;
 }
 
-void Dateinfo::showLandlord()
+void Room::showLandlord()
 {
     system("cls");
+    showNow();
     pos(30, 10);
     cout << "**********房间信息修改*******************" << endl;
     pos(30, 12);
@@ -94,15 +95,16 @@ void Dateinfo::showLandlord()
     else
         cout << "当前房间状态为:可预约" << endl;
 
-    show();
+    showNow();
+    showCalendar();
 }
 
-void Dateinfo::DoDateInfoLandlord()
+void Room::DoRoomInfoLandlord()
 {
-    time_t now = time(0);
+    time_t today = time(0);
     tm t;
 
-    localtime_s(&t, &now);
+    localtime_s(&t, &today);
 
     year = 1900 + t.tm_year;
     month = t.tm_mon + 1;
@@ -154,15 +156,15 @@ void Dateinfo::DoDateInfoLandlord()
             {
             case '1':
                 ChangeDatePrice();
-                room.update();
+                roomclass.update();
                 break;
             case '2':
                 ChangeDateSpare();
-                room.update();
+                roomclass.update();
                 break;
             case '3':
                 accesible = !accesible;
-                room.update();
+                roomclass.update();
                 break;
             case 'r':
                 flag = 0;
@@ -179,12 +181,12 @@ void Dateinfo::DoDateInfoLandlord()
     }
 }
 
-void Dateinfo::DoDateInfoGuest()
+void Room::DoRoomInfoGuest(string id)
 {
-    time_t now = time(0);
+    time_t today = time(0);
     tm t;
 
-    localtime_s(&t, &now);
+    localtime_s(&t, &today);
 
     year = 1900 + t.tm_year;
     month = t.tm_mon + 1;
@@ -235,14 +237,21 @@ void Dateinfo::DoDateInfoGuest()
             switch (keyc)
             {
             case '1':
-                MakeReserve();
-                room.update();
+                if (accesible == 1)
+                    MakeReserve(id);
+                else
+                {
+                    pos(30, 22);
+                    cout << "当前房间不可预约" << endl;
+                    pos(30, 24);
+                    system("pause");
+                }
+                roomclass.update();
                 break;
             case 'r':
                 flag = 0;
                 break;
-            case 'e':
-                showMainMenu();
+            case 'q':
                 flag = 0;
                 break;
             default:
@@ -253,11 +262,12 @@ void Dateinfo::DoDateInfoGuest()
     }
 }
 
-void Dateinfo::showGuest()
+void Room::showGuest()
 {
     system("cls");
+    showNow();
     pos(30, 10);
-    cout << "**********房间信息修改*******************" << endl;
+    printf("**********%s房间信息*******************", id.c_str());
     pos(30, 12);
     cout << "* 按q返回菜单界面    按r返回上一级    " << endl;
     pos(30, 14);
@@ -269,12 +279,13 @@ void Dateinfo::showGuest()
     pos(30, 20);
     cout << "********************************************" << endl;
 
-    show();
+    showCalendar();
 }
 
-void Dateinfo::showChangePrice()
+void Room::showChangePrice()
 {
     system("cls");
+    showNow();
     pos(30, 10);
     cout << "**********修改房价*************************" << endl;
     pos(30, 12);
@@ -288,22 +299,23 @@ void Dateinfo::showChangePrice()
     pos(30, 20);
     cout << "********************************************" << endl;
 
-    show();
+    showCalendar();
 
     keyc = _getch();
 }
 
-void Dateinfo::ChangeDatePrice()
+void Room::ChangeDatePrice()
 {
 
     int price;
     int date;
-    string datestr;
+    Date dateD;
     bool flag = 1;
 
     while (flag)
     {
         showChangePrice();
+        showNow();
         if (keyc == -32)
         {
             keyc = _getch();
@@ -350,24 +362,37 @@ void Dateinfo::ChangeDatePrice()
                 pos(30, 23);
                 cin >> price;
                 basicPrice = '$' + to_string(price);
-                show();
+                roomclass.update();
+
+                showCalendar();
                 break;
             case '2':
                 pos(30, 22);
                 cout << "日期(如:21):" << endl;
                 pos(30, 23);
                 cin >> date;
-                datestr = toString(year) + '.' + toString(month) + '.' + toString(date);
+                dateD = Date(year, month, date);
+                if (map.find(dateD) == map.end())
+                {
+                    map[dateD].status = "空闲";
+                }
+                else if (map[dateD].status != "空闲")
+                {
+                    pos(30, 26);
+                    cout << "该日期已被客户预定" << endl;
+                    pos(30, 27);
+                    system("pause");
+                    showCalendar();
+                    break;
+                }
                 pos(30, 24);
                 cout << "价格:" << endl;
                 pos(30, 25);
                 cin >> price;
-                if (map.find(datestr) == map.end())
-                {
-                    map[datestr].status = "空闲";
-                }
-                map[datestr].price = '$' + to_string(price);
-                show();
+
+                map[dateD].price = '$' + to_string(price);
+                roomclass.update();
+                showCalendar();
                 break;
             case 'r':
                 flag = 0;
@@ -380,33 +405,34 @@ void Dateinfo::ChangeDatePrice()
     }
 }
 
-void Dateinfo::showChangeSpare()
+void Room::showChangeSpare()
 {
     system("cls");
+    showNow();
     pos(30, 10);
     cout << "**********增删空闲时间*********************" << endl;
     pos(30, 12);
     cout << "*                                       " << endl;
     pos(30, 14);
-    cout << "* 1.修改空闲状态                           " << endl;
+    cout << "* 修改空闲状态                           " << endl;
     pos(30, 16);
     cout << "*                               " << endl;
     pos(30, 18);
-    cout << "*                                       " << endl;
+    cout << "* 按r返回上一级                                      " << endl;
     pos(30, 20);
     cout << "********************************************" << endl;
 
-    show();
+    showCalendar();
 
     keyc = _getch();
 }
 
-void Dateinfo::ChangeDateSpare()
+void Room::ChangeDateSpare()
 {
 
     string status;
     int date;
-    string datestr;
+    Date dateD;
     bool flag = 1;
 
     while (flag)
@@ -457,23 +483,20 @@ void Dateinfo::ChangeDateSpare()
                 cout << "日期(如:21):" << endl;
                 pos(30, 23);
                 cin >> date;
-                datestr = toString(year) + '.' + toString(month) + '.' + toString(date);
-                // pos(30, 24);
-                // cout << "状态: " << endl;
-                // pos(30, 25);
-                // cin >> status;
-                if (map.find(datestr) == map.end())
+                dateD = Date(year, month, date);
+                if (map.find(dateD) == map.end())
                 {
-                    map[datestr].price = "-1";
-                    map[datestr].status = "房主占用";
+                    map[dateD].price = "-";
+                    map[dateD].status = "房主占用";
                 }
-                else if (map[datestr].status == "空闲")
+                else if (map[dateD].status == "空闲")
                 {
-                    map[datestr].status = "房主占用";
+                    map[dateD].price = "-";
+                    map[dateD].status = "房主占用";
                 }
-                else if (map[datestr].status == "房主占用")
+                else if (map[dateD].status == "房主占用")
                 {
-                    map[datestr].status = "空闲";
+                    map.erase(dateD);
                 }
                 else
                 {
@@ -484,7 +507,7 @@ void Dateinfo::ChangeDateSpare()
 
                     // 可以增加联系客户的功能
                 }
-                show();
+                showCalendar();
                 break;
             case 'r':
                 flag = 0;
@@ -497,38 +520,172 @@ void Dateinfo::ChangeDateSpare()
     }
 }
 
-void Dateinfo::MakeReserve()
+void Room::MakeReserve(string guestid)
 {
     bool flag = 1;
     while (flag)
     {
-        string idTemp, checkinTemp, checkoutTemp;
+        Date checkinTemp, checkoutTemp;
         system("cls");
-        pos(30, 10);
+        showNow();
+        showCalendar();
+        pos(30, 9);
         cout << "**********预定房间*********************" << endl;
+        pos(30, 11);
+        printf("* 确定预约当前%s房间?(按y确认, 按任意键返回)           ", id.c_str());
         pos(30, 12);
-        cout << "* 请输入房间号:                                      " << endl;
-        pos(50, 14);
-        cin >> idTemp;
+        char choice;
+        choice = _getch();
+        if (choice != 'y')
+        {
+            break;
+        }
 
-        if (map.find(idTemp) == map.end())
+        pos(30, 14);
+        cout << "* 请输入入住时间(格式:yyyy mm dd)               " << endl;
+        pos(64, 14);
+        cin.ignore((std::numeric_limits<streamsize>::max)(), '\n');
+        cin >> checkinTemp;
+        if (checkinTemp < checkoutTemp)
         {
             pos(30, 16);
-            cout << "该房间不存在" << endl;
+            cout << "入住时间不能早于今天" << endl;
             pos(30, 18);
             system("pause");
             continue;
         }
-        pos(30, 14);
-        cout << "* 请输入入住时间               " << endl;
-        pos(50, 14);
-        cin >> checkinTemp;
         pos(30, 16);
-        cout << "* 请输入离店时间               " << endl;
-        pos(50, 16);
+        cout << "* 请输入离店时间(格式:yyyy mm dd)               " << endl;
+        pos(64, 16);
         cin >> checkoutTemp;
         pos(30, 28);
         cout << "********************************************" << endl;
+        int price = 0;
+        if (checkinTemp.IsValid() == false || checkoutTemp.IsValid() == false)
+        {
+            pos(30, 20);
+            cout << "时间格式有误" << endl;
+            pos(30, 22);
+            system("pause");
+            continue;
+        }
+        else if (checkinTemp > checkoutTemp)
+        {
+            pos(30, 20);
+            cout << "离店时间不能早于入住时间" << endl;
+            pos(30, 22);
+            system("pause");
+            continue;
+        }
+        for (Date d = checkinTemp; d <= checkoutTemp; d++)
+        {
+            if (map.find(d) != map.end())
+            {
+                if (map[d].status == "空闲")
+                {
+                    pos(30, 20);
+                    price += stoi(map[d].price.substr(1, map[d].price.length() - 1));
+                }
+                else
+                {
+                    pos(30, 20);
+                    cout << "该时段已被占用" << endl;
+                    pos(30, 22);
+                    flag = 0;
+                    system("pause");
+                    break;
+                }
+            }
+            else
+            {
+                price += stoi(basicPrice.substr(1, basicPrice.length() - 1));
+            }
+        }
 
+        if (flag)
+        {
+            while (true)
+            {
+                pos(30, 20);
+                cout << "预定成功" << endl;
+                pos(30, 22);
+                cout << "请支付费用:" << price << endl;
+                pos(30, 24);
+                cout << "是否支付?(y/n)" << endl;
+                char pay;
+                pay = _getch();
+                if (pay == 'y')
+                {
+                    pos(30, 26);
+                    cout << "请输入密码" << endl;
+                    string password;
+                    pos(30, 27);
+                    cin >> password;
+                    if (password != guestclass.guestMap[guestid].password)
+                    {
+                        pos(30, 28);
+                        cout << "密码错误" << endl;
+                        pos(30, 30);
+                        system("pause");
+
+                        pos(30, 26);
+                        cout << "                                            " << endl;
+                        pos(30, 27);
+                        cout << "                                            " << endl;
+                        pos(30, 28);
+                        cout << "********************************************" << endl;
+                        pos(30, 30);
+                        cout << "                                            " << endl;
+                    }
+                    else
+                    {
+                        pos(30, 28);
+                        cout << "支付成功" << endl;
+                        pos(30, 30);
+                        system("pause");
+
+                        reserveInfo.vec.push_back({id, checkinTemp, checkoutTemp, guestid, to_string(price), "未完成", -1});
+                        guestclass.guestMap[guestid].myReserve.push_back(&reserveInfo.vec[reserveInfo.vec.size() - 1]);
+                        reserveInfo.update();
+
+                        moneyInfo.vec.push_back({checkinTemp, to_string(price), id + "预定" + id});
+
+                        Reserveinfo_to_RoomDateinfo();
+                        roomclass.update();
+                        return;
+                    }
+                }
+                else if (pay == 'n')
+                {
+                    break;
+                }
+            }
+        }
     }
+}
+
+ostream &operator<<(ostream &out, const Room &roominfo)
+{
+    out.setf(ios::left);
+    string score = "";
+    if (roominfo.scoreTimes != 0)
+        score = to_string(roominfo.score / roominfo.scoreTimes).substr(0, 4);
+    else
+        score = "-";
+
+    if (roominfo.accesible == 0)
+        out << setw(5) << roominfo.id
+            << setw(10) << "不可预约"
+            << setw(10) << roominfo.basicPrice
+            << setw(10) << roominfo.usedTimes
+            << setw(6) << score
+            << setw(10) << roominfo.scoreTimes;
+    else
+        out << setw(5) << roominfo.id
+            << setw(10) << "可预约"
+            << setw(10) << roominfo.basicPrice
+            << setw(10) << roominfo.usedTimes
+            << setw(6) << score
+            << setw(10) << roominfo.scoreTimes;
+    return out;
 }

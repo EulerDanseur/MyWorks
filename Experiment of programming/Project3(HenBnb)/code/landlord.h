@@ -18,12 +18,14 @@ public:
 
     Landlord();
     ~Landlord();
+
     void Menu();
     void Login();
+
     void Reservedinfo();    
     void DoRepairInfo();
+
     void DoRoomInfo();
-    void DoDateInfo();
 
     void LandlordInfo();
     void ChangePassword();

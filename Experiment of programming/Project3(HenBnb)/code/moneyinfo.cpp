@@ -1,16 +1,9 @@
 #include "info.h"
 
-Moneyinfo moneyInfo;
-
-bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b)
-{
-    return a.date < b.date;
-}
-
 Moneyinfo::Moneyinfo()
 {
-    fstream file;
-    file.open("moneyinfo.txt", ios::in);
+    ifstream file;
+    file.open("moneyinfo.txt");
     for (int i = 0; !file.eof(); i++)
     {
         vec.push_back({});
@@ -29,7 +22,21 @@ Moneyinfo::Moneyinfo()
         else
             totalIncome += atoi(i.money.c_str());
     }
-
+    if (vec.size() == 1 && vec[0].money == "")
+    {
+        vec.clear();
+    }
+    else
+    {
+        for (auto i = vec.begin(); !vec.empty() && i != vec.end(); i++)
+        {
+            if (i->money == "")
+            {
+                i--;
+                vec.erase(i + 1);
+            }
+        }
+    }
     update();
 }
 
@@ -40,17 +47,10 @@ Moneyinfo::~Moneyinfo()
 
 void Moneyinfo::update()
 {
-    for (auto i = vec.begin(); i != vec.end(); i++)
-    {
-        if (i->date == "")
-        {
-            i--;
-            vec.erase(i + 1);
-        }
-    }
-
-    fstream file;
-    file.open("moneyinfo.txt", ios::out);
+    sort(vec.begin(), vec.end(), [](moneyInfoSt a, moneyInfoSt b)
+         { return a.date < b.date; });
+    ofstream file;
+    file.open("moneyinfo.txt");
     for (auto i : vec)
     {
         file << i.date << ' ' << i.money << ' ' << i.source << endl;
@@ -73,6 +73,7 @@ void Moneyinfo::update()
 void Moneyinfo::show()
 {
     system("cls");
+    showNow();
     pos(30, 9);
     cout << "**********资金流水**********" << endl;
     pos(30, 11);
@@ -118,57 +119,96 @@ void Moneyinfo::show()
 
 void Moneyinfo::AddMoneyInfo()
 {
-    string date, money, source;
-    pos(30, 22);
-    cout << "日期:";
-    pos(36, 22);
-    cin >> date;
-    pos(30, 24);
-    cout << "金额:";
-    pos(36, 24);
-    cin >> money;
-    pos(30, 26);
-    cout << "来源:";
-    pos(36, 26);
-    cin >> source;
-    vec.push_back(moneyInfoSt{date, money, source});
-    sort(vec.begin(), vec.end(), cmpMoneyInfo);
-    update();
-    show();
-    pos(30, 28);
-    cout << "添加成功" << endl;
-    pos(30, 30);
-    system("pause");
+    Date date;
+    string money, source;
+    while (true)
+    {
+        pos(30, 20);
+        cout << "日期:";
+        pos(36, 22);
+
+        cin >> date;
+        if (!date.IsValid())
+        {
+            pos(30, 24);
+            cout << "日期不合法" << endl;
+            pos(30, 26);
+            system("pause");
+        }
+        else
+        {
+            pos(30, 24);
+            cout << "金额:";
+            pos(36, 24);
+
+            cin >> money;
+            pos(30, 26);
+            cout << "来源:";
+            pos(36, 26);
+
+            cin >> source;
+            vec.push_back(moneyInfoSt{date, money, source}); // moneyInfoSt{date, money, source};
+            sort(vec.begin(), vec.end(), [](moneyInfoSt a, moneyInfoSt b)
+                 { return a.date < b.date; });
+            update();
+            show();
+            pos(30, 28);
+            cout << "修改成功" << endl;
+            pos(30, 30);
+            system("pause");
+            return;
+        }
+    }
 }
 
 void Moneyinfo::ChangeMoneyInfo()
 {
-    string date, money, source;
+    Date date;
+    string money, source;
     int i = 0;
-    pos(30, 20);
-    cout << "请选择要修改的项:";
-    pos(36, 21);
-    cin >> i;
-    pos(30, 22);
-    cout << "日期:";
-    pos(36, 22);
-    cin >> date;
-    pos(30, 24);
-    cout << "金额:";
-    pos(36, 24);
-    cin >> money;
-    pos(30, 26);
-    cout << "来源:";
-    pos(36, 26);
-    cin >> source;
-    vec[i] = moneyInfoSt{date, money, source};
-    sort(vec.begin(), vec.end(), cmpMoneyInfo);
-    update();
-    show();
-    pos(30, 28);
-    cout << "修改成功" << endl;
-    pos(30, 30);
-    system("pause");
+    while (true)
+    {
+        pos(30, 20);
+        cout << "请选择要修改的项:";
+        pos(36, 21);
+
+        cin >> i;
+        pos(30, 22);
+        cout << "日期:";
+        pos(36, 22);
+
+        cin >> date;
+        if (!date.IsValid())
+        {
+            pos(30, 24);
+            cout << "日期不合法" << endl;
+            pos(30, 26);
+            system("pause");
+        }
+        else
+        {
+            pos(30, 24);
+            cout << "金额:";
+            pos(36, 24);
+
+            cin >> money;
+            pos(30, 26);
+            cout << "来源:";
+            pos(36, 26);
+
+            cin >> source;
+            vec[i] = moneyInfoSt{date, money, source};
+            sort(vec.begin(), vec.end(), [](moneyInfoSt a, moneyInfoSt b)
+                 { return a.date < b.date; });
+            update();
+            show();
+            pos(30, 28);
+            cout << "修改成功" << endl;
+            pos(30, 30);
+            system("pause");
+            return;
+        }
+    }
 }
 
 void Moneyinfo::DeleteMoneyInfo()
@@ -177,6 +217,7 @@ void Moneyinfo::DeleteMoneyInfo()
     pos(30, 20);
     cout << "请选择要删除的项:";
     pos(36, 21);
+
     cin >> i;
     vec.erase(vec.begin() + i - 1);
     update();

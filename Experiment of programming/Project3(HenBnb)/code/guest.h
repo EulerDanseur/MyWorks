@@ -2,7 +2,6 @@
 #include "interface.h"
 #include "info.h"
 
-typedef string DateYMD;
 class Guest
 {
 public:
@@ -11,23 +10,37 @@ public:
     string password;
     string name;
     string gender;
-
-    DateYMD registerDate;
+    Date registerDate;
     string phone;
     string email;
 
+    vector<ReserveinfoSt *> myReserve;
+
     Guest();
-    Guest(string id, string name, string password, string gender, DateYMD registerDate, string phone, string email);
+    Guest(string id, string name, string password, string gender, Date registerDate, string phone, string email);
     ~Guest();
+
     void Menu();
-    void update();
+
     void DoRoomInfo();
+    void MakeReserve(string guestid);
+    void MyReserveInfo();
+    void showReserve();
+    void DeleteReserve();
+    void ScoreReserve();
+
+    void DoRepairInfo();
+    void RepairReport();
+
+    void MyInfo();
+    void Message();
 };
 
 class GuestClass
 {
 public:
     map<string, Guest> guestMap; // <id, guest>
+
     GuestClass();
     ~GuestClass();
     void update();

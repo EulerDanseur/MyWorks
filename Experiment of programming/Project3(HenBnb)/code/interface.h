@@ -9,6 +9,6 @@ extern char keyc;
 extern string keys;
 extern int keynum;
 
-void pos(int x,int y);
+void pos(short x,short y);
 
 void showMainMenu();

@@ -1,17 +1,32 @@
 #include "landlord.h"
-
-Reserveinfo reserveInfo;
-
 Reserveinfo::Reserveinfo()
 {
-    fstream file;
-    file.open("reservedinfo.txt", ios::in);
+    Date today;
+    ifstream file;
+    file.open("reservedinfo.txt");
     for (int i = 0; !file.eof(); i++)
     {
         vec.push_back({});
-        file >> vec[i].room >> vec[i].guest >> vec[i].checkin >> vec[i].checkout;
+        file >> vec[i].checkin >> vec[i].checkout >> vec[i].room >> vec[i].guest >> vec[i].money >> vec[i].status >> vec[i].score;
+        if (vec[i].checkout < today && vec[i].status == "未完成")
+            vec[i].status = "已完成";
     }
     file.close();
+    if (vec.size() == 1 && vec[0].room == "")
+    {
+        vec.clear();
+    }
+    else
+    {
+        for (auto i = vec.begin(); !vec.empty() && i != vec.end(); i++)
+        {
+            if (i->room == "")
+            {
+                i--;
+                vec.erase(i + 1);
+            }
+        }
+    }
     update();
 }
 
@@ -20,9 +35,11 @@ Reserveinfo::~Reserveinfo()
     update();
 }
 
-void Reserveinfo::show(string id)
+void Reserveinfo::showLandlord(string id)
 {
     system("cls");
+    showNow();
+
     pos(30, 10);
     cout << "**********已预订信息管理*******************" << endl;
     pos(30, 12);
@@ -39,7 +56,14 @@ void Reserveinfo::show(string id)
     pos(60, 16);
     cout << "入住日期";
     pos(75, 16);
-    cout << "退房日期" << endl;
+    cout << "退房日期";
+    pos(90, 16);
+    cout << "费用";
+    pos(100, 16);
+    cout << "状态" << endl;
+    pos(120, 16);
+    cout << "评分" << endl;
+
     int order = 1;
     if (id == "all")
         for (auto i : vec)
@@ -54,6 +78,15 @@ void Reserveinfo::show(string id)
             cout << i.checkin;
             pos(75, 16 + order);
             cout << i.checkout << endl;
+            pos(90, 16 + order);
+            cout << i.money << endl;
+            pos(100, 16 + order);
+            cout << i.status << endl;
+            pos(120, 16 + order);
+            if (i.status == "已完成")
+                i.score == -1 ? cout << "未评分" : cout << i.score;
+            else
+                cout << "-";
 
             order++;
         }
@@ -71,6 +104,12 @@ void Reserveinfo::show(string id)
                 cout << i.checkin;
                 pos(75, 16 + order);
                 cout << i.checkout << endl;
+                pos(90, 16 + order);
+                cout << i.money << endl;
+                pos(100, 16 + order);
+                cout << i.status << endl;
+                pos(120, 16 + order);
+                cout << i.score << endl;
 
                 order++;
             }
@@ -78,46 +117,18 @@ void Reserveinfo::show(string id)
 
 void Reserveinfo::update()
 {
-    for (auto i = vec.begin(); i != vec.end(); i++)
-    {
-        if (i->guest == "")
-        {
-            i--;
-            vec.erase(i + 1);
-        }
-    }
-    //RoomReserveinfoToRoomDateinfo();
-    fstream file;
-    file.open("reservedinfo.txt", ios::out);
+    sort(vec.begin() + 1, vec.end(), [](ReserveinfoSt a, ReserveinfoSt b)
+         { return a.checkin < b.checkin; });
+    ofstream file;
+    file.open("reservedinfo.txt");
     for (auto i : vec)
     {
-        file << i.room << ' ' << i.guest << ' ' << i.checkin << ' ' << i.checkout << endl;
+        file << i.checkin << ' ' << i.checkout << ' ' << i.room << ' ' << i.guest << ' ' << i.money << ' ' << i.status << ' ' << i.score << endl;
     }
     file.close();
 }
 
-void Reserveinfo::MakeReserve(Guest *)
+bool operator==(const ReserveinfoSt &a, const ReserveinfoSt &b)
 {
-    system("cls");
-    pos(30, 10);
-    cout << "**********预订房间*******************" << endl;
-    pos(30, 12);
-    cout << "*  按q返回房主菜单       按e返回主菜单        " << endl;
-    pos(30, 14);
-    cout << "********************************************" << endl;
-
-    string roomTemp, checkinTemp, checkoutTemp;
-
-    pos(30, 15);
-    cout << "房间号:";
-    pos(40, 15);
-    cin >> roomTemp;
-    pos(30, 16);
-    cout << "入住日期(如2023.01.01):";
-    pos(55, 16);
-    cin >> checkinTemp;
-    pos(30, 18);
-    cout << "退房日期:";
-    pos(40, 18);
-    cin >> checkoutTemp;
+    return a.room == b.room && a.checkin == b.checkin && a.checkout == b.checkout && a.guest == b.guest && a.money == b.money && a.status == b.status && a.score == b.score;
 }

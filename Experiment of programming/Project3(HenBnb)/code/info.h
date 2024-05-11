@@ -1,15 +1,15 @@
 #pragma once
-#include <iostream>
-#include <vector>
-#include <map>
-#include <fstream>
 #include <algorithm>
-#include <string>
 #include <ctime>
+#include <fstream>
+#include <iostream>
+#include <map>
+#include <string>
+#include <vector>
 
-#include "interface.h"
 #include "calendar.h"
-
+#include "date.h"
+#include "interface.h"
 using namespace std;
 
 #define UPKEY 72
@@ -18,7 +18,6 @@ using namespace std;
 #define RIGHTKEY 77
 
 typedef time_t Time;
-typedef string DateYMD;
 
 class Guest;
 
@@ -30,34 +29,28 @@ inline string toString(int num)
 typedef struct ReserveinfoSt
 {
     string room;
-    DateYMD checkin;
-    DateYMD checkout;
+    Date checkin;
+    Date checkout;
     string guest;
+    string money;
+    string status;
+    double score;
 
 } ReserveinfoSt;
 
-typedef struct RepairinfoSt
-{
-    DateYMD date;
-    string reporter;
-    string room;
-    string description;
-    string status;
-    string comment;
+bool operator==(const ReserveinfoSt &a, const ReserveinfoSt &b);
 
-} RepairinfoSt;
-
-typedef struct DateinfoSt
+typedef struct RoomDateSt
 {
     string status;
     string price;
 
-} DateinfoSt;
+} RoomDateSt;
 
 typedef struct moneyInfoSt
 {
 
-    DateYMD date;
+    Date date;
     string money;
     string source;
 
@@ -67,21 +60,33 @@ class Reserveinfo
 {
 public:
     vector<ReserveinfoSt> vec;
-    // TODO: 修改为map
+
     Reserveinfo();
     ~Reserveinfo();
     void update();
-    void show(string id = "all");
-    void MakeReserve(Guest *);
-    void deleteReserve(Guest *) {}
+    void showLandlord(string id = "all");
 };
 
+typedef struct RepairinfoSt
+{
+    Date date;
+    string reporter;
+    string room;
+    string description;
+    string status;
+    string comment;
+    string money;
+
+} RepairinfoSt;
 class Repairinfo
 {
 public:
-    RepairinfoSt rpTitle;
-    vector<RepairinfoSt> vec;
+    struct RpTitle
+    {
+        string date, reporter, room, description, status, comment, money;
+    } rpTitle;
 
+    vector<RepairinfoSt> vec;
     Repairinfo();
     ~Repairinfo();
     void update();
@@ -92,43 +97,56 @@ public:
     void ReviseRepairChoose();
     void showReviseInfo();
     void ReviseRepairInfo();
-};
-
-bool cmpRepair(RepairinfoSt a, RepairinfoSt b);
-
-class Dateinfo
-{
-public:
-    int year, month;
-    string basicPrice;
-    string id;
-    bool accesible;
-    map<string, DateinfoSt> map;
-
-    void DoDateInfoLandlord();
-    void DoDateInfoGuest();
-    void MakeReserve();
-    void show();
-    void showLandlord();
-    void showGuest();
-    void showChangePrice();
-    void showChangeSpare();
-    void ChangeDatePrice();
-    void ChangeDateSpare();
+    friend ostream &operator<<(ostream &out, const Repairinfo &repairinfo);
+    friend istream &operator>>(istream &in, Repairinfo &repairinfo);
+    friend ostream &operator<<(ostream &out, const RpTitle &i)
+    {
+        out << setw(13) << i.date << setw(10) << i.reporter << setw(8) << i.room << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << setw(10) << i.money << endl;
+        return out;
+    }
 };
 
 class Room
 {
 public:
+    string basicPrice;
+    string id;
+    bool accesible;
+    int usedTimes = 0;
+    int scoreTimes = 0;
+    double score;
+
+    int year, month;
+    map<Date, RoomDateSt> map;
+    void showCalendar();
+
+    void DoRoomInfoLandlord();
+    void showChangePrice();
+    void showChangeSpare();
+    void ChangeDatePrice();
+    void ChangeDateSpare();
+
+    void DoRoomInfoGuest(string guestid);
+    void MakeReserve(string guestid);
+
+    void showLandlord();
+    void showGuest();
+
+    friend ostream &operator<<(ostream &out, const Room &roominfo);
+};
+
+class RoomClass
+{
+public:
     vector<string> roomList;
-    map<string, Dateinfo> roomInfo;
-    Room();
-    ~Room();
+    map<string, Room> room;
+    RoomClass();
+    ~RoomClass();
     void update();
     void show();
 };
 
-extern Room room;
+extern RoomClass roomclass;
 
 class Moneyinfo
 {
@@ -145,53 +163,62 @@ public:
     void ChangeMoneyInfo();
     void DeleteMoneyInfo();
 };
-bool cmpMoneyInfo(moneyInfoSt a, moneyInfoSt b);
 
 extern Reserveinfo reserveInfo;
 extern Repairinfo repairInfo;
-// extern Dateinfo dateInfo;
 extern Moneyinfo moneyInfo;
 
-inline void RoomReserveinfoToRoomDateinfo()
+inline void Reserveinfo_to_Roomscoreinfo()
+{
+    for (auto i = roomclass.room.begin(); i != roomclass.room.end(); i++)
+    {
+        i->second.score = 0;
+        i->second.scoreTimes = 0;
+        i->second.usedTimes = 0;
+    }
+
+    for (auto i : reserveInfo.vec)
+    {
+        if (i.status != "已取消" && i.status != "未完成")
+        {
+            if (i.score != -1)
+            {
+                roomclass.room[i.room].score += i.score;
+                roomclass.room[i.room].scoreTimes++;
+            }
+            roomclass.room[i.room].usedTimes++;
+        }
+    }
+}
+inline void Reserveinfo_to_RoomDateinfo()
 {
     for (auto i : reserveInfo.vec)
     {
-        int checkInYear = stoi(i.checkin.substr(0, 4));
-        int checkInMonth = stoi(i.checkin.substr(5, 2));
-        int checkInDay = stoi(i.checkin.substr(8, 2));
-        int checkOutYear = stoi(i.checkout.substr(0, 4));
-        int checkOutMonth = stoi(i.checkout.substr(5, 2));
-        int checkOutDay = stoi(i.checkout.substr(8, 2));
-
-        string daytemp, monthtemp, datetemp;
-
-        while (!(checkInYear == checkOutYear && checkInMonth == checkOutMonth && checkInDay == checkOutDay))
+        if (i.status == "已取消")
         {
-            daytemp = toString(checkInDay);
-            monthtemp = toString(checkInMonth);
-            datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-            room.roomInfo[i.room].map[datetemp].status = i.guest;
-            if (room.roomInfo[i.room].map[datetemp].price == "")
-                room.roomInfo[i.room].map[datetemp].price = "-1";
-
-            checkInDay++;
-            if (checkInDay > DaysAmount(checkInMonth, checkInYear))
+            for (Date d = i.checkin; d <= i.checkout; d++)
             {
-                checkInDay = 1;
-                checkInMonth++;
-                if (checkInMonth > 12)
+                if (roomclass.room[i.room].map.find(d) == roomclass.room[i.room].map.end())
                 {
-                    checkInMonth = 1;
-                    checkInYear++;
+                    continue;
+                }
+                else if (roomclass.room[i.room].map[d].price == roomclass.room[i.room].basicPrice)
+                {
+                    roomclass.room[i.room].map.erase(d);
+                }
+                else
+                {
+                    roomclass.room[i.room].map[d].status = "空闲";
                 }
             }
         }
-        daytemp = toString(checkInDay);
-        monthtemp = toString(checkInMonth);
-        datetemp = to_string(checkInYear) + '.' + monthtemp + '.' + daytemp;
-        room.roomInfo[i.room].map[datetemp].status = i.guest;
-        if (room.roomInfo[i.room].map[datetemp].price == "")
-            room.roomInfo[i.room].map[datetemp].price = "-1";
+        else
+            for (Date d = i.checkin; d <= i.checkout; d++)
+            {
+                roomclass.room[i.room].map[d].status = i.guest;
+                if (roomclass.room[i.room].map[d].price == "")
+                    roomclass.room[i.room].map[d].price = roomclass.room[i.room].basicPrice;
+            }
     }
 }
 
@@ -205,4 +232,22 @@ inline bool isnumber(string a)
         }
     }
     return true;
+}
+
+inline ostream &operator<<(ostream &out, const RepairinfoSt &i)
+{
+    out << setw(13) << to_string(i.date.year) + "." + to_string(i.date.month) + "." + to_string(i.date.day) << setw(10) << i.reporter << setw(8) << i.room << setw(30) << i.description << setw(10) << i.status << setw(30) << i.comment << setw(10) << i.money << endl;
+    return out;
+}
+
+inline ofstream &operator<<(ofstream &out, const RepairinfoSt &i)
+{
+    out << i.date << ' ' << i.reporter << ' ' << i.room << ' ' << i.description << ' ' << i.status << ' ' << i.comment << ' ' << i.money << endl;
+    return out;
+}
+
+inline istream &operator>>(istream &in, RepairinfoSt &i)
+{
+    in >> i.date >> i.reporter >> i.room >> i.description >> i.status >> i.comment >> i.money;
+    return in;
 }

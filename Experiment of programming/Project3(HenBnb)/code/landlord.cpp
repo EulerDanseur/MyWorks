@@ -16,6 +16,7 @@ void Landlord::Login()
 {
 
     system("cls");
+    showNow();
     pos(30, 10);
     cout << "**********欢迎来到Henbnb的房主系统**********" << endl;
     pos(30, 11);
@@ -23,15 +24,16 @@ void Landlord::Login()
     pos(30, 13);
     cout << "* 请输入密码                             " << endl;
     pos(30, 15);
-    cout << "*:                                   " << endl;
+    cout << "*:                                      " << endl;
     pos(30, 17);
-    cout << "*                                  " << endl;
-    pos(30, 19);
     cout << "*                                       " << endl;
+    pos(30, 19);
+    cout << "*                                        " << endl;
     pos(30, 21);
-    cout << "********************************************" << endl;
+    cout << "******************************************" << endl;
     pos(32, 15);
     string inputpassword;
+
     cin >> inputpassword;
     if (inputpassword == password)
     {
@@ -55,6 +57,7 @@ void Landlord::Menu()
     while (flag)
     {
         system("cls");
+        showNow();
         pos(30, 10);
         cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
         pos(30, 11);
@@ -62,9 +65,9 @@ void Landlord::Menu()
         pos(30, 13);
         cout << "* 1.已预订信息管理      2.维修信息查看                  " << endl;
         pos(30, 15);
-        cout << "* 3.房间信息修改      4.我的信息                 " << endl;
+        cout << "* 3.房间信息修改        4.我的信息                 " << endl;
         pos(30, 17);
-        cout << "* 5.我的消息         6. 返回主菜单              " << endl;
+        cout << "* 5.我的消息            6. 返回主菜单              " << endl;
         pos(30, 19);
         cout << "*                            " << endl;
         pos(30, 21);
@@ -99,16 +102,15 @@ void Landlord::Menu()
 
 void Landlord::Reservedinfo()
 {
-    
+
     keys = "all";
-    bool flag = 0;
+    bool flag = 1;
     while (flag)
     {
-        reserveInfo.show(keys);
+        reserveInfo.showLandlord(keys);
         keyc = _getch();
         if (keyc == 'q')
         {
-            Menu();
             break;
         }
         else if (keyc == 'e')
@@ -121,9 +123,10 @@ void Landlord::Reservedinfo()
             pos(30, 7);
             cout << "请输入要查看的房间号码(输入all表示全部)" << endl;
             pos(30, 8);
+
             cin >> keys;
 
-            if (keys != "all" && room.roomInfo.find(keys) == room.roomInfo.end())
+            if (keys != "all" && roomclass.room.find(keys) == roomclass.room.end())
             {
                 pos(30, 10);
                 cout << "该房间不存在" << endl;
@@ -146,19 +149,22 @@ void Landlord::DoRoomInfo()
     while (flag)
     {
         system("cls");
+        showNow();
+        roomclass.show();
         pos(30, 10);
         cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
         pos(30, 12);
         cout << "* 请输入您要查看的房间号码(按q返回上一级):                  " << endl;
         pos(30, 13);
+
         cin >> keys;
-        room.show();
+
         if (keys == "q")
         {
             flag = 0;
             break;
         }
-        else if (room.roomInfo.find(keys) == room.roomInfo.end())
+        else if (roomclass.room.find(keys) == roomclass.room.end())
         {
             pos(30, 15);
             cout << "该房间不存在" << endl;
@@ -172,18 +178,19 @@ void Landlord::DoRoomInfo()
             pos(30, 17);
             system("pause");
 
-            room.roomInfo[keys].DoDateInfoLandlord();
+            roomclass.room[keys].DoRoomInfoLandlord();
         }
     }
 }
 
 void Landlord::DoRepairInfo()
 {
-    repairInfo.show("全部");
     keyc = 0;
     bool flag = 1;
+    string status = "全部";
     while (flag)
     {
+        repairInfo.show(status);
         keyc = _getch();
         switch (keyc)
         {
@@ -193,26 +200,26 @@ void Landlord::DoRepairInfo()
                 pos(30, 2);
                 cout << "修理列表为空" << endl;
             }
-            repairInfo.show("全部");
+            status = "全部";
             break;
         case '1':
-            if (repairInfo.vec.size() == 1)
+            if (repairInfo.vec.size() == 0)
             {
                 pos(30, 2);
                 cout << "修理列表为空" << endl;
             }
-            repairInfo.show("已处理");
+            status = "已处理";
             break;
         case '2':
-            if (repairInfo.vec.size() == 1)
+            if (repairInfo.vec.size() == 0)
             {
                 pos(30, 2);
                 cout << "修理列表为空" << endl;
             }
-            repairInfo.show("未处理");
+            status = "未处理";
             break;
         case 'd':
-            if (repairInfo.vec.size() == 1)
+            if (repairInfo.vec.size() == 0)
             {
                 pos(30, 2);
                 cout << "修理列表为空" << endl;
@@ -221,16 +228,15 @@ void Landlord::DoRepairInfo()
                 repairInfo.DeleteRepairInfo();
             break;
         case 'r':
-            if (repairInfo.vec.size() == 1)
+            if (repairInfo.vec.size() == 0)
             {
                 pos(30, 2);
                 cout << "修理列表为空" << endl;
             }
             else
-                repairInfo.ReviseRepairInfo();
+                repairInfo.ReviseRepairChoose();
             break;
         case 'q':
-            Menu();
             flag = 0;
             break;
         case 'e':
@@ -253,6 +259,7 @@ void Landlord::LandlordInfo()
     while (flag)
     {
         system("cls");
+        showNow();
         pos(30, 10);
         cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
         pos(30, 11);
@@ -260,10 +267,8 @@ void Landlord::LandlordInfo()
         pos(30, 13);
         cout << "* 2.资金流水" << endl;
         pos(30, 15);
-        cout << "* 3.查看客户名单" << endl;
+        cout << "* 3.返回主菜单" << endl;
         pos(30, 17);
-        cout << "* 4.返回主菜单" << endl;
-        pos(30, 19);
         cout << "********************************************" << endl;
 
         keyc = _getch();
@@ -276,8 +281,6 @@ void Landlord::LandlordInfo()
             DoMoneyInfo();
             break;
         case '3':
-            break;
-        case '4':
             flag = 0;
             break;
         default:
@@ -311,7 +314,6 @@ void Landlord::DoMoneyInfo()
             flag = 0;
             break;
         case 'q':
-            Menu();
             flag = 0;
             break;
         default:
@@ -324,6 +326,7 @@ void Landlord::DoMoneyInfo()
 void Landlord::ChangePassword()
 {
     system("cls");
+    showNow();
     pos(30, 10);
     cout << "**********欢迎来到 Henbnb的房主系统**********" << endl;
     pos(30, 11);
@@ -332,14 +335,16 @@ void Landlord::ChangePassword()
     cout << "*: " << endl;
     pos(32, 13);
     string inputpassword;
+
     cin >> inputpassword;
     if (inputpassword == password)
     {
         pos(30, 15);
-        cout << "* 请输入新密码" << endl;
+        cout << "*请输入新密码" << endl;
         pos(30, 17);
         cout << "*: " << endl;
         pos(32, 17);
+
         cin >> password;
         pos(30, 19);
         cout << "密码修改成功" << endl;

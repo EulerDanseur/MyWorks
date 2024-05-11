@@ -8,7 +8,13 @@ string keys = "";
 int keynum = 0;
 Landlord landlord;
 
-void pos(int x, int y)
+Reserveinfo reserveInfo;
+RoomClass roomclass;
+GuestClass guestclass;
+Moneyinfo moneyInfo;
+Repairinfo repairInfo;
+
+void pos(short x, short y)
 {
     COORD posPoint = {x, y}; // 设置坐标
     SetConsoleCursorPosition(hOut, posPoint);
@@ -19,6 +25,8 @@ void showMainMenu()
     while (true)
     {
         system("cls");
+        showNow();
+
         pos(30, 10);
         cout << "**********欢迎来到Henbnb的管理系统**********" << endl;
         pos(30, 11);

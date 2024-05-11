@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cab2442e-dc0c-42c3-b6b3-baafb71dca8a}</ProjectGuid>
-    <RootNamespace>Project3HenBnb</RootNamespace>
+    <ProjectGuid>{05130cb8-7172-4a14-9999-b1a4479b1782}</ProjectGuid>
+    <RootNamespace>Chunlian</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -106,7 +106,7 @@
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -127,26 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="code\calendar.h" />
-    <ClInclude Include="code\date.h" />
-    <ClInclude Include="code\guest.h" />
-    <ClInclude Include="code\info.h" />
-    <ClInclude Include="code\interface.h" />
-    <ClInclude Include="code\landlord.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="code\calendar.cpp" />
-    <ClCompile Include="code\date.cpp" />
-    <ClCompile Include="code\dateinfo.cpp" />
-    <ClCompile Include="code\guest.cpp" />
-    <ClCompile Include="code\info.cpp" />
-    <ClCompile Include="code\interface.cpp" />
-    <ClCompile Include="code\landlord.cpp" />
-    <ClCompile Include="code\main.cpp" />
-    <ClCompile Include="code\moneyinfo.cpp" />
-    <ClCompile Include="code\repairinfo.cpp" />
-    <ClCompile Include="code\reservedinfo.cpp" />
-    <ClCompile Include="code\room.cpp" />
+    <ClCompile Include="chunlian.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="cl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

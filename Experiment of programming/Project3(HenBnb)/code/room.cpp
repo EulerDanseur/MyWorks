@@ -1,21 +1,22 @@
 #include "info.h"
-Room room;
 
-Room::Room()
+RoomClass::RoomClass()
 {
     fstream file;
     string id;
+    
     file.open("roomlist.txt", ios::in);
-    while(!file.eof())
+    while (!file.eof())
     {
-        
+
         file >> id;
-        roomInfo[id].id = id;
-        file >> roomInfo[id].basicPrice;
-        file >> roomInfo[id].accesible;
+        room[id].id = id;
+        file >> room[id].basicPrice;
+        file >> room[id].accesible;
         roomList.push_back(id);
     }
     file.close();
+
     if (roomList.size() == 1 && roomList[0] == "")
     {
         roomList.clear();
@@ -29,36 +30,39 @@ Room::Room()
     }
 
     file.open("dateinfo.txt", ios::in);
-    string date;
+    Date date;
     while (!file.eof())
     {
         file >> id;
         file >> date;
-        file >> roomInfo[id].map[date].status;
-        file >> roomInfo[id].map[date].price;
+        file >> room[id].map[date].status;
+        file >> room[id].map[date].price;
     }
     file.close();
+    Reserveinfo_to_Roomscoreinfo();
+    Reserveinfo_to_RoomDateinfo();
+    update();
 }
 
-Room::~Room()
+RoomClass::~RoomClass()
 {
     update();
 }
 
-void Room::update()
+void RoomClass::update()
 {
-    fstream file;
+    ofstream file;
     file.open("roomlist.txt", ios::out);
     for (auto i : roomList)
     {
-        file << i << ' ' << roomInfo[i].basicPrice << ' ' << roomInfo[i].accesible << endl;
+        file << i << ' ' << room[i].basicPrice << ' ' << room[i].accesible << endl;
     }
     file.close();
 
-    RoomReserveinfoToRoomDateinfo();
+    Reserveinfo_to_RoomDateinfo();
 
     file.open("dateinfo.txt", ios::out);
-    for (auto i : roomInfo)
+    for (auto i : room)
     {
         for (auto j : i.second.map)
         {
@@ -68,14 +72,22 @@ void Room::update()
     file.close();
 }
 
-void Room::show()
+void RoomClass::show()
 {
-    int order = 0;
-    pos(70, 10);
-    for(auto i : roomList)
+    showNow();
+    int order = 1;
+    pos(90, 10);
+    cout.setf(ios::left);
+    cout << setw(5) << "号码"
+         << setw(10) << "状态"
+         << setw(10) << "基本价格"
+         << setw(10) << "使用次数"
+         << setw(6) << "评分"
+         << setw(10) << "评分次数";
+    for (auto i : room)
     {
-        pos(70, 10 + order);
-        cout << i << endl;
+        pos(90, 10 + order);
+        cout << i.second;
         order++;
     }
 }
