@@ -83,7 +83,7 @@ void Moneyinfo::show()
     pos(30, 15);
     cout << "* 3.增加资金流水" << endl;
     pos(30, 17);
-    cout << "* 按q返回房主界面 按r返回上一级" << endl;
+    cout << "* 按q或r返回上一级" << endl;
     pos(30, 19);
     cout << "********************************************" << endl;
 
@@ -134,6 +134,7 @@ void Moneyinfo::AddMoneyInfo()
             cout << "日期不合法" << endl;
             pos(30, 26);
             system("pause");
+            break;
         }
         else
         {
@@ -141,7 +142,17 @@ void Moneyinfo::AddMoneyInfo()
             cout << "金额:";
             pos(36, 24);
 
-            cin >> money;
+            string money0 = "";
+            cin >> money0;
+            if (!isnumber(money0))
+            {
+                pos(30, 24);
+                cout << "金额不合法" << endl;
+                pos(30, 26);
+                system("pause");
+                break;
+            }
+            money = money0;
             pos(30, 26);
             cout << "来源:";
             pos(36, 26);
@@ -169,10 +180,21 @@ void Moneyinfo::ChangeMoneyInfo()
     while (true)
     {
         pos(30, 20);
-        cout << "请选择要修改的项:";
+        cout << "请选择要修改的项(按0返回):";
         pos(36, 21);
 
         cin >> i;
+        if (i == 0)
+        {
+            break;
+        }
+        if (vec.size() < i || i < 0)
+        {
+            pos(30, 22);
+            cout << "无此项";
+            system("pause");
+            break;
+        }
         pos(30, 22);
         cout << "日期:";
         pos(36, 22);
@@ -184,20 +206,30 @@ void Moneyinfo::ChangeMoneyInfo()
             cout << "日期不合法" << endl;
             pos(30, 26);
             system("pause");
+            break;
         }
         else
         {
             pos(30, 24);
             cout << "金额:";
             pos(36, 24);
-
-            cin >> money;
+            string money0 = "";
+            cin >> money0;
+            if (!isnumber(money0))
+            {
+                pos(30, 24);
+                cout << "金额不合法" << endl;
+                pos(30, 26);
+                system("pause");
+                break;
+            }
+            money = money0;
             pos(30, 26);
             cout << "来源:";
             pos(36, 26);
 
             cin >> source;
-            vec[i] = moneyInfoSt{date, money, source};
+            vec[i - 1] = moneyInfoSt{date, money, source};
             sort(vec.begin(), vec.end(), [](moneyInfoSt a, moneyInfoSt b)
                  { return a.date < b.date; });
             update();
@@ -215,10 +247,21 @@ void Moneyinfo::DeleteMoneyInfo()
 {
     int i = 0;
     pos(30, 20);
-    cout << "请选择要删除的项:";
-    pos(36, 21);
+    cout << "请选择要删除的项(0返回):";
+    pos(30, 22);
 
     cin >> i;
+    if (i == 0)
+    {
+        return;
+    }
+    if (vec.size() < i || i < 0)
+    {
+        pos(30, 22);
+        cout << "无此项";
+        system("pause");
+        return;
+    }
     vec.erase(vec.begin() + i - 1);
     update();
     show();

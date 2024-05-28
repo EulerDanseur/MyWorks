@@ -107,6 +107,7 @@ void Repairinfo::showDeleteInterface()
 {
     system("cls");
     showNow();
+    show();
     pos(30, 4);
     cout << "**********维修信息查看*******************" << endl;
     pos(30, 6);
@@ -118,7 +119,7 @@ void Repairinfo::showDeleteInterface()
     pos(30, 12);
     cout << "********************************************" << endl;
     int order = 0;
-    show();
+    
     pos(30, 11);
 
     cin >> keys;
@@ -134,7 +135,7 @@ void Repairinfo::DeleteRepairInfo()
         if (isnumber(keys) && stoi(keys) <= vec.size())
         {
             int position = stoi(keys);
-            vec.erase(vec.begin() + position);
+            vec.erase(vec.begin() + position - 1);
             update();
         }
         else
@@ -162,6 +163,7 @@ void Repairinfo::DeleteRepairInfo()
             default:
                 pos(30, 2);
                 cout << "输入有误,请重新输入" << endl;
+                flag = 0;
                 break;
             }
     }
@@ -203,6 +205,7 @@ void Repairinfo::ReviseRepairChoose()
         pos(30, 9);
 
         cin >> keys;
+        // 检查输入是否为数字
         if (isnumber(keys) && stoi(keys) <= vec.size())
         {
             keynum = stoi(keys) - 1;

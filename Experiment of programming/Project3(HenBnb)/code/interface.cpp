@@ -6,8 +6,9 @@ HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE); // 获取标准输出句柄
 char keyc = 0;
 string keys = "";
 int keynum = 0;
-Landlord landlord;
 
+// 创建对象
+Landlord landlord;
 Reserveinfo reserveInfo;
 RoomClass roomclass;
 GuestClass guestclass;
@@ -22,6 +23,7 @@ void pos(short x, short y)
 
 void showMainMenu()
 {
+    // 按键控制
     while (true)
     {
         system("cls");
@@ -47,12 +49,15 @@ void showMainMenu()
         switch (keyc)
         {
         case '1':
+            // 房主登录
             landlord.Login();
             break;
         case '2':
+            // 房客登录
             guestclass.GuestInterface();
             break;
         case '3':
+            // 退出
             exit(0);
             break;
         default:

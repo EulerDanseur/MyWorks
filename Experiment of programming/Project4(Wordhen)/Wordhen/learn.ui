@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Learn</class>
+ <widget class="QWidget" name="Learn">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>418</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="QWidget" name="horizontalLayoutWidget_3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>10</y>
+     <width>117</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_3">
+    <property name="sizeConstraint">
+     <enum>QLayout::SetMinimumSize</enum>
+    </property>
+    <item>
+     <widget class="QPushButton" name="closeButton">
+      <property name="minimumSize">
+       <size>
+        <width>12</width>
+        <height>12</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>12</width>
+        <height>12</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	color: #EB5353;
+	background-color: #EB5353;
+	border-radius:6px;
+}
+QPushButton:hover {
+	font-size:7px;
+	color: rgb(100, 35, 35);
+	background-color: #EB5353;
+	border-radius:6px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="hideButton">
+      <property name="minimumSize">
+       <size>
+        <width>12</width>
+        <height>12</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>12</width>
+        <height>12</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton{
+	color: #F9D923;
+	background-color: #F9D923;
+	border-radius:6px;
+}
+QPushButton:hover {
+	font-size:7px;
+	color: rgb(100, 35, 35);
+	background-color: #F9D923;
+	border-radius:6px;
+}</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="moveButton">
+      <property name="minimumSize">
+       <size>
+        <width>12</width>
+        <height>12</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>12</width>
+        <height>12</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QCheckBox{
+	color: #36AE7C;
+	background-color: #36AE7C;
+	border-radius:6px;
+}
+QCheckBox:hover{
+	font-size:7px;
+	background-color: rgb(37, 228, 123);
+	border-radius:0px;
+}
+QCheckBox::indicator{/*选择框尺寸*/
+    background-color: rgba(255, 255, 255, 0);
+    border: 0px solid #b1b1b1;
+	width: 12px;
+	height: 12px;
+}
+QCheckBox::indicator:checked:hover{
+	font-size:7px;
+	color: rgb(100, 35, 35);
+	background-color: #2789e4;
+	border-radius:6px;
+}
+QCheckBox::indicator:!checked:hover{
+	font-size:7px;
+	color: rgb(100, 35, 35);
+	background-color: #2789e4;
+	border-radius:6px;
+}
+QCheckBox:enabled:checked{
+	color: #37e49c;
+	background-color: #37e49c;
+	border-radius:6px;
+}
+QCheckBox:enabled:!checked{
+	color: #36AE7C;
+	background-color: #36AE7C;
+	border-radius:6px;
+}
+</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:11pt;&quot;&gt;Learning&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

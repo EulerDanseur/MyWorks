@@ -139,7 +139,6 @@
     <ClCompile Include="code\date.cpp" />
     <ClCompile Include="code\dateinfo.cpp" />
     <ClCompile Include="code\guest.cpp" />
-    <ClCompile Include="code\info.cpp" />
     <ClCompile Include="code\interface.cpp" />
     <ClCompile Include="code\landlord.cpp" />
     <ClCompile Include="code\main.cpp" />

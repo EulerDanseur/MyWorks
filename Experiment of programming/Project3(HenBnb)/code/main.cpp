@@ -18,7 +18,10 @@ int main()
 {
     full_screen();
 
+    // 设置控制台颜色
     system("color 7F");
+
+    // 设置控制台标题
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), (7 << 4));
     
     showMainMenu();

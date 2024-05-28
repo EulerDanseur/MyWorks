@@ -1,34 +1,6 @@
 #include "guest.h"
 
-istream &operator>>(istream &is, Guest &guest)
-{
-    is >> guest.password >> guest.name >> guest.gender >> guest.registerDate >> guest.phone >> guest.email;
-    return is;
-}
 
-ostream &operator<<(ostream &os, Guest &guest)
-{
-    os << guest.id << ' '
-       << guest.password << ' '
-       << guest.name << ' '
-       << guest.gender << ' '
-       << guest.registerDate << ' '
-       << guest.phone << ' '
-       << guest.email << endl;
-    return os;
-}
-
-ofstream &operator<<(ofstream &ofs, Guest &guest)
-{
-    ofs << guest.id << ' '
-        << guest.password << ' '
-        << guest.name << ' '
-        << guest.gender << ' '
-        << guest.registerDate << ' '
-        << guest.phone << ' '
-        << guest.email << endl;
-    return ofs;
-}
 
 GuestClass::GuestClass()
 {
@@ -63,8 +35,12 @@ void GuestClass::update()
 void GuestClass::Login()
 {
     string id, password;
+
+    // 清屏
     system("cls");
+    // 打印登录界面
     showNow();
+
     pos(30, 11);
     cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
     pos(30, 13);
@@ -82,11 +58,13 @@ void GuestClass::Login()
     pos(32, 19);
     cin >> password;
 
+    // 登录验证
     if (guestMap.find(id) == guestMap.end())
     {
         cout << "该账号不存在!" << endl;
         system("pause");
     }
+    // 密码验证
     else if (guestMap[id].password == password)
     {
         pos(30, 23);
@@ -114,20 +92,60 @@ void GuestClass::Login()
 
 void GuestClass::Register()
 {
+    // 清屏
     system("cls");
+
+    // 打印登录界面
     showNow();
+
+    // 注册界面
     string id, name, password, gender, phone, email;
     Date registerDate;
     pos(30, 11);
     cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
     pos(30, 13);
-    cout << "* 请输入您的账号:                          " << endl;
+    cout << "* 请输入您的账号(小于10位):                          " << endl;
+
     pos(30, 15);
     cout << "*                                        " << endl;
+    pos(31, 15);
+    cin >> id;
+
+    // 账号验证
+    if (guestMap.find(id) != guestMap.end())
+    {
+        pos(30, 39);
+        cout << "该账号已存在!" << endl;
+        pos(30, 41);
+        system("pause");
+        return;
+    }
+    else if (id.length() > 9)
+    {
+        pos(30, 39);
+        cout << "账号过长!" << endl;
+        pos(30, 41);
+        system("pause");
+        return;
+    }
+    cin.ignore();
+
     pos(30, 17);
-    cout << "* 请输入您的密码:                          " << endl;
+    cout << "* 请输入您的密码（不超过20位）:                          " << endl;
     pos(30, 19);
-    cout << "*                                        " << endl;
+    cout << "*                                       " << endl;
+    pos(32, 19);
+    cin >> password;
+    cin.ignore();
+    if (password.length() > 8)
+    {
+        pos(30, 39);
+        cout << "密码过长!" << endl;
+        pos(30, 41);
+        system("pause");
+        return;
+    }
+
     pos(30, 21);
     cout << "* 请输入您的姓名:                                   " << endl;
     pos(30, 23);
@@ -147,28 +165,6 @@ void GuestClass::Register()
     pos(30, 37);
     cout << "********************************************" << endl;
     pos(32, 15);
-    cin >> id;
-    if (guestMap.find(id) != guestMap.end())
-    {
-        pos(30, 39);
-        cout << "该账号已存在!" << endl;
-        pos(30, 41);
-        system("pause");
-        return;
-    }
-    else if (id.length() > 8)
-    {
-        pos(30, 39);
-        cout << "账号过长!" << endl;
-        pos(30, 41);
-        system("pause");
-        return;
-    }
-    cin.ignore();
-
-    pos(32, 19);
-    cin >> password;
-    cin.ignore();
 
     pos(32, 23);
     name = "\n";
@@ -189,7 +185,7 @@ void GuestClass::Register()
     cin >> phone;
     for (int i = 0; i < phone.length(); i++)
     {
-        if (phone[i] < '0' || phone[i] > '9')
+        if (phone[i] < '0' || phone[i] > '9' || phone.length() != 11)
         {
             pos(30, 39);
             cout << "手机号有误!" << endl;
@@ -264,13 +260,16 @@ void GuestClass::GuestInterface()
     }
 }
 
+// 构造函数
 Guest::Guest()
     : id(""), password(""), name(""), gender(""), registerDate({}), phone(""), email("")
 {
 }
 
+// 析构函数
 Guest::~Guest() {}
 
+// 有参构造
 Guest::Guest(string id, string password, string name, string gender, Date registerDate, string phone, string email)
     : id(id), password(password), name(name), gender(gender), registerDate(registerDate), phone(phone), email(email) {}
 
@@ -278,6 +277,7 @@ void Guest::Menu()
 {
     keyc = 0;
     bool flag = 1;
+    // 主菜单
     while (flag)
     {
         system("cls");
@@ -299,27 +299,140 @@ void Guest::Menu()
         pos(30, 21);
         cout << "* 5.退出                                 " << endl;
         pos(30, 23);
-        cout << "* 6.我的消息                                      " << endl;
+        cout << "*                                   " << endl;
         pos(30, 25);
         cout << "********************************************" << endl;
         keyc = _getch();
         switch (keyc)
         {
         case '1':
+            // 房间信息
             DoRoomInfo();
             break;
         case '2':
+            // 我的订单
             MyReserveInfo();
             break;
         case '3':
+            // 报修
             DoRepairInfo();
             break;
         case '4':
-            // MyMessage();
+            //  我的信息
+            MyInfo();
             break;
         case '5':
+            // 退出
             flag = 0;
             break;
+        }
+    }
+}
+
+void Guest::MyInfo()
+{
+    keyc = ' ';
+    bool flag = 1;
+    while (flag)
+    {
+        // 我的信息
+        system("cls");
+        // 我的信息
+        showNow();
+
+        // 我的信息
+        pos(30, 9);
+        cout << name + "您好" << endl;
+        pos(30, 10);
+        cout << "**********欢迎来到Henbnb的用户系统**********" << endl;
+        pos(30, 12);
+        cout << "* 请输入您要修改的信息(按q返回上一级):                  " << endl;
+        pos(30, 13);
+        cout << "* 1.姓名" << endl;
+        pos(30, 14);
+        cout << "* 2.性别" << endl;
+        pos(30, 15);
+        cout << "* 3.手机号" << endl;
+        pos(30, 16);
+        cout << "* 4.邮箱" << endl;
+        pos(30, 17);
+        cout << "* 5.密码" << endl;
+        pos(30, 18);
+        cout << "********************************************" << endl;
+        keyc = _getch();
+        if (keyc == 'q')
+        {
+            flag = 0;
+            break;
+        }
+        else if (keyc == '1')
+        {
+            pos(30, 20);
+            cout << "* 请输入您的新名字: ";
+            pos(30, 21);
+            cin >> name;
+            break;
+        }
+        else if (keyc == '2')
+        {
+            pos(30, 20);
+            cout << "* 请输入您的新性别: ";
+            pos(30, 21);
+            cin >> gender;
+            break;
+        }
+        else if (keyc == '3')
+        {
+            pos(30, 20);
+            cout << "* 请输入您的新手机号: ";
+            pos(30, 21);
+            string ph;
+            cin >> ph;
+            if (ph.size() == 11)
+            {
+                phone = ph;
+                break;
+            }
+            else
+            {
+                pos(30, 23);
+                cout << "手机号长度应为11位" << endl;
+                pos(30, 24);
+                system("pause");
+            }
+        }
+        else if (keyc == '4')
+        {
+            pos(30, 20);
+            cout << "* 请输入您的新邮箱: ";
+            pos(30, 21);
+            cin >> email;
+            break;
+        }
+        else if (keyc == '5')
+        {
+
+            pos(30, 20);
+            cout << "* 请输入您的新旧码: ";
+            pos(30, 21);
+            string password0;
+            cin >> password0;
+            //密码检查
+            if (password0 == password)
+            {
+                pos(30, 23);
+                cout << "请输入您的新密码: ";
+                pos(30, 24);
+                cin >> password;
+                break;
+            }
+            else
+            {
+                pos(30, 23);
+                cout << "密码输入错误" << endl;
+                pos(30, 24);
+                system("pause");
+            }
         }
     }
 }
@@ -330,7 +443,9 @@ void Guest::DoRoomInfo()
     bool flag = 1;
     while (flag)
     {
+        // 房间信息
         system("cls");
+        // 房间信息
         showNow();
         roomclass.show();
         pos(30, 9);
@@ -416,6 +531,7 @@ void Guest::showReserve()
     pos(90, 16);
     cout << "评分";
 
+    // 房间信息
     int order = 1;
     for (auto i : myReserve)
     {
@@ -451,7 +567,8 @@ void Guest::DeleteReserve()
     cin >> order;
 
     Date today;
-
+    
+    // 订单检查
     if (order > myReserve.size() || order < 1)
     {
         pos(30, 2);

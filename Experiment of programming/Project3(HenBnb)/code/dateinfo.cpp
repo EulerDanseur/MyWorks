@@ -3,19 +3,20 @@
 
 void Room::showCalendar()
 {
-    showNow();
+    showNow(); // 显示当前时间
 
-    int startx = 76;
-    int starty = 10;
-    int width = 12;
-    int height = 5;
+    int startx = 76; // 起始x坐标
+    int starty = 10; // 起始y坐标
+    int width = 12;  // 单元格宽度
+    int height = 5;  // 单元格高度
 
+    // 显示当前年月
     pos(startx + 8, starty - 4);
-    cout << "当前年月为:" << year << " 年 " << month << "月" << endl;
+    cout << "当前年月为:" << year << " 年 " << month << "月" << " ps.按上下键切换月份, 按左右键切换年份" <<endl;
 
-    int daysAmount = DaysAmount(month, year);
-    int DayOfWeek = CalcDayOfWeek(year, month, 1) - 1;
-    Date dateTemp = Date(year, month, 1);
+    int daysAmount = DaysAmount(month, year);    // 该月天数
+    int DayOfWeek = CalcDayOfWeek(year, month, 1) - 1;  // 该月第一天是周几
+    Date dateTemp = Date(year, month, 1);    // 该月第一天
 
     pos(startx + width * 1, starty - 2);
     printf("%s\t", "Mon.");
@@ -95,8 +96,8 @@ void Room::showLandlord()
     else
         cout << "当前房间状态为:可预约" << endl;
 
-    showNow();
-    showCalendar();
+    showNow();      // 显示当前时间
+    showCalendar(); // 显示日历
 }
 
 void Room::DoRoomInfoLandlord()
@@ -112,6 +113,7 @@ void Room::DoRoomInfoLandlord()
     bool flag = 1;
     while (flag)
     {
+        // 显示房间信息
         showLandlord();
         keyc = _getch();
         if (keyc == -32)
@@ -155,14 +157,17 @@ void Room::DoRoomInfoLandlord()
             switch (keyc)
             {
             case '1':
+                // 修改房价
                 ChangeDatePrice();
                 roomclass.update();
                 break;
             case '2':
+            // 增删空闲时间
                 ChangeDateSpare();
                 roomclass.update();
                 break;
             case '3':
+            // 修改房间状态
                 accesible = !accesible;
                 roomclass.update();
                 break;
@@ -237,6 +242,8 @@ void Room::DoRoomInfoGuest(string id)
             switch (keyc)
             {
             case '1':
+
+            // 预定
                 if (accesible == 1)
                     MakeReserve(id);
                 else
@@ -248,6 +255,7 @@ void Room::DoRoomInfoGuest(string id)
                 }
                 roomclass.update();
                 break;
+
             case 'r':
                 flag = 0;
                 break;
@@ -414,7 +422,7 @@ void Room::showChangeSpare()
     pos(30, 12);
     cout << "*                                       " << endl;
     pos(30, 14);
-    cout << "* 修改空闲状态                           " << endl;
+    cout << "* 按1修改空闲状态                           " << endl;
     pos(30, 16);
     cout << "*                               " << endl;
     pos(30, 18);
@@ -437,7 +445,7 @@ void Room::ChangeDateSpare()
 
     while (flag)
     {
-        showChangeSpare();
+        showChangeSpare();        //显示房间信息
         if (keyc == -32)
         {
             keyc = _getch();
@@ -536,11 +544,12 @@ void Room::MakeReserve(string guestid)
         pos(30, 12);
         char choice;
         choice = _getch();
-        if (choice != 'y')
+        if (choice != 'y'||choice == 'Y')
         {
             break;
         }
 
+        // 输入入住时间
         pos(30, 14);
         cout << "* 请输入入住时间(格式:yyyy mm dd)               " << endl;
         pos(64, 14);
@@ -554,6 +563,8 @@ void Room::MakeReserve(string guestid)
             system("pause");
             continue;
         }
+
+        // 输入离店时间
         pos(30, 16);
         cout << "* 请输入离店时间(格式:yyyy mm dd)               " << endl;
         pos(64, 16);
@@ -577,7 +588,17 @@ void Room::MakeReserve(string guestid)
             system("pause");
             continue;
         }
-        for (Date d = checkinTemp; d <= checkoutTemp; d++)
+        else if (checkoutTemp == checkinTemp)
+        {
+            pos(30, 20);
+            cout << "很抱歉本店不提供钟点房" << endl;
+            pos(30, 22);
+            system("pause");
+            continue;
+        }
+
+        // 计算价格
+        for (Date d = checkinTemp; d < checkoutTemp; d++)
         {
             if (map.find(d) != map.end())
             {
@@ -602,6 +623,7 @@ void Room::MakeReserve(string guestid)
             }
         }
 
+        // 确认预定
         if (flag)
         {
             while (true)
@@ -644,12 +666,16 @@ void Room::MakeReserve(string guestid)
                         pos(30, 30);
                         system("pause");
 
+                        // 记录预定信息
                         reserveInfo.vec.push_back({id, checkinTemp, checkoutTemp, guestid, to_string(price), "未完成", -1});
                         guestclass.guestMap[guestid].myReserve.push_back(&reserveInfo.vec[reserveInfo.vec.size() - 1]);
                         reserveInfo.update();
 
-                        moneyInfo.vec.push_back({checkinTemp, to_string(price), id + "预定" + id});
+                        // 记录资金
+                        moneyInfo.vec.push_back({checkinTemp, to_string(price), guestid + "预定" + id});
+                        moneyInfo.update();
 
+                        // 更新房间
                         Reserveinfo_to_RoomDateinfo();
                         roomclass.update();
                         return;
@@ -672,7 +698,6 @@ ostream &operator<<(ostream &out, const Room &roominfo)
         score = to_string(roominfo.score / roominfo.scoreTimes).substr(0, 4);
     else
         score = "-";
-
     if (roominfo.accesible == 0)
         out << setw(5) << roominfo.id
             << setw(10) << "不可预约"

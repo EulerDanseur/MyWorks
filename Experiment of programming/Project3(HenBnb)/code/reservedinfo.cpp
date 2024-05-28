@@ -43,7 +43,7 @@ void Reserveinfo::showLandlord(string id)
     pos(30, 10);
     cout << "**********已预订信息管理*******************" << endl;
     pos(30, 12);
-    cout << "*  按q返回房主菜单   按e返回主菜单   按r查看某个房间 " << endl;
+    cout << "*  按q返回房主菜单   按e返回主菜单   " << endl;
     pos(30, 14);
     cout << "********************************************" << endl;
 

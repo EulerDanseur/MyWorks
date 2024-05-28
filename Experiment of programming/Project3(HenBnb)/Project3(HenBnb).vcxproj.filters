@@ -38,9 +38,6 @@
     <ClCompile Include="code\main.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="code\info.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="code\repairinfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>

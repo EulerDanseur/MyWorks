@@ -1,9 +1,6 @@
 // date.cpp
 #include "date.h"
 
-
-
-
 Date::Date()
 {
     time_t today = time(0);
@@ -16,7 +13,7 @@ Date::Date()
 
 Date::Date(int year, int month, int day) : year(year), month(month), day(day)
 {
-    if (!IsValid()) // -> this.IsValid()
+    if (!IsValid()) 
     {
         cout << "valid Date";
     }
