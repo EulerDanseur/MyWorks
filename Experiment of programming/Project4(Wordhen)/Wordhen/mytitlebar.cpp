@@ -1,17 +1,57 @@
 #include "Start.h"
 #include "./ui_Start.h"
-
+#include <QParallelAnimationGroup>
 void Widget::on_closeButton_clicked()
 {
-    this->close();
+    QPropertyAnimation *animation = new QPropertyAnimation(this,"windowOpacity");
+    animation->setDuration(200);
+    animation->setStartValue(1);
+    animation->setEndValue(0);
+    animation->start();
+    connect(animation, &QPropertyAnimation::finished, this, &QWidget::close);
+
 }
 
 void Widget::on_hideButton_clicked()
 {
-    //HWND hw1 = FindWindowA(NULL, "Wordhen");//获取程序句柄
-    //ShowWindow(hw1, SW_MINIMIZE);//程序最小化到任务栏
-    //ShowWindow(hw1, SW_RESTORE);//程序恢复到主界面
-    setWindowState(windowState()^Qt::WindowMinimized);
+    QPropertyAnimation *pAnim1 = new QPropertyAnimation(this, "geometry");
+    pAnim1->setStartValue(currRect);
+    pAnim1->setEndValue(QRect(-currRect.x(), -currRect.y(), currRect.x(), currRect.y()));
+    pAnim1->setEasingCurve(QEasingCurve::Linear);
+    pAnim1->setDuration(600);
+
+    QPropertyAnimation *pAnim2 = new QPropertyAnimation(this, "windowOpacity");
+    pAnim2->setStartValue(1);
+    pAnim2->setEndValue(0.5);
+    pAnim2->setDuration(600);
+
+    QParallelAnimationGroup *animGrp = new QParallelAnimationGroup(this);
+    animGrp->addAnimation(pAnim1);
+    animGrp->addAnimation(pAnim2);
+    animGrp->start(QAbstractAnimation::DeleteWhenStopped);
+
+    connect(animGrp, &QParallelAnimationGroup::finished, this, [=]{
+        setWindowState(windowState()^Qt::WindowMinimized);
+    });
+}
+
+void Widget::PopOut()
+{
+    QPropertyAnimation *pAnim1 = new QPropertyAnimation(this, "geometry");
+    pAnim1->setEndValue(currRect);
+    pAnim1->setStartValue(QRect(-currRect.x(), -currRect.y(), currRect.x(), currRect.y()));
+    pAnim1->setEasingCurve(QEasingCurve::Linear);
+    pAnim1->setDuration(600);
+
+    QPropertyAnimation *pAnim2 = new QPropertyAnimation(this, "windowOpacity");
+    pAnim2->setStartValue(0);
+    pAnim2->setEndValue(1);
+    pAnim2->setDuration(600);
+
+    QParallelAnimationGroup *animGrp = new QParallelAnimationGroup(this);
+    animGrp->addAnimation(pAnim1);
+    animGrp->addAnimation(pAnim2);
+    animGrp->start(QAbstractAnimation::DeleteWhenStopped);
 }
 
 

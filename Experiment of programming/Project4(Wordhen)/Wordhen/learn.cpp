@@ -1,7 +1,7 @@
 #include "learn.h"
 #include "ui_learn.h"
 #include "icon.h"
-
+#include <QThread>
 Learn::Learn(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::Learn)
@@ -26,7 +26,16 @@ Learn::~Learn()
 
 void Learn::on_closeButton_clicked()
 {
-    this->close();
+
+    Vater->show();
+    QPropertyAnimation *animation = new QPropertyAnimation(Vater,"windowOpacity");
+    animation->setDuration(1000);
+    animation->setStartValue(0);
+    animation->setEndValue(1);
+    animation->start();
+
+    connect(animation, &QPropertyAnimation::finished, this, &QWidget::close);
+
 }
 
 void Learn::on_hideButton_clicked()

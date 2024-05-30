@@ -15,6 +15,9 @@ Widget::Widget(QWidget *parent)
     //setWindowFlags(Qt::CustomizeWindowHint);
     setWindowFlags(Qt::FramelessWindowHint);
 
+    //connect(m_taskbarNotifier, &QWinEventNotifier::activated, this, &Widget::PopOut);
+
+
     QDate today = QDate::currentDate();
 
     QGraphicsDropShadowEffect * dse = new QGraphicsDropShadowEffect();
@@ -57,7 +60,15 @@ void Widget::resizeEvent(QResizeEvent *event)
 
 void Widget::on_Learn_clicked()
 {
+    static Learn w_learn;
+    w_learn.Vater = this;
     w_learn.show();
+    QPropertyAnimation *animation = new QPropertyAnimation(&w_learn,"windowOpacity");
+    animation->setDuration(1000);
+    animation->setStartValue(0);
+    animation->setEndValue(1);
+    animation->start();
+    connect(animation, &QPropertyAnimation::finished, this, &QWidget::hide);
 }
 
 void Widget::on_startButton_clicked()
@@ -69,32 +80,17 @@ void Widget::on_startButton_clicked()
     QGraphicsOpacityEffect  *OpacityStartButton = new QGraphicsOpacityEffect(ui->startButton);
     ui->startButton->setGraphicsEffect(OpacityStartButton);
     QPropertyAnimation *animation = new QPropertyAnimation(OpacityStartButton, "opacity", this);
-    animation->setDuration(1200);
+    animation->setDuration(1000);
     animation->setStartValue(1);
     animation->setEndValue(0.0);
     animation->start();
-
-    QPropertyAnimation *shrink = new QPropertyAnimation(ui->startButton, "geometry");
-    shrink->setDuration(2000);
-    shrink->setStartValue(QRect(0, 0, 401, 621));
-    shrink->setEndValue(QRect(0, 0, 1000, 1000));
-    shrink->start();
-
-    // QGraphicsOpacityEffect  *OpacityTitle = new QGraphicsOpacityEffect(ui->startTitle);
-    // ui->startTitle->setGraphicsEffect(OpacityTitle);
-    // QPropertyAnimation *comeout = new QPropertyAnimation(OpacityTitle, "opacity", this);
-    // comeout->setDuration(2000);
-    // comeout->setStartValue(0);
-    // comeout->setEndValue(1);
-    // comeout->start();
 
     QPropertyAnimation *expand = new QPropertyAnimation(ui->startTitle, "geometry");
     expand->setDuration(1200);
     expand->setStartValue(QRect(63,170,0,0));
     expand->setEndValue(QRect(63,170,252,52));
     expand->start();
-
-    connect(animation, &QPropertyAnimation::finished, [=] {ui->startButton->hide();});
+    connect(animation, &QPropertyAnimation::finished, this, [=] {ui->startButton->hide();});
 
 }
 

@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/new/picture">
+        <file>pic/Claude_Monet,_Impression,_soleil_levant.jpg</file>
+        <file>pic/Van_Gogh_-_Angler_und_Boote_an_der_Pont_de_Clichy.jpg</file>
+        <file>pic/Vincent_van_Gogh_(1853-1890)_-_Wheat_Field_with_Crows_(1890).jpg</file>
+        <file>pic/Starry Night.jpg</file>
+        <file>pic/Twilight.jpg</file>
+        <file>pic/Dawn.jpg</file>
+        <file>pic/p314009781.jpg</file>
+        <file>pic/1.png</file>
+        <file>pic/2.png</file>
+        <file>pic/3.png</file>
+        <file>pic/4.png</file>
+        <file>pic/5.png</file>
+        <file>pic/6.png</file>
+        <file>pic/7.png</file>
+        <file>pic/8.png</file>
+        <file>pic/0.png</file>
+        <file>pic/9.png</file>
+    </qresource>
+    <qresource prefix="/new/font">
+        <file>pic/fontawesome-webfont.ttf</file>
+    </qresource>
+    <qresource prefix="/icon">
+        <file>pic/book1.png</file>
+        <file>pic/book2.png</file>
+        <file>pic/book3.png</file>
+        <file>pic/book-open-cover.png</file>
+    </qresource>
+    <qresource prefix="/book">
+        <file>HighSchool.csv</file>
+        <file>star.csv</file>
+    </qresource>
+</RCC>

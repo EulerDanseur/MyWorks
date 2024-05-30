@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include "Start.h"
+#include "ui_Start.h"
 namespace Ui {
 class Learn;
 }
@@ -14,6 +16,7 @@ class Learn : public QWidget
 public:
     explicit Learn(QWidget *parent = nullptr);
     ~Learn();
+    Widget *Vater;
 
 private slots:
     void on_closeButton_clicked();
