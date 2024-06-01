@@ -1,9 +1,13 @@
 #include "Start.h"
 #include "./ui_Start.h"
+#include "animationeffect.h"
 #include <QDate>
 #include <QPainter>
 #include <QThread>
 #include "learn.h"
+#include <QStandardItemModel>
+
+
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -29,6 +33,8 @@ Widget::Widget(QWidget *parent)
     xPosition = x();
     yPosition = y();
 
+    modelword = new QStandardItemModel();
+    modelstar = new QStandardItemModel();
 
     QGraphicsDropShadowEffect * dse = new QGraphicsDropShadowEffect();
     dse->setBlurRadius(20);
@@ -43,6 +49,10 @@ Widget::Widget(QWidget *parent)
                               "<font style = 'font-size:20px; color:#01204E ; font-weight:700'> %2 </font>").arg(today.toString("MMM dd")).arg(today.toString("ddd.")));
 
     //ui->startBG->setFixedSize(392, 615);
+    QGraphicsBlurEffect *blureffect = new QGraphicsBlurEffect;
+    blureffect->setBlurRadius(20); //数值越大，越模糊
+    ui->startBG_2->setGraphicsEffect(blureffect);//设置模糊特效
+    ui->startBG_2->graphicsEffect()->setEnabled(0);//设置模糊特效
 
     ui->bookButton->setFont(FontAwesomeIcons::Instance().getFont());
     ui->bookButton->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
@@ -62,11 +72,24 @@ Widget::Widget(QWidget *parent)
     ui->titleBarIcon->setFont(FontAwesomeIcons::Instance().getFont());
     ui->titleBarIcon->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
 
+    ui->returnButton->setFont(FontAwesomeIcons::Instance().getFont());
+    ui->returnButton->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_sign_out));
+
+    ui->returnButton_2->setFont(FontAwesomeIcons::Instance().getFont());
+    ui->returnButton_2->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_sign_out));
+
+    ui->lastbook->setFont(FontAwesomeIcons::Instance().getFont());
+    ui->lastbook->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_chevron_left));
+    ui->nextbook->setFont(FontAwesomeIcons::Instance().getFont());
+    ui->nextbook->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_chevron_right));
+
 }
 
 Widget::~Widget()
 {
     delete ui;
+
+    delete w_learn;
 }
 
 void Widget::resizeEvent(QResizeEvent *event)
@@ -81,23 +104,10 @@ void Widget::on_Learn_clicked()
 
     setWindowIcon(QIcon(":/icon/pic/book-open-cover.png"));
 
-    QGraphicsBlurEffect *blureffect = new QGraphicsBlurEffect;
-    blureffect->setBlurRadius(20); //数值越大，越模糊
-    ui->startBG_2->setGraphicsEffect(blureffect);//设置模糊特效
-
+    ui->startBG_2->graphicsEffect()->setEnabled(1);
     ui->startBG->setStyleSheet("background-color: rgba(0,0,0,200); border-radius:0");
-    QLabel *label = new QLabel(this);
-    label->resize(this->size());
-    label->setPixmap(this->grab());
-    label->show();
-    QGraphicsOpacityEffect  *OpacityImage = new QGraphicsOpacityEffect(label);
-    label->setGraphicsEffect(OpacityImage);
-    QPropertyAnimation *animation = new QPropertyAnimation(OpacityImage, "opacity", this);
-    animation->setDuration(500);
-    animation->setStartValue(1);
-    animation->setEndValue(0.0);
-    animation->start();
-    connect(animation, &QPropertyAnimation::finished, this, [=] {delete label;});
+
+    animate(this);
 
     int index = ui->stackedWidget->addWidget(w_learn);
     ui->stackedWidget->setCurrentIndex(index);
@@ -123,7 +133,7 @@ void Widget::on_startButton_clicked()
     expand->setStartValue(QRect(63,170,0,0));
     expand->setEndValue(QRect(63,170,252,52));
     expand->start();
-    connect(animation, &QPropertyAnimation::finished, this, [=] {ui->startButton->hide();});
+    connect(animation, &QPropertyAnimation::finished, this, [=] {delete blureffect; delete OpacityStartButton;delete expand;ui->startButton->hide();});
 
 }
 
@@ -131,23 +141,11 @@ int wallpaperorder = 0;
 
 void Widget::on_shiftWallpaperButton_clicked()
 {
-    QLabel *label = new QLabel(this);
-    label->resize(this->size());
-    label->setPixmap(this->grab());
-    label->show();
-    QGraphicsOpacityEffect  *OpacityImage = new QGraphicsOpacityEffect(label);
-    label->setGraphicsEffect(OpacityImage);
-    QPropertyAnimation *animation = new QPropertyAnimation(OpacityImage, "opacity", this);
-    animation->setDuration(500);
-    animation->setStartValue(1);
-    animation->setEndValue(0.0);
-    animation->start();
-    connect(animation, &QPropertyAnimation::finished, this, [=] {delete label;});
-
+    animate(this);
     wallpaperorder = (wallpaperorder + 1) % 10;
     QImage img;
     img.load(QString(":/new/picture/pic/%1.png").arg(wallpaperorder));
-    //ui->startBG->setPixmap(QPixmap::fromImage(img));
+
     ui->startBG_2->setPixmap(QPixmap::fromImage(img));
 
 }
@@ -161,12 +159,124 @@ void Widget::on_stackedWidget_currentChanged(int index)
 
 void Widget::on_bookButton_clicked()
 {
-    ui->stackedWidget->setCurrentIndex(2);
+    animate(this);
+    ui->startBG_2->graphicsEffect()->setEnabled(1);
+    ui->startBG->setStyleSheet("background-color: rgba(0,0,0,200); border-radius:0");
+
+    ui->bookListButton->setText(w_learn->book->name);
+    int learned = w_learn->book->learntList.size();
+    int unlearned = w_learn->book->unlearntList.size();
+    ui->learnt->setText(QString("已学习 %1").arg(learned));
+    ui->unlearnt->setText(QString("已学习 %1").arg(unlearned));
+    ui->progressBar->setMinimum(0);
+    ui->progressBar->setMaximum(learned + unlearned);
+    ui->progressBar->setValue(learned);
+    ui->stackedWidget->setCurrentWidget(ui->book);
+
+    delete modelword;
+    delete modelstar;
+
+    QString state;
+    modelword = new QStandardItemModel(ui->bookWordTable);
+    modelstar = new QStandardItemModel(ui->starTable);
+    modelword->setColumnCount(4);
+    modelword->setHeaderData(0,Qt::Horizontal, "单词");
+    modelword->setHeaderData(1,Qt::Horizontal, "状态");
+    modelword->setHeaderData(2,Qt::Horizontal, "音标");
+    modelword->setHeaderData(3,Qt::Horizontal, "释义");
+    modelstar->setColumnCount(4);
+    modelstar->setHeaderData(0,Qt::Horizontal, "单词");
+    modelstar->setHeaderData(1,Qt::Horizontal, "状态");
+    modelstar->setHeaderData(2,Qt::Horizontal, "音标");
+    modelstar->setHeaderData(3,Qt::Horizontal, "释义");
+    for(auto i : w_learn->book->starList)
+    {
+        QList<QStandardItem *> item;
+        i.learnt ? state = "已学习" : state = "未学习";
+        item << new QStandardItem(i.word) << new QStandardItem(state) <<  new QStandardItem(i.pronunciation) <<  new QStandardItem(i.meaning.join(" "));
+        modelstar->appendRow(item);
+    }
+    for(auto i : w_learn->book->wordList)
+    {
+        QList<QStandardItem *> item;
+        i.learnt ? state = "已学习" : state = "未学习";
+        item << new QStandardItem(i.word) << new QStandardItem(state) <<  new QStandardItem(i.pronunciation) <<  new QStandardItem(i.meaning.join(" "));
+        modelword->appendRow(item);
+    }
+    ui->bookWordTable->setModel(modelword);
+    ui->starTable->setModel(modelstar);
+    ui->bookWordTable->verticalHeader()->hide();
+    ui->starTable->verticalHeader()->hide();
+    ui->bookWordTable->setColumnWidth(3, 200);
+    ui->starTable->setColumnWidth(3, 200);
 }
 
 
-void Widget::on_bookListButton_clicked()
+void Widget::on_returnButton_clicked()
 {
+    animate(this);
+    ui->stackedWidget->setCurrentWidget(ui->start);
 
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->startBG->setStyleSheet("background-color: rgba(0,0,0,0); border-radius:0");
+    ui->titleBarIcon->setFont(FontAwesomeIcons::Instance().getFont());
+    ui->titleBarIcon->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
+
+    ui->startBG_2->graphicsEffect()->setEnabled(0);
+}
+
+int bookindex = 0;
+
+void Widget::on_lastbook_clicked()
+{
+    bookindex += 2;
+    bookindex %= 3;
+    delete w_learn->book;
+    w_learn->book = new Book(bookindex);
+    w_learn->setQuiz();
+    on_bookButton_clicked();
+}
+
+
+void Widget::on_nextbook_clicked()
+{
+    bookindex++;
+    bookindex %= 3;
+    delete w_learn->book;
+    w_learn->book = new Book(bookindex);
+    w_learn->setQuiz();
+    on_bookButton_clicked();
+}
+
+
+void Widget::on_returnButton_2_clicked()
+{
+    animate(this);
+    ui->stackedWidget->setCurrentWidget(ui->start);
+
+    ui->stackedWidget->setCurrentIndex(0);
+    ui->startBG->setStyleSheet("background-color: rgba(0,0,0,0); border-radius:0");
+    ui->titleBarIcon->setFont(FontAwesomeIcons::Instance().getFont());
+    ui->titleBarIcon->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
+
+    ui->startBG_2->graphicsEffect()->setEnabled(0);
+}
+
+
+void Widget::on_settingButton_clicked()
+{
+    animate(this);
+    ui->startBG_2->graphicsEffect()->setEnabled(1);
+    ui->startBG->setStyleSheet("background-color: rgba(0,0,0,200); border-radius:0");
+
+    ui->stackedWidget->setCurrentWidget(ui->setting);
+
+}
+
+
+void Widget::on_randomButton_stateChanged(int arg1)
+{
+    w_learn->ordered =! w_learn->ordered;
+    w_learn->setQuiz();
 }
 

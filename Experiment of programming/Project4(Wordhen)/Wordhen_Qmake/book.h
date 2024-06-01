@@ -13,22 +13,34 @@ class Word
 public:
     QString word;
     QString pronunciation;
-    QString meaning;
+    QStringList meaning;
     bool learnt;
     int reviewtimes;
 
     Word()
         :word(""), pronunciation(""), meaning(""), learnt(0), reviewtimes(0){}
     Word(QString _word, QString _pronunciation, QString _meaning, bool _memorised, int _reviewtimes)
-        :word(_word), pronunciation(_pronunciation), meaning(_meaning), learnt(_memorised), reviewtimes(_reviewtimes){}
+        :word(_word), pronunciation(_pronunciation), meaning(_meaning.split("#")), learnt(_memorised), reviewtimes(_reviewtimes){}
     Word(QStringList list)
-        :word(list[0]), pronunciation(list[1]), meaning(list[2]), learnt(list[3].toInt()), reviewtimes(list[4].toInt()){}
-
+        :word(list[0]), pronunciation(list[1]), meaning(list[2].split("#")), learnt(list[3].toInt()), reviewtimes(list[4].toInt()){}
+    bool operator==(const Word &b)
+    {
+        return word==b.word && pronunciation == b.pronunciation && meaning == b.meaning;
+    }
+    Word & operator=(const Word &b)
+    {
+        word = b.word;
+        pronunciation = b.pronunciation;
+        meaning = b.meaning;
+        learnt = b.learnt;
+        reviewtimes = b.reviewtimes;
+        return *this;
+    }
 };
 
 inline void operator<<(QTextStream &out, Word a)
 {
-    out<< QString("%1|%2|%3|%4|%5\n").arg(a.word).arg(a.pronunciation).arg(a.meaning).arg(a.learnt).arg(a.reviewtimes);
+    out<< QString("%1|%2|%3|%4|%5\n").arg(a.word).arg(a.pronunciation).arg(a.meaning.join("#")).arg(a.learnt).arg(a.reviewtimes);
     return;
 }
 
@@ -37,16 +49,17 @@ class Book
 public:
     QString name;
     QMap<QString, Word> wordList;
-    QVector<Word *> unlearnList;
+    QVector<Word *> unlearntList;
     QVector<Word *> learntList;
-    QVector<QString> starList;
+    QVector<Word> starList;
 
     Book(QString name = "HighSchool");
+    Book(int index);
     ~Book();
     bool writeFile();
 };
 
-inline void readFromCsv(QVector<QString> list, QString name)
+inline void readFromCsv(QVector<Word> & list, QString name)
 {
     QFile file(QString(":/book/%1.csv").arg(name));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
@@ -67,17 +80,13 @@ inline void readFromCsv(QVector<QString> list, QString name)
                 relation.append("0");
                 relation.append("0");
             }
-            else if(relation.size() == 1)
-            {
-                list.push_back(relation[0]);
-            }
             else
             {
                 continue;
             }
         }
-        //Word word = Word(relation);
-        //list.push_back(word);
+        Word word = Word(relation);
+        list.push_back(word);
     }
 
 }

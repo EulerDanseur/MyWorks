@@ -26,9 +26,13 @@
         <file>pic/book2.png</file>
         <file>pic/book3.png</file>
         <file>pic/book-open-cover.png</file>
+        <file>pic/random.png</file>
+        <file>pic/order.png</file>
     </qresource>
     <qresource prefix="/book">
         <file>HighSchool.csv</file>
         <file>star.csv</file>
+        <file>MiddleSchool.csv</file>
+        <file>PrimarySchool.csv</file>
     </qresource>
 </RCC>

@@ -1,4 +1,5 @@
 QT       += core gui
+QT += webenginewidgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -10,6 +11,7 @@ CONFIG += c++17
 
 SOURCES += \
     Start.cpp \
+    SwitchButton.cpp \
     book.cpp \
     icon.cpp \
     learn.cpp \
@@ -18,6 +20,8 @@ SOURCES += \
 
 HEADERS += \
     Start.h \
+    SwitchButton.h \
+    animationeffect.h \
     book.h \
     icon.h \
     learn.h \

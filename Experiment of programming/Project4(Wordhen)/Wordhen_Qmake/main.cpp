@@ -4,6 +4,7 @@
 int main(int argc, char *argv[])
 {
     QGuiApplication::setHighDpiScaleFactorRoundingPolicy(Qt::HighDpiScaleFactorRoundingPolicy::Ceil);
+    QCoreApplication::setAttribute(Qt::AA_UseSoftwareOpenGL);
 
     QApplication a(argc, argv);
     Widget w;

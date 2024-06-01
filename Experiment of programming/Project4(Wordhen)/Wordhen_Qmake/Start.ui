@@ -38,7 +38,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="start">
     <widget class="QWidget" name="horizontalLayoutWidget">
@@ -317,9 +317,193 @@ border-radius: 0</string>
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="setting"/>
+   <widget class="QWidget" name="setting">
+    <widget class="QLabel" name="settingLabel">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>20</y>
+       <width>151</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>24</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>设置</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="returnButton_2">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>40</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size:16px;
+QPushButton{
+	//background-color: #EB5353;
+	color: rgb(100, 35, 35);
+	border-radius:6px;
+}
+QPushButton:hover {
+	font-size:7px;
+	color: #EB5353;
+	//background-color: #EB5353;
+	border-radius:6px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_7">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>110</y>
+       <width>257</width>
+       <height>80</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <item>
+       <widget class="QLabel" name="settingLabel_4">
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>随机模式</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="randomButton">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QCheckBox { 
+    border: 0px solid #FFFFFF; /*设置qcheckbox控件的边框为0px（无边框）*/
+    border-radius: 20px; 
+    padding: 4px; 
+    spacing: 10px; 
+} 
+/*设置qcheckbox控件中的勾选框的属性*/
+ QCheckBox::indicator{
+border: 0px solid #FFFFFF;  /*设置qcheckbox控件中勾选框的边框为0px（无边框）*/
+width: 40px;/*勾选框的大小*/
+height: 40px;
+}
+QCheckBox::indicator { subcontrol-position: right; }
+/*勾选框未选中时的图像*/
+QCheckBox::indicator:unchecked {
+    image: url(:/icon/pic/order.png);
+}
+/*勾选框选中时的图像*/
+QCheckBox::indicator:checked {
+    image: url(:/icon/pic/random.png);
+}</string>
+        </property>
+        <property name="text">
+         <string>随机模式</string>
+        </property>
+        <property name="icon">
+         <iconset theme="accessories-text-editor"/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_6">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>230</y>
+       <width>261</width>
+       <height>139</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QLabel" name="settingLabel_3">
+        <property name="font">
+         <font>
+          <pointsize>24</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>每组词数</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="lineEdit">
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>22</pointsize>
+         </font>
+        </property>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </widget>
    <widget class="QWidget" name="book">
-    <widget class="QLabel" name="label">
+    <widget class="QLabel" name="Learning">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -361,8 +545,8 @@ border-radius: 0</string>
      </property>
      <property name="font">
       <font>
-       <pointsize>22</pointsize>
-       <bold>true</bold>
+       <pointsize>11</pointsize>
+       <bold>false</bold>
       </font>
      </property>
      <property name="styleSheet">
@@ -391,6 +575,467 @@ QProgressBar::chunk{border-radius:11px;background:qlineargradient(spread:pad,x1:
      <property name="value">
       <number>24</number>
      </property>
+    </widget>
+    <widget class="QLabel" name="learnt">
+     <property name="geometry">
+      <rect>
+       <x>149</x>
+       <y>120</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>已学习</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="unlearnt">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>120</y>
+       <width>51</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>未学习</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="returnButton">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>20</y>
+       <width>16</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16</width>
+       <height>16</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">font-size:16px;
+QPushButton{
+	//background-color: #EB5353;
+	color: rgb(100, 35, 35);
+	border-radius:6px;
+}
+QPushButton:hover {
+	font-size:7px;
+	color: #EB5353;
+	//background-color: #EB5353;
+	border-radius:6px;
+}</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QTabWidget" name="Table">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>220</y>
+       <width>331</width>
+       <height>361</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgba(0,0,0, 0);</string>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="bookList">
+      <property name="styleSheet">
+       <string notr="true">border-radius:0px</string>
+      </property>
+      <attribute name="title">
+       <string>Book</string>
+      </attribute>
+      <widget class="QTableView" name="bookWordTable">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>331</width>
+         <height>341</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Code New Roman</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QTableView{
+    background: rgba(48, 48, 51, 0);
+	border-radius:0;
+}
+QTableView::item
+{
+    color:rgba(255,255,255,150);
+    background: rgba(48, 48, 51, 0);
+}
+QTableView::item:hover
+{
+    color:#FFFFFF;
+    background: rgba(75, 75, 77, 0);
+}
+QTableView::item:selected
+{
+    color:#FFFFFF;
+    background: rgba(75, 75, 77, 0);
+}
+QHeaderView::section,QTableCornerButton:section
+{ 
+    text-align:center;
+    padding:3px; 
+    margin:0px; 
+    color:#DCDCDC; 
+    border:1px solid #242424; 
+    border-left-width:0px; 
+    border-right-width:1px; 
+    border-top-width:0px;
+     border-bottom-width:1px; 
+	background: rgba(48, 48, 51, 50);
+ }
+
+QScrollBar::handle:vertical::hover{ 
+    background: rgba(255,255,255,0.90);
+    border-radius: 4px;
+    width:3px; 
+}
+QScrollBar::handle:vertical::pressed{ 
+    background: rgba(255,255,255,0.90);
+    border-radius:4px;
+    width:3px; 
+}
+QScrollBar::sub-page:vertical {
+    background: #19191A;
+border-style:flat;
+}
+QScrollBar::add-page:vertical {
+   background: #19191A;
+border-style:flat;
+}
+QScrollBar::add-line:vertical{
+   background: #19191A;
+}
+QScrollBar::sub-line:vertical {
+   background: #19191A;
+}
+QScrollBar:horizontal{ 
+    height:3px;  
+    border-style:flat;
+    border-radius: 4px;
+    border:0px;
+background: #19191A;
+} 
+QScrollBar::handle:horizontal{ 
+    background: rgba(255,255,255,0.50);
+    border-radius: 4px;
+    height:3px; 
+    min-width:91px; 
+    border-style:flat;
+}
+QScrollBar::handle:horizontal::hover{ 
+    background: rgba(255,255,255,0.90);
+    border-radius: 4px;
+    height:8px; 
+}
+QScrollBar::handle:horizontal::pressed{ 
+    background: rgba(255,255,255,0.90);
+    border-radius:4px;
+    height:3px; 
+}
+QScrollBar::sub-page:horizontal {
+    background: #19191A;
+    border-style:flat;
+}
+QScrollBar::add-page:horizontal {
+   background: #19191A;
+    border-style:flat;
+}
+QScrollBar::sub-line:horizontal {
+   background: #19191A;
+}
+QScrollBar::add-line:horizontal{
+   background: #19191A;
+}
+QHeaderView::section:selected
+{ 
+    color:#FFFFFF; 
+    border:1px solid #242424; 
+ }
+QScrollBar:vertical{ 
+    width:3px;  
+    border-style:flat;
+    border-radius: 4px;
+    border:0px;
+     background: #19191A;
+} 
+QScrollBar::handle:vertical{ 
+    background: rgba(255,255,255,0.50);
+    border-radius: 4px;
+    width:3px; 
+    min-height:91px; 
+    border-style:flat;
+}</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="starList">
+      <attribute name="title">
+       <string>Star</string>
+      </attribute>
+      <widget class="QTableView" name="starTable">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>331</width>
+         <height>341</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Code New Roman</family>
+         <pointsize>11</pointsize>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QTableView{
+    background: rgba(48, 48, 51, 0);
+	border-radius:0;
+}
+QTableView::item
+{
+    color:rgba(255,255,255,150);
+    background: rgba(48, 48, 51, 0);
+}
+QTableView::item:hover
+{
+    color:#FFFFFF;
+    background: rgba(75, 75, 77, 0);
+}
+QTableView::item:selected
+{
+    color:#FFFFFF;
+    background: rgba(75, 75, 77, 0);
+}
+QHeaderView::section,QTableCornerButton:section
+{ 
+    text-align:center;
+    padding:3px; 
+    margin:0px; 
+    color:#DCDCDC; 
+    border:1px solid #242424; 
+    border-left-width:0px; 
+    border-right-width:1px; 
+    border-top-width:0px;
+     border-bottom-width:1px; 
+	background: rgba(48, 48, 51, 50);
+ }
+
+QScrollBar::handle:vertical::hover{ 
+    background: rgba(255,255,255,0.90);
+    border-radius: 4px;
+    width:3px; 
+}
+QScrollBar::handle:vertical::pressed{ 
+    background: rgba(255,255,255,0.90);
+    border-radius:4px;
+    width:3px; 
+}
+QScrollBar::sub-page:vertical {
+    background: #19191A;
+border-style:flat;
+}
+QScrollBar::add-page:vertical {
+   background: #19191A;
+border-style:flat;
+}
+QScrollBar::add-line:vertical{
+   background: #19191A;
+}
+QScrollBar::sub-line:vertical {
+   background: #19191A;
+}
+QScrollBar:horizontal{ 
+    height:3px;  
+    border-style:flat;
+    border-radius: 4px;
+    border:0px;
+background: #19191A;
+} 
+QScrollBar::handle:horizontal{ 
+    background: rgba(255,255,255,0.50);
+    border-radius: 4px;
+    height:3px; 
+    min-width:91px; 
+    border-style:flat;
+}
+QScrollBar::handle:horizontal::hover{ 
+    background: rgba(255,255,255,0.90);
+    border-radius: 4px;
+    height:8px; 
+}
+QScrollBar::handle:horizontal::pressed{ 
+    background: rgba(255,255,255,0.90);
+    border-radius:4px;
+    height:3px; 
+}
+QScrollBar::sub-page:horizontal {
+    background: #19191A;
+    border-style:flat;
+}
+QScrollBar::add-page:horizontal {
+   background: #19191A;
+    border-style:flat;
+}
+QScrollBar::sub-line:horizontal {
+   background: #19191A;
+}
+QScrollBar::add-line:horizontal{
+   background: #19191A;
+}
+QHeaderView::section:selected
+{ 
+    color:#FFFFFF; 
+    border:1px solid #242424; 
+ }
+QScrollBar:vertical{ 
+    width:3px;  
+    border-style:flat;
+    border-radius: 4px;
+    border:0px;
+     background: #19191A;
+} 
+QScrollBar::handle:vertical{ 
+    background: rgba(255,255,255,0.50);
+    border-radius: 4px;
+    width:3px; 
+    min-height:91px; 
+    border-style:flat;
+}</string>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="horizontalLayoutWidget_5">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>80</y>
+       <width>191</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <item>
+       <widget class="QPushButton" name="lastbook">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	color: rgb(255,255,255);
+    background-color: rgba(255, 255, 255, 0);
+	font-size:16px;}
+/*
+MyCheckBox:checked{
+	font-size:7px;
+    color:rgb(255, 170, 0);
+    background-color: rgba(255, 255, 255, 0);
+	border-radius:0px;
+}
+MyCheckBox::indicator{
+	width: 0px;
+	height: 0px;
+}*/</string>
+        </property>
+        <property name="text">
+         <string>&lt;</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="font">
+         <font>
+          <pointsize>14</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>换本词书</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="nextbook">
+        <property name="minimumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
+	color: rgb(255,255,255);
+    background-color: rgba(255, 255, 255, 0);
+	font-size:16px;}
+/*
+MyCheckBox:checked{
+	font-size:7px;
+    color:rgb(255, 170, 0);
+    background-color: rgba(255, 255, 255, 0);
+	border-radius:0px;
+}
+MyCheckBox::indicator{
+	width: 0px;
+	height: 0px;
+}*/</string>
+        </property>
+        <property name="text">
+         <string>&gt;</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </widget>
   </widget>

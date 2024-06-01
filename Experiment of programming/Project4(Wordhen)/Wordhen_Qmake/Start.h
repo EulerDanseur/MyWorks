@@ -6,6 +6,8 @@
 #include <QGraphicsOpacityEffect>
 #include <Windows.h>
 #include "icon.h"
+#include "qheaderview.h"
+#include "qstandarditemmodel.h"
 
 class Learn;
 
@@ -40,6 +42,8 @@ private slots:
 private:
     Ui::Widget *ui;
     Learn *w_learn;
+    QStandardItemModel* modelstar;
+    QStandardItemModel* modelword;
 
     //QGraphicsOpacityEffect  *Opacity;
 
@@ -54,7 +58,17 @@ private slots:
 
     void on_stackedWidget_currentChanged(int arg1);
 
-    void on_bookListButton_clicked();
+    void on_returnButton_clicked();
+
+    void on_lastbook_clicked();
+
+    void on_nextbook_clicked();
+
+    void on_returnButton_2_clicked();
+
+    void on_settingButton_clicked();
+
+    void on_randomButton_stateChanged(int arg1);
 
 private:
     QPoint last;//窗口拖动用变量
@@ -62,6 +76,10 @@ private:
 
     int xPosition;
     int yPosition;
-
 };
+
+#include <QTableView>
+#include <QStandardItemModel>
+
+
 #endif // START_H
