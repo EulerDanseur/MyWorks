@@ -4,6 +4,8 @@
 #include <QLabel>
 #include <QGraphicsEffect>
 #include <QPropertyAnimation>
+
+//淡出动画
 inline void animate(QWidget * w)
 {
     QLabel *label = new QLabel(w);
@@ -17,7 +19,7 @@ inline void animate(QWidget * w)
     animation->setStartValue(1);
     animation->setEndValue(0.0);
     animation->start();
-    QAbstractAnimation::connect(animation, &QPropertyAnimation::finished, w, [=] {delete animation; delete label;});
+    QAbstractAnimation::connect(animation, &QPropertyAnimation::finished, w, [=] {delete animation; delete OpacityImage; delete label;});
 }
 
 inline void animate(QWidget * w, int time)

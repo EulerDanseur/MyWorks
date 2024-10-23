@@ -11,18 +11,26 @@ using namespace std;
 class Word
 {
 public:
+    //单词
     QString word;
+    //音标
     QString pronunciation;
+    //释义
     QStringList meaning;
+    //是否记住
     bool learnt;
+    //复习次数
     int reviewtimes;
 
+    //构造函数
     Word()
         :word(""), pronunciation(""), meaning(""), learnt(0), reviewtimes(0){}
     Word(QString _word, QString _pronunciation, QString _meaning, bool _memorised, int _reviewtimes)
         :word(_word), pronunciation(_pronunciation), meaning(_meaning.split("#")), learnt(_memorised), reviewtimes(_reviewtimes){}
     Word(QStringList list)
         :word(list[0]), pronunciation(list[1]), meaning(list[2].split("#")), learnt(list[3].toInt()), reviewtimes(list[4].toInt()){}
+    
+    //重载运算符
     bool operator==(const Word &b)
     {
         return word==b.word && pronunciation == b.pronunciation && meaning == b.meaning;
@@ -47,10 +55,15 @@ inline void operator<<(QTextStream &out, Word a)
 class Book
 {
 public:
+    //名字
     QString name;
+    //单词列表
     QMap<QString, Word> wordList;
+    //未记住单词
     QVector<Word *> unlearntList;
+    //已记住单词
     QVector<Word *> learntList;
+    //星标
     QVector<Word> starList;
 
     Book(QString name = "HighSchool");
@@ -59,9 +72,11 @@ public:
     bool writeFile();
 };
 
+//从csv中读取
 inline void readFromCsv(QVector<Word> & list, QString name)
 {
-    QFile file(QString(":/book/%1.csv").arg(name));
+    //打开文件
+    QFile file(QString(":/book/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/%1.csv").arg(name));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Failed to open file";
         return;

@@ -3,9 +3,11 @@
 
 Book::Book(QString _name)
 {
+    //命名
     name = _name;
 
-    QFile file(QString(":/book/%1.csv").arg(name));
+    //打开文件
+    QFile file(QString(":/book/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/%1.csv").arg(name));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Failed to open file";
         return;
@@ -48,7 +50,7 @@ Book::Book(int index)
     QStringList namelist = {"HighSchool", "MiddleSchool", "PrimarySchool"};
     name = namelist[index];
 
-    QFile file(QString(":/book/%1.csv").arg(name));
+    QFile file(QString(":/book/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/%1.csv").arg(name));
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "Failed to open file";
         return;
@@ -88,20 +90,16 @@ Book::Book(int index)
 }
 bool Book::writeFile()
 {
-    QFile file(QString("D:\\MyWorks\\MyWorks\\Experiment of programming\\Project4(Wordhen)\\Wordhen_Qmake\\%1.csv").arg(name));
+    QFile file(QString("%1.csv").arg(name));
     if(file.open(QIODevice::WriteOnly|QIODevice::Text)){
         QTextStream out(&file);
         for(auto a : wordList){
             out<<QString("%1|%2|%3|%4|%5\n").arg(a.word).arg(a.pronunciation).arg(a.meaning.join("#")).arg(a.learnt).arg(a.reviewtimes);
         }
         file.close();
-        //return true;
-    }
-    else{
-        // false;
     }
 
-    QFile filestar(QString("D:\\MyWorks\\MyWorks\\Experiment of programming\\Project4(Wordhen)\\Wordhen_Qmake\\star.csv"));
+    QFile filestar(QString("star.csv"));
     if(filestar.open(QIODevice::WriteOnly|QIODevice::Text)){
         QTextStream out(&filestar);
         for(auto a : starList){

@@ -1,0 +1,64 @@
+Date : 2024-06-02 15:22:37
+Directory : d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake
+Total : 28 files,  17823 codes, 29 comments, 359 blanks, all 18211 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| CSV      |          7 |     13,358 |          0 |          7 |     13,365 |
+| XML      |          3 |      2,299 |          0 |         16 |      2,315 |
+| C++      |         16 |      2,164 |         29 |        336 |      2,529 |
+| JSON     |          2 |          2 |          0 |          0 |          2 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                                                                       | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                                                                          |         28 |     17,823 |         29 |        359 |     18,211 |
+| . (Files)                                                                                                                                                  |         21 |      9,977 |         29 |        354 |     10,360 |
+| build                                                                                                                                                      |          7 |      7,846 |          0 |          5 |      7,851 |
+| build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug                                                                                                                |          5 |      7,832 |          0 |          4 |      7,836 |
+| build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug (Files)                                                                                                        |          3 |      7,818 |          0 |          3 |      7,821 |
+| build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\.qtc_clangd                                                                                                    |          1 |          1 |          0 |          0 |          1 |
+| build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\debug                                                                                                          |          1 |         13 |          0 |          1 |         14 |
+| build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug                                                                                                                |          2 |         14 |          0 |          1 |         15 |
+| build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\.qtc_clangd                                                                                                    |          1 |          1 |          0 |          0 |          1 |
+| build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\debug                                                                                                          |          1 |         13 |          0 |          1 |         14 |
++------------------------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                                                                                   | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\HighSchool.csv                                                                | CSV      |      3,350 |          0 |          1 |      3,351 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\MiddleSchool.csv                                                              | CSV      |      1,831 |          0 |          1 |      1,832 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\PrimarySchool.csv                                                             | CSV      |        179 |          0 |          1 |        180 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\Start.cpp                                                                     | C++      |        253 |          4 |         68 |        325 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\Start.h                                                                       | C++      |         61 |          3 |         28 |         92 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\Start.ui                                                                      | XML      |      1,594 |          0 |         10 |      1,604 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\SwitchButton.cpp                                                              | C++      |        291 |         12 |         63 |        366 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\SwitchButton.h                                                                | C++      |         80 |          0 |         23 |        103 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\animationeffect.h                                                             | C++      |         37 |          0 |          2 |         39 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\book.cpp                                                                      | C++      |        109 |          2 |         12 |        123 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\book.h                                                                        | C++      |         83 |          1 |         11 |         95 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\.qtc_clangd\compile_commands.json | JSON     |          1 |          0 |          0 |          1 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\HighSchool .csv                   | CSV      |          0 |          0 |          1 |          1 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\HighSchool.csv                    | CSV      |      3,909 |          0 |          1 |      3,910 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\debug\moc_predefs.h               | C++      |         13 |          0 |          1 |         14 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\star.csv                          | CSV      |      3,909 |          0 |          1 |      3,910 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\.qtc_clangd\compile_commands.json | JSON     |          1 |          0 |          0 |          1 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\debug\moc_predefs.h               | C++      |         13 |          0 |          1 |         14 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\icon.cpp                                                                      | C++      |         19 |          0 |          7 |         26 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\icon.h                                                                        | C++      |        806 |          0 |         12 |        818 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\learn.cpp                                                                     | C++      |        221 |          3 |         59 |        283 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\learn.h                                                                       | C++      |         39 |          0 |         16 |         55 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\learn.ui                                                                      | XML      |        667 |          0 |          5 |        672 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\main.cpp                                                                      | C++      |         16 |          0 |          3 |         19 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\mycheckbox.h                                                                  | C++      |         21 |          0 |         13 |         34 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\mytitlebar.cpp                                                                | C++      |        102 |          4 |         17 |        123 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\pic.qrc                                                                       | XML      |         38 |          0 |          1 |         39 |
+| d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\star.csv                                                                      | CSV      |        180 |          0 |          1 |        181 |
+| Total                                                                                                                                                      |          |     17,823 |         29 |        359 |     18,211 |
++------------------------------------------------------------------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+

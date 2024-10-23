@@ -28,8 +28,8 @@
   <widget class="QPushButton" name="returnButton">
    <property name="geometry">
     <rect>
-     <x>360</x>
-     <y>20</y>
+     <x>370</x>
+     <y>3</y>
      <width>16</width>
      <height>16</height>
     </rect>
@@ -140,9 +140,9 @@ border-radius: 10;
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>50</y>
+       <y>30</y>
        <width>311</width>
-       <height>61</height>
+       <height>101</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -512,36 +512,6 @@ MyCheckBox::indicator{
           </property>
          </widget>
         </item>
-        <item>
-         <widget class="QPushButton" name="deleteWord">
-          <property name="minimumSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="maximumSize">
-           <size>
-            <width>20</width>
-            <height>20</height>
-           </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color:rgb(78, 78, 78);
-background-color: rgba(255, 255, 255, 0);
-font-size:15px;
-
-
-/*
-
-}*/
-</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </item>
        </layout>
       </widget>
      </widget>
@@ -550,8 +520,8 @@ font-size:15px;
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>110</y>
-       <width>121</width>
+       <y>130</y>
+       <width>301</width>
        <height>21</height>
       </rect>
      </property>
@@ -577,36 +547,25 @@ border-radius: 10;
     <zorder>pronunciation</zorder>
    </widget>
    <widget class="QWidget" name="webPage">
-    <widget class="QWidget" name="gridLayoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>0</y>
-       <width>411</width>
-       <height>621</height>
-      </rect>
-     </property>
-     <layout class="QGridLayout" name="webLayer"/>
-    </widget>
     <widget class="QPushButton" name="backButton">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>10</y>
+       <x>290</x>
+       <y>4</y>
        <width>40</width>
-       <height>30</height>
+       <height>15</height>
       </rect>
      </property>
      <property name="minimumSize">
       <size>
        <width>40</width>
-       <height>30</height>
+       <height>15</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>16</width>
-       <height>16</height>
+       <height>15</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -617,7 +576,7 @@ border-radius: 10;
 }
 QPushButton:hover {
 	color: #EB5353;
-	background-color: #EB5353;
+	background-color: rgb(255, 170, 127);
 	border-radius:6px;
 }</string>
      </property>
@@ -625,6 +584,53 @@ QPushButton:hover {
       <string>&lt;-Back</string>
      </property>
     </widget>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>401</width>
+       <height>621</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="tabLex">
+      <attribute name="title">
+       <string>Lexipedia</string>
+      </attribute>
+      <widget class="QWidget" name="gridLayoutWidget">
+       <property name="geometry">
+        <rect>
+         <x>-1</x>
+         <y>-1</y>
+         <width>391</width>
+         <height>591</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="tabLexLayer"/>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tabEtym">
+      <attribute name="title">
+       <string>Etymology</string>
+      </attribute>
+      <widget class="QWidget" name="gridLayoutWidget_2">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>391</width>
+         <height>591</height>
+        </rect>
+       </property>
+       <layout class="QGridLayout" name="tabEtymLayer"/>
+      </widget>
+     </widget>
+    </widget>
+    <zorder>tabWidget</zorder>
+    <zorder>backButton</zorder>
    </widget>
   </widget>
   <zorder>stackedWidget</zorder>

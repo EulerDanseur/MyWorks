@@ -11,7 +11,6 @@ CONFIG += c++17
 
 SOURCES += \
     Start.cpp \
-    SwitchButton.cpp \
     book.cpp \
     icon.cpp \
     learn.cpp \
@@ -20,12 +19,10 @@ SOURCES += \
 
 HEADERS += \
     Start.h \
-    SwitchButton.h \
     animationeffect.h \
     book.h \
     icon.h \
-    learn.h \
-    mycheckbox.h
+    learn.h
 
 FORMS += \
     Start.ui \
@@ -40,3 +37,4 @@ RESOURCES += \
     pic.qrc
 
 DISTFILES +=
+

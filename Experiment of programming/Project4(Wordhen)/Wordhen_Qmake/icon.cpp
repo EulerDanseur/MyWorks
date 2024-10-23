@@ -7,7 +7,7 @@ FontAwesomeIcons &FontAwesomeIcons::Instance() {
 }
 
 FontAwesomeIcons::FontAwesomeIcons() {
-    int fontId = QFontDatabase::addApplicationFont("D:\\MyWorks\\MyWorks\\Experiment of programming\\Project4(Wordhen)\\Wordhen/fontawesome-webfont.ttf");
+    int fontId = QFontDatabase::addApplicationFont(":/new/font/pic/fontawesome-webfont.ttf");
     QStringList fontFamilies = QFontDatabase::applicationFontFamilies(fontId);
 
     this->font.setFamily(fontFamilies.at(0));

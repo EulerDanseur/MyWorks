@@ -4,6 +4,7 @@
 #include <QParallelAnimationGroup>
 void Widget::on_closeButton_clicked()
 {
+    // 隐藏窗口
     QPropertyAnimation *animation = new QPropertyAnimation(this,"windowOpacity");
     animation->setDuration(200);
     animation->setStartValue(1);
@@ -15,6 +16,7 @@ void Widget::on_closeButton_clicked()
 
 void Widget::on_hideButton_clicked()
 {
+    // 最小化窗口
     const QRect &currRect = this->geometry();
     QPropertyAnimation *pAnim1 = new QPropertyAnimation(this, "geometry");
     pAnim1->setStartValue(currRect);
@@ -46,6 +48,7 @@ void Widget::on_hideButton_clicked()
 
 void Widget::PopOut()
 {
+    // 弹出窗口
     const QRect &currRect = this->geometry();
     QPropertyAnimation *pAnim1 = new QPropertyAnimation(this, "geometry");
     pAnim1->setEndValue(currRect);

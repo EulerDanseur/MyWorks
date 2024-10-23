@@ -30,9 +30,10 @@
         <file>pic/order.png</file>
     </qresource>
     <qresource prefix="/book">
-        <file>HighSchool.csv</file>
-        <file>star.csv</file>
-        <file>MiddleSchool.csv</file>
-        <file>PrimarySchool.csv</file>
+        <file>build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/HighSchool.csv</file>
+        <file>build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/MiddleSchool.csv</file>
+        <file>build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/PrimarySchool.csv</file>
+        <file>build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/star.csv</file>
+        <file>build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/mode.txt</file>
     </qresource>
 </RCC>

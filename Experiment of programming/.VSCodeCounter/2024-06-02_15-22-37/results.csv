@@ -1,0 +1,30 @@
+"filename", "language", "C++", "CSV", "XML", "JSON", "comment", "blank", "total"
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\HighSchool.csv", "CSV", 0, 3350, 0, 0, 0, 1, 3351
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\MiddleSchool.csv", "CSV", 0, 1831, 0, 0, 0, 1, 1832
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\PrimarySchool.csv", "CSV", 0, 179, 0, 0, 0, 1, 180
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\Start.cpp", "C++", 253, 0, 0, 0, 4, 68, 325
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\Start.h", "C++", 61, 0, 0, 0, 3, 28, 92
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\Start.ui", "XML", 0, 0, 1594, 0, 0, 10, 1604
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\SwitchButton.cpp", "C++", 291, 0, 0, 0, 12, 63, 366
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\SwitchButton.h", "C++", 80, 0, 0, 0, 0, 23, 103
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\animationeffect.h", "C++", 37, 0, 0, 0, 0, 2, 39
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\book.cpp", "C++", 109, 0, 0, 0, 2, 12, 123
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\book.h", "C++", 83, 0, 0, 0, 1, 11, 95
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\.qtc_clangd\compile_commands.json", "JSON", 0, 0, 0, 1, 0, 0, 1
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\HighSchool .csv", "CSV", 0, 0, 0, 0, 0, 1, 1
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\HighSchool.csv", "CSV", 0, 3909, 0, 0, 0, 1, 3910
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\debug\moc_predefs.h", "C++", 13, 0, 0, 0, 0, 1, 14
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_0_MSVC2019_64bit-Debug\star.csv", "CSV", 0, 3909, 0, 0, 0, 1, 3910
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\.qtc_clangd\compile_commands.json", "JSON", 0, 0, 0, 1, 0, 0, 1
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\build\Desktop_Qt_6_7_1_MSVC2019_64bit-Debug\debug\moc_predefs.h", "C++", 13, 0, 0, 0, 0, 1, 14
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\icon.cpp", "C++", 19, 0, 0, 0, 0, 7, 26
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\icon.h", "C++", 806, 0, 0, 0, 0, 12, 818
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\learn.cpp", "C++", 221, 0, 0, 0, 3, 59, 283
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\learn.h", "C++", 39, 0, 0, 0, 0, 16, 55
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\learn.ui", "XML", 0, 0, 667, 0, 0, 5, 672
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\main.cpp", "C++", 16, 0, 0, 0, 0, 3, 19
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\mycheckbox.h", "C++", 21, 0, 0, 0, 0, 13, 34
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\mytitlebar.cpp", "C++", 102, 0, 0, 0, 4, 17, 123
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\pic.qrc", "XML", 0, 0, 38, 0, 0, 1, 39
+"d:\MyWorks\MyWorks\Experiment of programming\Project4(Wordhen)\Wordhen_Qmake\star.csv", "CSV", 0, 180, 0, 0, 0, 1, 181
+"Total", "-", 2164, 13358, 2299, 2, 29, 359, 18211

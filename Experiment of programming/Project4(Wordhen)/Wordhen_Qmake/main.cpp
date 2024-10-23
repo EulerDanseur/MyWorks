@@ -1,5 +1,6 @@
 #include "Start.h"
 #include <QApplication>
+#include <QRandomGenerator>
 
 int main(int argc, char *argv[])
 {
@@ -10,9 +11,11 @@ int main(int argc, char *argv[])
     Widget w;
     w.show();
     QPropertyAnimation *animation = new QPropertyAnimation(&w,"windowOpacity");
+
     animation->setDuration(500);
     animation->setStartValue(0);
     animation->setEndValue(1);
     animation->start();
+
     return a.exec();
 }

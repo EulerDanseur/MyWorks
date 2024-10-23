@@ -6,8 +6,9 @@
 #include <QThread>
 #include "learn.h"
 #include <QStandardItemModel>
+#include <QRandomGenerator>
 
-
+int wallpaperorder = 0;
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent)
@@ -35,6 +36,8 @@ Widget::Widget(QWidget *parent)
 
     modelword = new QStandardItemModel();
     modelstar = new QStandardItemModel();
+    modellearnt = new QStandardItemModel();
+    modelunlearnt = new QStandardItemModel();
 
     QGraphicsDropShadowEffect * dse = new QGraphicsDropShadowEffect();
     dse->setBlurRadius(20);
@@ -54,6 +57,7 @@ Widget::Widget(QWidget *parent)
     ui->startBG_2->setGraphicsEffect(blureffect);//设置模糊特效
     ui->startBG_2->graphicsEffect()->setEnabled(0);//设置模糊特效
 
+    //设置图标
     ui->bookButton->setFont(FontAwesomeIcons::Instance().getFont());
     ui->bookButton->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
     ui->settingButton->setFont(FontAwesomeIcons::Instance().getFont());
@@ -82,6 +86,42 @@ Widget::Widget(QWidget *parent)
     ui->lastbook->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_chevron_left));
     ui->nextbook->setFont(FontAwesomeIcons::Instance().getFont());
     ui->nextbook->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_chevron_right));
+    
+    //设置只能输入数字
+    QRegularExpression rx("[0-9]*");
+    QRegularExpressionValidator *pReg = new QRegularExpressionValidator(rx, this);
+    ui->wordAmountline->setValidator(pReg);
+
+    //设置随机壁纸
+    wallpaperorder = QRandomGenerator::global()->bounded(0,10);
+    QImage img;
+    img.load(QString(":/new/picture/pic/%1.png").arg(wallpaperorder));
+    ui->startBG_2->setPixmap(QPixmap::fromImage(img));
+
+    //设置模式
+    QFile file(QString(":/book/build/Desktop_Qt_6_7_1_MSVC2019_64bit-Debug/mode.txt"));
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qDebug() << "Failed to open file";
+        return;
+    }
+    QTextStream in(&file);
+    QString bookname;
+    int ordered;
+    while (!in.atEnd())
+    {
+        in >> bookname >> w_learn->wordsPerGroup >> ordered >> w_learn->mode;
+    }
+    ui->wordAmountline->setText(QString("%1").arg(w_learn->wordsPerGroup));
+    delete w_learn->book;
+    w_learn->book = new Book(bookname);
+    if(!w_learn->mode)
+    {
+        ui->cnToEn->setChecked(1);
+        on_cnToEn_clicked();
+    }
+    if(!ordered)
+        ui->randomButton->setChecked(1);
+    w_learn->setQuiz();
 
 }
 
@@ -92,21 +132,17 @@ Widget::~Widget()
     delete w_learn;
 }
 
-void Widget::resizeEvent(QResizeEvent *event)
-{
-    //ui->startBG->resize(this->size());
-}
-
 void Widget::on_Learn_clicked()
 {
+    //更改图标
     ui->titleBarIcon->setFont(FontAwesomeIcons::Instance().getFont());
     ui->titleBarIcon->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_pencil));
-
     setWindowIcon(QIcon(":/icon/pic/book-open-cover.png"));
 
     ui->startBG_2->graphicsEffect()->setEnabled(1);
     ui->startBG->setStyleSheet("background-color: rgba(0,0,0,200); border-radius:0");
 
+    //切换界面
     animate(this);
 
     int index = ui->stackedWidget->addWidget(w_learn);
@@ -116,10 +152,11 @@ void Widget::on_Learn_clicked()
 
 void Widget::on_startButton_clicked()
 {
-    QGraphicsBlurEffect *blureffect = new QGraphicsBlurEffect;
-    blureffect->setBlurRadius(5); //数值越大，越模糊
-    ui->startButton->setGraphicsEffect(blureffect);//设置模糊特效
+     // QGraphicsBlurEffect blureffect;
+     // blureffect.setBlurRadius(5); //数值越大，越模糊
+     // ui->startButton->setGraphicsEffect(&blureffect);//设置模糊特效
 
+    //开始动画
     QGraphicsOpacityEffect  *OpacityStartButton = new QGraphicsOpacityEffect(ui->startButton);
     ui->startButton->setGraphicsEffect(OpacityStartButton);
     QPropertyAnimation *animation = new QPropertyAnimation(OpacityStartButton, "opacity", this);
@@ -133,11 +170,10 @@ void Widget::on_startButton_clicked()
     expand->setStartValue(QRect(63,170,0,0));
     expand->setEndValue(QRect(63,170,252,52));
     expand->start();
-    connect(animation, &QPropertyAnimation::finished, this, [=] {delete blureffect; delete OpacityStartButton;delete expand;ui->startButton->hide();});
+    connect(expand, &QPropertyAnimation::finished, this, [=] {/*delete blureffect;*/ delete animation; delete OpacityStartButton; delete expand; ui->startButton->hide();});
 
 }
 
-int wallpaperorder = 0;
 
 void Widget::on_shiftWallpaperButton_clicked()
 {
@@ -145,17 +181,67 @@ void Widget::on_shiftWallpaperButton_clicked()
     wallpaperorder = (wallpaperorder + 1) % 10;
     QImage img;
     img.load(QString(":/new/picture/pic/%1.png").arg(wallpaperorder));
-
     ui->startBG_2->setPixmap(QPixmap::fromImage(img));
 
 }
 
 
-void Widget::on_stackedWidget_currentChanged(int index)
+
+void Widget::createTable(QStandardItemModel *model, QTableView *table, char name)
 {
+    //清空表格
+    model->clear();
+    QString state;
+    model->setColumnCount(4);
+    model->setHeaderData(0,Qt::Horizontal, "单词");
+    model->setHeaderData(1,Qt::Horizontal, "状态");
+    model->setHeaderData(2,Qt::Horizontal, "音标");
+    model->setHeaderData(3,Qt::Horizontal, "释义");
 
+    //填充表格
+    switch(name)
+    {
+    case 'w':
+        for(auto i : w_learn->book->wordList)
+        {
+            QList<QStandardItem *> item;
+            i.learnt ? state = "已学习" : state = "未学习";
+            item << new QStandardItem(i.word) << new QStandardItem(state) <<  new QStandardItem(i.pronunciation) <<  new QStandardItem(i.meaning.join(" "));
+            model->appendRow(item);
+        }
+        break;
+    case 's':
+        for(auto i : w_learn->book->starList)
+        {
+            QList<QStandardItem *> item;
+            i.learnt ? state = "已学习" : state = "未学习";
+            item << new QStandardItem(i.word) << new QStandardItem(state) <<  new QStandardItem(i.pronunciation) <<  new QStandardItem(i.meaning.join(" "));
+            model->appendRow(item);
+        }
+        break;
+    case 'l':
+        for(auto i : w_learn->book->learntList)
+        {
+            QList<QStandardItem *> item;
+            state = "已学习";
+            item << new QStandardItem(i->word) << new QStandardItem(state) <<  new QStandardItem(i->pronunciation) <<  new QStandardItem(i->meaning.join(" "));
+            model->appendRow(item);
+        }
+        break;
+    case 'u':
+        for(auto i : w_learn->book->unlearntList)
+        {
+            QList<QStandardItem *> item;
+            state = "未学习";
+            item << new QStandardItem(i->word) << new QStandardItem(state) <<  new QStandardItem(i->pronunciation) <<  new QStandardItem(i->meaning.join(" "));
+            model->appendRow(item);
+        }
+        break;
+    }
+    table->setModel(model);
+    table->verticalHeader()->hide();
+    table->setColumnWidth(3, 200);
 }
-
 
 void Widget::on_bookButton_clicked()
 {
@@ -163,6 +249,7 @@ void Widget::on_bookButton_clicked()
     ui->startBG_2->graphicsEffect()->setEnabled(1);
     ui->startBG->setStyleSheet("background-color: rgba(0,0,0,200); border-radius:0");
 
+    //更新数据
     ui->bookListButton->setText(w_learn->book->name);
     int learned = w_learn->book->learntList.size();
     int unlearned = w_learn->book->unlearntList.size();
@@ -173,55 +260,23 @@ void Widget::on_bookButton_clicked()
     ui->progressBar->setValue(learned);
     ui->stackedWidget->setCurrentWidget(ui->book);
 
-    delete modelword;
-    delete modelstar;
-
-    QString state;
-    modelword = new QStandardItemModel(ui->bookWordTable);
-    modelstar = new QStandardItemModel(ui->starTable);
-    modelword->setColumnCount(4);
-    modelword->setHeaderData(0,Qt::Horizontal, "单词");
-    modelword->setHeaderData(1,Qt::Horizontal, "状态");
-    modelword->setHeaderData(2,Qt::Horizontal, "音标");
-    modelword->setHeaderData(3,Qt::Horizontal, "释义");
-    modelstar->setColumnCount(4);
-    modelstar->setHeaderData(0,Qt::Horizontal, "单词");
-    modelstar->setHeaderData(1,Qt::Horizontal, "状态");
-    modelstar->setHeaderData(2,Qt::Horizontal, "音标");
-    modelstar->setHeaderData(3,Qt::Horizontal, "释义");
-    for(auto i : w_learn->book->starList)
-    {
-        QList<QStandardItem *> item;
-        i.learnt ? state = "已学习" : state = "未学习";
-        item << new QStandardItem(i.word) << new QStandardItem(state) <<  new QStandardItem(i.pronunciation) <<  new QStandardItem(i.meaning.join(" "));
-        modelstar->appendRow(item);
-    }
-    for(auto i : w_learn->book->wordList)
-    {
-        QList<QStandardItem *> item;
-        i.learnt ? state = "已学习" : state = "未学习";
-        item << new QStandardItem(i.word) << new QStandardItem(state) <<  new QStandardItem(i.pronunciation) <<  new QStandardItem(i.meaning.join(" "));
-        modelword->appendRow(item);
-    }
-    ui->bookWordTable->setModel(modelword);
-    ui->starTable->setModel(modelstar);
-    ui->bookWordTable->verticalHeader()->hide();
-    ui->starTable->verticalHeader()->hide();
-    ui->bookWordTable->setColumnWidth(3, 200);
-    ui->starTable->setColumnWidth(3, 200);
+    createTable(modelword, ui->bookWordTable, 'w');
+    createTable(modelstar, ui->starTable, 's');
+    createTable(modellearnt, ui->learntTable, 'l');
+    createTable(modelunlearnt, ui->unlearntTable, 'u');
 }
 
 
 void Widget::on_returnButton_clicked()
 {
     animate(this);
-    ui->stackedWidget->setCurrentWidget(ui->start);
 
+    //更改图标
+    ui->stackedWidget->setCurrentWidget(ui->start);
     ui->stackedWidget->setCurrentIndex(0);
     ui->startBG->setStyleSheet("background-color: rgba(0,0,0,0); border-radius:0");
     ui->titleBarIcon->setFont(FontAwesomeIcons::Instance().getFont());
     ui->titleBarIcon->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
-
     ui->startBG_2->graphicsEffect()->setEnabled(0);
 }
 
@@ -231,8 +286,11 @@ void Widget::on_lastbook_clicked()
 {
     bookindex += 2;
     bookindex %= 3;
+    QVector<Word> stared;
+    stared = w_learn->book->starList;
     delete w_learn->book;
     w_learn->book = new Book(bookindex);
+    w_learn->book->starList = stared;
     w_learn->setQuiz();
     on_bookButton_clicked();
 }
@@ -242,8 +300,11 @@ void Widget::on_nextbook_clicked()
 {
     bookindex++;
     bookindex %= 3;
+    QVector<Word> stared;
+    stared = w_learn->book->starList;
     delete w_learn->book;
     w_learn->book = new Book(bookindex);
+    w_learn->book->starList = stared;
     w_learn->setQuiz();
     on_bookButton_clicked();
 }
@@ -253,12 +314,10 @@ void Widget::on_returnButton_2_clicked()
 {
     animate(this);
     ui->stackedWidget->setCurrentWidget(ui->start);
-
     ui->stackedWidget->setCurrentIndex(0);
     ui->startBG->setStyleSheet("background-color: rgba(0,0,0,0); border-radius:0");
     ui->titleBarIcon->setFont(FontAwesomeIcons::Instance().getFont());
     ui->titleBarIcon->setText(FontAwesomeIcons::Instance().getIconChar(FontAwesomeIcons::IconIdentity::icon_book));
-
     ui->startBG_2->graphicsEffect()->setEnabled(0);
 }
 
@@ -268,15 +327,52 @@ void Widget::on_settingButton_clicked()
     animate(this);
     ui->startBG_2->graphicsEffect()->setEnabled(1);
     ui->startBG->setStyleSheet("background-color: rgba(0,0,0,200); border-radius:0");
-
     ui->stackedWidget->setCurrentWidget(ui->setting);
-
 }
 
 
 void Widget::on_randomButton_stateChanged(int arg1)
 {
     w_learn->ordered =! w_learn->ordered;
+    if(!w_learn->ordered)
+    {
+        unsigned seed = std::chrono::system_clock::now ().time_since_epoch ().count ();
+        std::shuffle(w_learn->book->unlearntList.begin(),w_learn->book->unlearntList.end(),std::default_random_engine(seed));
+    }
+    else
+    {
+        sort(w_learn->book->unlearntList.begin(),w_learn->book->unlearntList.end(),[=](Word *a, Word *b){return a->word < b->word;});
+    }
     w_learn->setQuiz();
+}
+
+
+void Widget::on_enToCn_clicked()
+{
+    w_learn->mode = 1;
+    w_learn->setQuiz();
+}
+
+
+void Widget::on_cnToEn_clicked()
+{
+    w_learn->mode = 0;
+    w_learn->setQuiz();
+}
+
+
+void Widget::on_wordAmountline_textChanged(const QString &amt)
+{
+    //排除非法输入
+    if(amt == "0" )
+    {
+        ui->wordAmountline->setText("1");
+        w_learn->wordsPerGroup = 1;
+    }
+    if(amt == "")
+    {
+        w_learn->wordsPerGroup = 1;
+    }
+    w_learn->wordsPerGroup = amt.toInt();
 }
 

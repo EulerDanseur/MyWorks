@@ -1,0 +1,13 @@
+\babel@toc {english}{}\relax 
+\contentsline {section}{\numberline {1}Introduction}{2}{section.1}%
+\contentsline {section}{\numberline {2}Conceptual Explanation}{2}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Kunstlied(Art Song)}{2}{subsection.2.1}%
+\contentsline {subsection}{\numberline {2.2}Heinean Irony}{2}{subsection.2.2}%
+\contentsline {section}{\numberline {3}Schumann's Dual Talent and Turn to Heine's Texts}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Poet or Musician? Schumann's Dual Talent}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Schumann and Heine: An Encounter}{3}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Analysis of the Text-Music Relationship in the Song from an Irony Perspective}{3}{section.4}%
+\contentsline {subsection}{\numberline {4.1}"Ich grolle nicht": Denying as a Mask}{4}{subsection.4.1}%
+\contentsline {subsection}{\numberline {4.2}"Das ist ein Flöten und Geigen": Objectivity as a Shell}{5}{subsection.4.2}%
+\contentsline {section}{\numberline {5}Conclusion}{8}{section.5}%
+\contentsfinish 

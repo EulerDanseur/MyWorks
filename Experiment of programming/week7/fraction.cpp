@@ -11,14 +11,14 @@ public:
 	{
 		int sign = (numerator0 < 0) ^ (denominator0 < 0) ? -1 : 1;
 		numerator *= sign;
-		// ±£Ö¤·ÖÄ¸²»Îª0
+		// ä¿è¯åˆ†æ¯ä¸ä¸º0
 		if (denominator0 == 0)
 		{
 			cout << "Invalid denominator!" << endl;
 			exit(1);
 		}
 
-		//Ô¼·Ö
+		//çº¦åˆ†
 		for(int i = 2; i <= abs(numerator0) && i <= abs(denominator0); i++)
 		{
 			if (numerator0 % i == 0 && denominator0 % i == 0)
@@ -67,15 +67,15 @@ public:
 int main()
 {
 	Fraction f1(5, -4), f2(3, 6);
-	f1.print(); // Êä³ö£º-5/4
-	f2.print(); // Êä³ö£º1/2
+	f1.print(); // è¾“å‡ºï¼š-5/4
+	f2.print(); // è¾“å‡ºï¼š1/2
 	Fraction f3 = f1 + f2;
-	f3.print(); // Êä³ö£º-3/4
+	f3.print(); // è¾“å‡ºï¼š-3/4
 	Fraction f4 = f1 - f2;
-	f4.print(); // Êä³ö£º-7/4
+	f4.print(); // è¾“å‡ºï¼š-7/4
 	Fraction f5 = f1 * f2;
-	f5.print(); // Êä³ö£º-5/8
+	f5.print(); // è¾“å‡ºï¼š-5/8
 	Fraction f6 = f1 / f2;
-	f6.print(); // Êä³ö£º-5/2
+	f6.print(); // è¾“å‡ºï¼š-5/2
 	return 0;
 }
